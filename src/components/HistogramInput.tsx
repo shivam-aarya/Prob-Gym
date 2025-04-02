@@ -1,0 +1,127 @@
+'use client';
+
+import React, { useState } from 'react';
+import { useTheme } from './ThemeProvider';
+
+interface HistogramInputProps {
+  options: string[];
+  onSubmit: (value: number[]) => void;
+}
+
+export default function HistogramInput({ options, onSubmit }: HistogramInputProps) {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
+  const maxValue = 10; // Maximum height of bars
+
+  const handleIncrement = (index: number) => {
+    if (values[index] < maxValue) {
+      const newValues = [...values];
+      newValues[index] = newValues[index] + 1;
+      setValues(newValues);
+    }
+  };
+
+  const handleDecrement = (index: number) => {
+    if (values[index] > 0) {
+      const newValues = [...values];
+      newValues[index] = newValues[index] - 1;
+      setValues(newValues);
+    }
+  };
+
+  const handleSubmit = () => {
+    onSubmit(values);
+  };
+
+  // Generate y-axis labels
+  const yAxisLabels = Array.from({ length: 6 }, (_, i) => maxValue - (i * 2));
+
+  return (
+    <div className="space-y-8">
+      <div className="relative pl-8"> {/* Added left padding for y-axis labels */}
+        {/* Y-axis labels
+        <div className="absolute left-0 inset-y-0 w-8 flex flex-col justify-between items-end pr-2">
+          {yAxisLabels.map((value) => (
+            <span key={value} className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`} style={{ transform: 'translateY(50%)' }}>
+              {value}
+            </span>
+          ))}
+        </div> */}
+
+        {/* Histogram Grid Background */}
+        <div className={`absolute inset-0 left-8 flex flex-col justify-between border-l ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className={`border-t w-full ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
+              style={{ height: '1px' }}
+            />
+          ))}
+        </div>
+
+        {/* Histogram Bars */}
+        <div className="relative h-60 flex items-end justify-between gap-2 px-4">
+          {values.map((value, index) => (
+            <div key={index} className="flex-1 flex flex-col items-center">
+              <div className="w-full h-full flex items-end">
+                <div
+                  className={`w-full rounded-t transition-all duration-200 ease-in-out ${isDark ? 'bg-blue-400' : 'bg-blue-500'}`}
+                  style={{
+                    height: value > 0 ? `${(value / maxValue) * 240}px` : '0',
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="grid grid-cols-7 gap-2 px-4">
+        {options.map((option, index) => (
+          <div key={index} className="flex flex-col items-center gap-2">
+            <span className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              {option}
+            </span>
+            <div className="flex flex-col gap-1">
+              <button
+                onClick={() => handleIncrement(index)}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
+                  ${isDark 
+                    ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500' 
+                    : 'bg-white border-gray-300 hover:bg-gray-50 active:bg-gray-100'
+                  } border`}
+                aria-label={`Increase value for ${option}`}
+              >
+                <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>+</span>
+              </button>
+              <button
+                onClick={() => handleDecrement(index)}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
+                  ${isDark 
+                    ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500' 
+                    : 'bg-white border-gray-300 hover:bg-gray-50 active:bg-gray-100'
+                  } border`}
+                aria-label={`Decrease value for ${option}`}
+              >
+                <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>−</span>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button
+        onClick={handleSubmit}
+        className={`w-full py-2 px-4 rounded-md transition-colors text-white
+          ${isDark 
+            ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600' 
+            : 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-300'
+          } disabled:cursor-not-allowed`}
+      >
+        Submit Response
+      </button>
+    </div>
+  );
+} 
