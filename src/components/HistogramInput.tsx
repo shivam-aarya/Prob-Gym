@@ -6,16 +6,20 @@ import { useTheme } from './ThemeProvider';
 interface HistogramInputProps {
   options: string[];
   onSubmit: (value: number[]) => void;
+  total_allocation?: number;
 }
 
-export default function HistogramInput({ options, onSubmit }: HistogramInputProps) {
+export default function HistogramInput({ options, onSubmit, total_allocation }: HistogramInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
   const maxValue = 10; // Maximum height of bars
 
+  const totalAllocated = values.reduce((sum, val) => sum + val, 0);
+  const remainingAllocations = total_allocation ? total_allocation - totalAllocated : Infinity;
+
   const handleIncrement = (index: number) => {
-    if (values[index] < maxValue) {
+    if (values[index] < maxValue && remainingAllocations > 0) {
       const newValues = [...values];
       newValues[index] = newValues[index] + 1;
       setValues(newValues);
@@ -35,10 +39,15 @@ export default function HistogramInput({ options, onSubmit }: HistogramInputProp
   };
 
   // Generate y-axis labels
-  const yAxisLabels = Array.from({ length: 6 }, (_, i) => maxValue - (i * 2));
+  // const yAxisLabels = Array.from({ length: 6 }, (_, i) => maxValue - (i * 2));
 
   return (
     <div className="space-y-8">
+      {total_allocation && (
+        <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+          Remaining allocations: {remainingAllocations} / {total_allocation}
+        </div>
+      )}
       <div className="relative pl-8"> {/* Added left padding for y-axis labels */}
         {/* Y-axis labels
         <div className="absolute left-0 inset-y-0 w-8 flex flex-col justify-between items-end pr-2">
@@ -87,14 +96,15 @@ export default function HistogramInput({ options, onSubmit }: HistogramInputProp
             <div className="flex flex-col gap-1">
               <button
                 onClick={() => handleIncrement(index)}
+                disabled={remainingAllocations <= 0}
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
                   ${isDark 
-                    ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500' 
-                    : 'bg-white border-gray-300 hover:bg-gray-50 active:bg-gray-100'
+                    ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500 disabled:bg-gray-800 disabled:border-gray-700' 
+                    : 'bg-white border-gray-300 hover:bg-gray-50 active:bg-gray-100 disabled:bg-gray-100 disabled:border-gray-200'
                   } border`}
                 aria-label={`Increase value for ${option}`}
               >
-                <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>+</span>
+                <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'} ${remainingAllocations <= 0 ? 'opacity-50' : ''}`}>+</span>
               </button>
               <button
                 onClick={() => handleDecrement(index)}

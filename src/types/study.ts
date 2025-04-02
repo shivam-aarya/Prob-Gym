@@ -9,6 +9,7 @@ export interface StudyConfig {
   options: string[];
   input_method: InputMethod;
   num_points?: number; // Number of points to create probability distribution
+  total_allocation?: number; // Total number of allocations allowed for histogram
 }
 
 export interface UserResponse {

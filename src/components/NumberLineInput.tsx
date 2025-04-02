@@ -11,13 +11,19 @@ interface NumberLineInputProps {
 
 type InteractionMode = 'add' | 'remove' | 'move';
 
+interface Point {
+  id: number;
+  value: number;
+}
+
 export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: NumberLineInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const [points, setPoints] = useState<number[]>([]);
+  const [points, setPoints] = useState<Point[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPointIndex, setDraggedPointIndex] = useState<number | null>(null);
   const [mode, setMode] = useState<InteractionMode>('add');
+  const [availableIds, setAvailableIds] = useState<number[]>(Array.from({ length: numPoints }, (_, i) => i));
   const lineRef = useRef<HTMLDivElement>(null);
 
   const calculateValue = (clientX: number) => {
@@ -28,23 +34,33 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
     return Number((clampedPosition * (options.length - 1)).toFixed(2));
   };
 
+  const getNextAvailableId = () => {
+    return availableIds[0] ?? -1;
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     const clickedValue = calculateValue(e.clientX);
     if (clickedValue === null) return;
 
     // Check if clicking near an existing point
-    const existingPointIndex = points.findIndex(p => Math.abs(p - clickedValue) < 0.2);
+    const existingPointIndex = points.findIndex(p => Math.abs(p.value - clickedValue) < 0.2);
     
     if (mode === 'move' && existingPointIndex !== -1) {
       // Start dragging existing point
       setIsDragging(true);
       setDraggedPointIndex(existingPointIndex);
     } else if (mode === 'add' && points.length < numPoints) {
-      // Add new point
-      setPoints(prev => [...prev, clickedValue].sort((a, b) => a - b));
+      // Add new point with next available ID
+      const newId = getNextAvailableId();
+      if (newId !== -1) {
+        setPoints(prev => [...prev, { id: newId, value: clickedValue }].sort((a, b) => a.value - b.value));
+        setAvailableIds(prev => prev.filter(id => id !== newId));
+      }
     } else if (mode === 'remove' && existingPointIndex !== -1) {
-      // Remove point
+      // Remove point and make its ID available again
+      const removedId = points[existingPointIndex].id;
       setPoints(prev => prev.filter((_, index) => index !== existingPointIndex));
+      setAvailableIds(prev => [...prev, removedId].sort((a, b) => a - b));
     }
   };
 
@@ -55,8 +71,8 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
 
     setPoints(prev => {
       const newPoints = [...prev];
-      newPoints[draggedPointIndex] = newValue;
-      return newPoints.sort((a, b) => a - b);
+      newPoints[draggedPointIndex] = { ...newPoints[draggedPointIndex], value: newValue };
+      return newPoints.sort((a, b) => a.value - b.value);
     });
   };
 
@@ -86,8 +102,8 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
     
     // Calculate area for each segment between points
     for (let i = 0; i < points.length - 1; i++) {
-      const start = points[i];
-      const end = points[i + 1];
+      const start = points[i].value;
+      const end = points[i + 1].value;
       const startBin = Math.floor(start);
       const endBin = Math.floor(end);
       
@@ -121,8 +137,8 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
     }
   };
 
-  // Add this function to generate a color based on point index
-  const getPointColor = (index: number) => {
+  // Add this function to generate a color based on point ID
+  const getPointColor = (id: number) => {
     const colors = [
       { light: 'rgba(59, 130, 246, 0.8)', dark: 'rgba(96, 165, 250, 0.8)' }, // blue
       { light: 'rgba(16, 185, 129, 0.8)', dark: 'rgba(52, 211, 153, 0.8)' }, // green
@@ -130,7 +146,7 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
       { light: 'rgba(239, 68, 68, 0.8)', dark: 'rgba(248, 113, 113, 0.8)' }, // red
       { light: 'rgba(168, 85, 247, 0.8)', dark: 'rgba(192, 132, 252, 0.8)' }, // purple
     ];
-    return isDark ? colors[index % colors.length].dark : colors[index % colors.length].light;
+    return isDark ? colors[id % colors.length].dark : colors[id % colors.length].light;
   };
 
   return (
@@ -193,9 +209,9 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
             key={index}
             className={`absolute -top-1 transform -translate-x-1/2 px-2 py-1 rounded text-sm
               ${isDark ? 'bg-gray-700 text-gray-200' : 'bg-gray-800 text-white'}`}
-            style={{ left: `${(point / (options.length - 1)) * 100}%` }}
+            style={{ left: `${(point.value / (options.length - 1)) * 100}%` }}
           >
-            {point.toFixed(2)}
+            {point.value.toFixed(2)}
           </div>
         ))}
 
@@ -217,7 +233,7 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
               preserveAspectRatio="none"
             >
               <path
-                d={`M ${points.map(p => `${(p / (options.length - 1)) * 100} 50`).join(' L ')}`}
+                d={`M ${points.map(p => `${(p.value / (options.length - 1)) * 100} 50`).join(' L ')}`}
                 fill="none"
                 stroke={isDark ? '#60A5FA' : '#3B82F6'}
                 strokeWidth="2"
@@ -248,11 +264,11 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
           {/* Points markers */}
           {points.map((point, index) => (
             <div
-              key={index}
+              key={point.id}
               className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full transform -translate-x-1/2 transition-all duration-75"
               style={{ 
-                left: `${(point / (options.length - 1)) * 100}%`,
-                backgroundColor: getPointColor(index),
+                left: `${(point.value / (options.length - 1)) * 100}%`,
+                backgroundColor: getPointColor(point.id),
                 cursor: mode === 'move' ? 'move' : 'default',
                 boxShadow: isDark 
                   ? '0 0 0 2px rgba(17, 24, 39, 0.5)' 

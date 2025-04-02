@@ -9,12 +9,13 @@ interface QuestionFrameProps {
 }
 
 export default function QuestionFrame({ config, onSubmit }: QuestionFrameProps) {
-  const handleNumberLineSubmit = (value: number) => {
+  const handleNumberLineSubmit = (distribution: number[]) => {
     const response: UserResponse = {
       task_name: config.task_name,
       scenario_id: config.scenario_id,
       response_data: {
-        selected_value: value,
+        selected_value: distribution.reduce((a, b) => a + b, 0), // Sum for compatibility
+        distribution: distribution,
         timestamp: new Date().toISOString(),
       },
     };
@@ -46,6 +47,7 @@ export default function QuestionFrame({ config, onSubmit }: QuestionFrameProps) 
         <HistogramInput
           options={config.options}
           onSubmit={handleHistogramSubmit}
+          total_allocation={config.total_allocation}
         />
       )}
     </div>
