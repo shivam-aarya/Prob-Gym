@@ -13,7 +13,6 @@ export default function Scenarios() {
   const router = useRouter();
   const [currentScenario, setCurrentScenario] = React.useState(1);
   const [responses, setResponses] = React.useState<Record<number, number[]>>({});
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
   const [completedScenarios, setCompletedScenarios] = React.useState<Set<number>>(new Set());
 
@@ -42,7 +41,6 @@ export default function Scenarios() {
   }, [router]);
 
   const handleSubmit = async (response: UserResponse) => {
-    setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
@@ -128,8 +126,6 @@ export default function Scenarios() {
     } catch (error) {
       console.error('Error submitting response:', error);
       setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -172,7 +168,6 @@ export default function Scenarios() {
         currentScenario={currentScenario}
         totalScenarios={scenarios.length}
         onNavigate={handleNavigate}
-        responses={responses}
         completedScenarios={completedScenarios}
       />
     </main>

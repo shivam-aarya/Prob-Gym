@@ -16,9 +16,8 @@ export default function ScenarioNavigation({
   currentScenario,
   totalScenarios,
   onNavigate,
-  responses,
   completedScenarios
-}: ScenarioNavigationProps) {
+}: Omit<ScenarioNavigationProps, 'responses'>) {
   const { theme } = useTheme();
   const router = useRouter();
   const isDark = theme === 'dark';

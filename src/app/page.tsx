@@ -18,7 +18,6 @@ export default function Home() {
   const [studyStage, setStudyStage] = useState<StudyStage>('consent');
   const [currentScenario, setCurrentScenario] = useState(1);
   const [responses, setResponses] = useState<Record<number, number[]>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [completedScenarios, setCompletedScenarios] = useState<Set<number>>(new Set());
 
@@ -54,7 +53,6 @@ export default function Home() {
   }, []);
 
   const handleSubmit = async (response: UserResponse) => {
-    setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
@@ -112,8 +110,6 @@ export default function Home() {
     } catch (error) {
       console.error('Error submitting response:', error);
       setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -182,7 +178,6 @@ export default function Home() {
           currentScenario={currentScenario}
           totalScenarios={scenarios.length}
           onNavigate={handleNavigate}
-          responses={responses}
           completedScenarios={completedScenarios}
         />
       )}

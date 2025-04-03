@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useTheme } from './ThemeProvider';
 
 interface NumberLineInputProps {
@@ -185,13 +185,13 @@ export default function NumberLineInput({
     setDraggedPointIndex(null);
   }, [options, total_allocation, initialDistribution]);
 
-  const calculateValue = (clientX: number) => {
+  const calculateValue = useCallback((clientX: number) => {
     if (!lineRef.current) return null;
     const rect = lineRef.current.getBoundingClientRect();
     const position = (clientX - rect.left) / rect.width;
     const clampedPosition = Math.max(0, Math.min(1, position));
     return Number((clampedPosition * (options.length - 1)).toFixed(2));
-  };
+  }, [options.length]);
 
   const getNextAvailableId = () => {
     return availableIds[0] ?? -1;
@@ -218,12 +218,12 @@ export default function NumberLineInput({
     } else if (mode === 'remove' && existingPointIndex !== -1) {
       // Remove point and make its ID available again
       const removedId = points[existingPointIndex].id;
-      setPoints(prev => prev.filter((_, index) => index !== existingPointIndex));
+      setPoints(prev => prev.filter((_, i) => i !== existingPointIndex));
       setAvailableIds(prev => [...prev, removedId].sort((a, b) => a - b));
     }
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging || draggedPointIndex === null || mode !== 'move') return;
     const newValue = calculateValue(e.clientX);
     if (newValue === null) return;
@@ -233,7 +233,7 @@ export default function NumberLineInput({
       newPoints[draggedPointIndex] = { ...newPoints[draggedPointIndex], value: newValue };
       return newPoints.sort((a, b) => a.value - b.value);
     });
-  };
+  }, [isDragging, draggedPointIndex, mode, calculateValue]);
 
   const handleMouseUp = () => {
     setIsDragging(false);
@@ -249,7 +249,7 @@ export default function NumberLineInput({
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging]);
+  }, [isDragging, handleMouseMove]);
 
   // Calculate probability distribution from points
   const calculateDistribution = () => {
@@ -431,7 +431,7 @@ export default function NumberLineInput({
           })}
 
           {/* Points markers */}
-          {points.map((point, index) => (
+          {points.map((point) => (
             <div
               key={point.id}
               className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full transform -translate-x-1/2 transition-all duration-75"

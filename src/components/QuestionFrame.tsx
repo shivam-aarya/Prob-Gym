@@ -23,9 +23,8 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
         const savedPositions = localStorage.getItem(`pointPositions_${config.scenario_id}`);
         if (savedPositions) {
           try {
-            const pointValues = JSON.parse(savedPositions);
-            // We'll use the point positions data when loading the component
-            // The NumberLineInput component will handle this
+            JSON.parse(savedPositions);
+            // The NumberLineInput component will handle the point positions data
           } catch (err) {
             console.error('Error parsing saved point positions:', err);
           }

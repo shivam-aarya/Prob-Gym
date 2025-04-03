@@ -110,7 +110,7 @@ export default function Layout({ children, config }: LayoutProps) {
                   </span>
                 </div>
                 <p className={`text-lg leading-relaxed text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                  "{config.commentary}"
+                  &quot;{config.commentary}&quot;
                 </p>
               </div>
             )}
