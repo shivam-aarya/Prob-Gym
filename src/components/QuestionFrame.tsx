@@ -41,6 +41,7 @@ export default function QuestionFrame({ config, onSubmit }: QuestionFrameProps) 
         <NumberLineInput
           options={config.options}
           onSubmit={handleNumberLineSubmit}
+          total_allocation={config.total_allocation}
         />
       )}
       {config.input_method === 'histogram' && (

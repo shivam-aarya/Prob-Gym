@@ -63,6 +63,12 @@ export default function Scenarios() {
           setCurrentScenario(currentScenario + 1);
           setSubmitStatus('idle');
         }, 1000);
+      } else {
+        // All scenarios completed
+        localStorage.setItem('scenariosComplete', 'true');
+        setTimeout(() => {
+          router.push('/demographic');
+        }, 1000);
       }
     } catch (error) {
       console.error('Error submitting response:', error);

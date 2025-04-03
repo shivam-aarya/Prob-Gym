@@ -6,7 +6,7 @@ import { useTheme } from './ThemeProvider';
 interface NumberLineInputProps {
   options: string[];
   onSubmit: (distribution: number[]) => void;
-  numPoints?: number;
+  total_allocation?: number;
 }
 
 type InteractionMode = 'add' | 'remove' | 'move';
@@ -16,15 +16,24 @@ interface Point {
   value: number;
 }
 
-export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: NumberLineInputProps) {
+export default function NumberLineInput({ options, onSubmit, total_allocation = 5 }: NumberLineInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [points, setPoints] = useState<Point[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPointIndex, setDraggedPointIndex] = useState<number | null>(null);
   const [mode, setMode] = useState<InteractionMode>('add');
-  const [availableIds, setAvailableIds] = useState<number[]>(Array.from({ length: numPoints }, (_, i) => i));
+  const [availableIds, setAvailableIds] = useState<number[]>(Array.from({ length: total_allocation }, (_, i) => i));
   const lineRef = useRef<HTMLDivElement>(null);
+
+  // Reset points and available IDs when options change (new question)
+  useEffect(() => {
+    setPoints([]);
+    setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i));
+    setMode('add');
+    setIsDragging(false);
+    setDraggedPointIndex(null);
+  }, [options, total_allocation]);
 
   const calculateValue = (clientX: number) => {
     if (!lineRef.current) return null;
@@ -49,7 +58,7 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
       // Start dragging existing point
       setIsDragging(true);
       setDraggedPointIndex(existingPointIndex);
-    } else if (mode === 'add' && points.length < numPoints) {
+    } else if (mode === 'add' && points.length < total_allocation) {
       // Add new point with next available ID
       const newId = getNextAvailableId();
       if (newId !== -1) {
@@ -139,21 +148,22 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
 
   // Add this function to generate a color based on point ID
   const getPointColor = (id: number) => {
-    const colors = [
-      { light: 'rgba(59, 130, 246, 0.8)', dark: 'rgba(96, 165, 250, 0.8)' }, // blue
-      { light: 'rgba(16, 185, 129, 0.8)', dark: 'rgba(52, 211, 153, 0.8)' }, // green
-      { light: 'rgba(245, 158, 11, 0.8)', dark: 'rgba(251, 191, 36, 0.8)' }, // yellow
-      { light: 'rgba(239, 68, 68, 0.8)', dark: 'rgba(248, 113, 113, 0.8)' }, // red
-      { light: 'rgba(168, 85, 247, 0.8)', dark: 'rgba(192, 132, 252, 0.8)' }, // purple
-    ];
-    return isDark ? colors[id % colors.length].dark : colors[id % colors.length].light;
+    // Use HSL color space for better color distribution
+    // Hue: 0-360 (full color spectrum)
+    // Saturation: 70% (vibrant colors)
+    // Lightness: 60% for light theme, 70% for dark theme
+    const hue = (id * 137.508) % 360; // Golden angle approximation for good distribution
+    const saturation = 70;
+    const lightness = isDark ? 70 : 60;
+    
+    return `hsla(${hue}, ${saturation}%, ${lightness}%, 0.8)`;
   };
 
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div className="text-sm text-gray-600 dark:text-gray-400">
-          Click to add points ({points.length}/{numPoints})
+          Click to add points ({points.length}/{total_allocation})
         </div>
         <div className="flex space-x-2">
           <button
@@ -280,17 +290,24 @@ export default function NumberLineInput({ options, onSubmit, numPoints = 5 }: Nu
       </div>
 
       {/* Submit button */}
-      <button
-        onClick={handleSubmit}
-        disabled={points.length < 2}
-        className={`w-full py-2 px-4 rounded-md transition-colors text-white
-          ${isDark 
-            ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600' 
-            : 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-300'
-          } disabled:cursor-not-allowed`}
-      >
-        Submit Response
-      </button>
+      <div className="space-y-2">
+        {points.length < total_allocation && (
+          <div className={`text-sm text-center ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            Please place all {total_allocation} points before submitting
+          </div>
+        )}
+        <button
+          onClick={handleSubmit}
+          disabled={points.length < total_allocation}
+          className={`w-full py-2 px-4 rounded-md transition-colors text-white
+            ${isDark 
+              ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600' 
+              : 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-300'
+            } disabled:cursor-not-allowed`}
+        >
+          Submit Response
+        </button>
+      </div>
     </div>
   );
 } 

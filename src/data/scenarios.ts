@@ -21,7 +21,7 @@ export const scenarios: StudyConfig[] = [
     question: "What is the probability distribution of the structure collapsing?",
     options: ["1", "2", "3", "4", "5", "6", "7"],
     input_method: "number_line",
-    num_points: 4
+    total_allocation: 7
   },
   {
     task_name: "blocks_world",
@@ -32,6 +32,6 @@ export const scenarios: StudyConfig[] = [
     question: "How would you distribute the probability of the structure's stability?",
     options: ["1", "2", "3", "4", "5", "6", "7"],
     input_method: "number_line",
-    num_points: 4
+    total_allocation: 1
   }
 ]; 

@@ -124,13 +124,16 @@ export default function HistogramInput({ options, onSubmit, total_allocation }: 
 
       <button
         onClick={handleSubmit}
+        disabled={total_allocation ? remainingAllocations > 0 : false}
         className={`w-full py-2 px-4 rounded-md transition-colors text-white
           ${isDark 
-            ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600' 
-            : 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-300'
+            ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600 disabled:hover:bg-gray-600' 
+            : 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-300 disabled:hover:bg-gray-300'
           } disabled:cursor-not-allowed`}
       >
-        Submit Response
+        {total_allocation && remainingAllocations > 0 
+          ? `Allocate ${remainingAllocations} more to submit` 
+          : 'Submit Response'}
       </button>
     </div>
   );

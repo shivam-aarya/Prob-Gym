@@ -1,9 +1,9 @@
 {
   "study": {
     "title": "Research Study",
-    "randomizeQuestions": false,
+    "randomizeQuestions": true,
     "backend": {
-      "enabled": true,
+      "enabled": false,
       "endpoint": "/api/submit"
     }
   },
@@ -36,5 +36,65 @@
       }
     ],
     "buttonText": "Start Study"
+  },
+  "demographic": {
+    "title": "Demographic Information",
+    "description": "Please help us by providing some demographic information. This will help us better understand our study results.",
+    "questions": [
+      {
+        "id": "age",
+        "type": "select",
+        "label": "What is your age?",
+        "required": true,
+        "options": [
+          "18-24",
+          "25-34",
+          "35-44",
+          "45-54",
+          "55-64",
+          "65+"
+        ]
+      },
+      {
+        "id": "gender",
+        "type": "select",
+        "label": "What is your gender?",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Non-binary",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "education",
+        "type": "select",
+        "label": "What is your highest level of education?",
+        "required": true,
+        "options": [
+          "High school or less",
+          "Some college",
+          "Bachelor's degree",
+          "Master's degree",
+          "Doctoral degree",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "experience",
+        "type": "select",
+        "label": "How would you rate your experience with [topic]?",
+        "required": true,
+        "options": [
+          "No experience",
+          "Beginner",
+          "Intermediate",
+          "Advanced",
+          "Expert"
+        ]
+      }
+    ],
+    "buttonText": "Complete Survey"
   }
 } 
