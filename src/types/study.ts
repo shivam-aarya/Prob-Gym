@@ -1,10 +1,19 @@
 export type InputMethod = 'number_line' | 'histogram';
 
+export interface TextSection {
+  title: string;
+  content: string;
+  isCollapsible?: boolean;
+  isInitiallyExpanded?: boolean;
+}
+
 export interface StudyConfig {
   task_name: string;
   scenario_id: number;
-  input_type: 'img';
-  source_link: string;
+  input_type: 'img' | 'text';
+  source_link?: string;
+  text_content?: string;
+  text_sections?: TextSection[];
   commentary: string;
   question: string;
   options: string[];

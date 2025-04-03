@@ -11,10 +11,10 @@
     "title": "Study Consent",
     "content": [
       "Thank you for your interest in participating in our research study.",
-      "This study aims to [brief description of study purpose].",
+      "This study aims to collect user data on beliefs about probability distributions.",
       "Your participation is voluntary and you can withdraw at any time.",
       "All data collected will be kept confidential and used only for research purposes.",
-      "The study will take approximately [estimated duration] to complete.",
+      "The study will take approximately 5 minutes to complete.",
       "By clicking 'I Consent', you agree to participate in this study."
     ],
     "buttonText": "I Consent"
@@ -24,7 +24,7 @@
     "sections": [
       {
         "title": "Understanding the Interface",
-        "content": "You will be presented with a series of scenarios and questions. Each scenario will have multiple questions that you need to answer."
+        "content": "You will be presented with a series of scenarios and questions. Each scenario may have multiple questions that you need to answer."
       },
       {
         "title": "Navigation",
@@ -32,7 +32,7 @@
       },
       {
         "title": "Submitting Responses",
-        "content": "After answering all questions in a scenario, click the submit button to save your responses. You cannot go back to previous scenarios after submission."
+        "content": "After answering all scenarios, a green button will appear to submit your responses. Once completed, you will be redirected to a quick demographic survey, after which your participation in the study will be complete."
       }
     ],
     "buttonText": "Start Study"
@@ -84,7 +84,7 @@
       {
         "id": "experience",
         "type": "select",
-        "label": "How would you rate your experience with [topic]?",
+        "label": "How would you rate your experience with probability distributions?",
         "required": true,
         "options": [
           "No experience",
