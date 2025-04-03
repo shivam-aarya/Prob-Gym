@@ -15,6 +15,7 @@ export default function Scenarios() {
   const [responses, setResponses] = React.useState<Record<number, number[]>>({});
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
+  const [completedScenarios, setCompletedScenarios] = React.useState<Set<number>>(new Set());
 
   useEffect(() => {
     // Check if user has completed consent and tutorial
@@ -25,6 +26,18 @@ export default function Scenarios() {
       router.push('/consent');
     } else if (!hasTutorial) {
       router.push('/tutorial');
+    }
+    
+    // Load saved responses from localStorage
+    const savedResponses = localStorage.getItem('userResponses');
+    if (savedResponses) {
+      setResponses(JSON.parse(savedResponses));
+    }
+    
+    // Load completed scenarios from localStorage
+    const savedCompletedScenarios = localStorage.getItem('completedScenarios');
+    if (savedCompletedScenarios) {
+      setCompletedScenarios(new Set(JSON.parse(savedCompletedScenarios)));
     }
   }, [router]);
 
@@ -48,12 +61,37 @@ export default function Scenarios() {
       }
 
       // Store the response locally
+      let updatedResponses = { ...responses };
       if ('values' in response.response_data) {
-        setResponses(prev => ({
-          ...prev,
+        updatedResponses = {
+          ...updatedResponses,
           [currentScenario]: response.response_data.values || []
-        }));
+        };
+        setResponses(updatedResponses);
+      } else if ('distribution' in response.response_data) {
+        updatedResponses = {
+          ...updatedResponses,
+          [currentScenario]: response.response_data.distribution || []
+        };
+        setResponses(updatedResponses);
+        
+        // Store the points positions if available (for continuous values)
+        if ('points' in response.response_data && response.response_data.points) {
+          localStorage.setItem(`pointPositions_${currentScenario}`, 
+            JSON.stringify(response.response_data.points));
+        }
       }
+      
+      // Save to localStorage
+      localStorage.setItem('userResponses', JSON.stringify(updatedResponses));
+
+      // Mark this scenario as completed
+      const updatedCompletedScenarios = new Set([...completedScenarios, currentScenario]);
+      setCompletedScenarios(updatedCompletedScenarios);
+      
+      // Save completed scenarios to localStorage
+      localStorage.setItem('completedScenarios', 
+        JSON.stringify(Array.from(updatedCompletedScenarios)));
 
       setSubmitStatus('success');
 
@@ -64,11 +102,28 @@ export default function Scenarios() {
           setSubmitStatus('idle');
         }, 1000);
       } else {
-        // All scenarios completed
-        localStorage.setItem('scenariosComplete', 'true');
-        setTimeout(() => {
-          router.push('/demographic');
-        }, 1000);
+        // Check if all scenarios are completed
+        const allCompleted = scenarios.every(scenario => 
+          updatedCompletedScenarios.has(scenario.scenario_id)
+        );
+
+        if (allCompleted) {
+          localStorage.setItem('scenariosComplete', 'true');
+          setTimeout(() => {
+            router.push('/demographic');
+          }, 1000);
+        } else {
+          // Find the first incomplete scenario
+          const firstIncomplete = scenarios.find(
+            scenario => !updatedCompletedScenarios.has(scenario.scenario_id)
+          );
+          if (firstIncomplete) {
+            setTimeout(() => {
+              setCurrentScenario(firstIncomplete.scenario_id);
+              setSubmitStatus('idle');
+            }, 1000);
+          }
+        }
       }
     } catch (error) {
       console.error('Error submitting response:', error);
@@ -97,6 +152,7 @@ export default function Scenarios() {
         <QuestionFrame
           config={currentScenarioData}
           onSubmit={handleSubmit}
+          previousResponses={responses}
         />
         
         {submitStatus === 'success' && (
@@ -117,6 +173,7 @@ export default function Scenarios() {
         totalScenarios={scenarios.length}
         onNavigate={handleNavigate}
         responses={responses}
+        completedScenarios={completedScenarios}
       />
     </main>
   );

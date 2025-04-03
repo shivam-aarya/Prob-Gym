@@ -2,22 +2,33 @@
 
 import React from 'react';
 import { useTheme } from './ThemeProvider';
+import { useRouter } from 'next/navigation';
 
 interface ScenarioNavigationProps {
   currentScenario: number;
   totalScenarios: number;
   onNavigate: (scenarioId: number) => void;
   responses: Record<number, number[]>;
+  completedScenarios: Set<number>;
 }
 
-export default function ScenarioNavigation({ 
-  currentScenario, 
-  totalScenarios, 
+export default function ScenarioNavigation({
+  currentScenario,
+  totalScenarios,
   onNavigate,
-  responses
+  responses,
+  completedScenarios
 }: ScenarioNavigationProps) {
   const { theme } = useTheme();
+  const router = useRouter();
   const isDark = theme === 'dark';
+
+  const allScenariosCompleted = completedScenarios.size === totalScenarios;
+
+  const handleSubmit = () => {
+    localStorage.setItem('scenariosComplete', 'true');
+    router.push('/demographic');
+  };
 
   return (
     <div className={`fixed bottom-0 left-0 right-0 border-t transition-colors ${
@@ -59,27 +70,59 @@ export default function ScenarioNavigation({
           </button>
         </div>
 
-        {/* Progress indicators */}
-        <div className="flex gap-2">
-          {Array.from({ length: totalScenarios }, (_, i) => i + 1).map((scenarioId) => {
-            const isActive = scenarioId === currentScenario;
-            const isCompleted = responses[scenarioId];
-            
-            return (
-              <button
-                key={scenarioId}
-                onClick={() => onNavigate(scenarioId)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  isActive
-                    ? isDark ? 'bg-blue-400' : 'bg-blue-500'
-                    : isCompleted
-                      ? isDark ? 'bg-gray-600' : 'bg-gray-300'
-                      : isDark ? 'bg-gray-800' : 'bg-gray-200'
-                }`}
-                aria-label={`Go to scenario ${scenarioId}`}
-              />
-            );
-          })}
+        {/* Progress indicators and submit button */}
+        <div className="flex items-center gap-4">
+          <div className="flex gap-2">
+            {Array.from({ length: totalScenarios }, (_, i) => i + 1).map((scenarioId) => {
+              const isActive = scenarioId === currentScenario;
+              const isCompleted = completedScenarios.has(scenarioId);
+              
+              return (
+                <button
+                  key={scenarioId}
+                  onClick={() => onNavigate(scenarioId)}
+                  className={`w-4 h-4 rounded-full transition-colors relative ${
+                    isActive
+                      ? isDark ? 'bg-blue-400' : 'bg-blue-500'
+                      : isCompleted
+                        ? isDark ? 'bg-green-500' : 'bg-green-400'
+                        : isDark ? 'bg-gray-800' : 'bg-gray-200'
+                  }`}
+                  aria-label={`Go to scenario ${scenarioId}`}
+                >
+                  {isCompleted && (
+                    <svg
+                      className="absolute -top-[0.0rem] -right-[0.0rem] w-4 h-4 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {allScenariosCompleted && (
+            <button
+              onClick={handleSubmit}
+              className={`px-4 py-2 rounded-md transition-colors ${
+                isDark
+                  ? 'bg-green-600 hover:bg-green-700 text-white'
+                  : 'bg-green-500 hover:bg-green-600 text-white'
+              }`}
+            >
+              Submit All Responses
+            </button>
+          )}
         </div>
       </div>
     </div>

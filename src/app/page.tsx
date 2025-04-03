@@ -20,6 +20,7 @@ export default function Home() {
   const [responses, setResponses] = useState<Record<number, number[]>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [completedScenarios, setCompletedScenarios] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     // Check if user has already given consent
@@ -36,6 +37,21 @@ export default function Home() {
       router.push('/consent');
     }
   }, [router]);
+
+  // Load saved responses from localStorage
+  useEffect(() => {
+    const savedResponses = localStorage.getItem('userResponses');
+    if (savedResponses) {
+      setResponses(JSON.parse(savedResponses));
+    }
+    
+    const savedCompletedScenarios = localStorage.getItem('completedScenarios');
+    if (savedCompletedScenarios) {
+      setCompletedScenarios(
+        new Set(JSON.parse(savedCompletedScenarios))
+      );
+    }
+  }, []);
 
   const handleSubmit = async (response: UserResponse) => {
     setIsSubmitting(true);
@@ -57,12 +73,32 @@ export default function Home() {
       }
 
       // Store the response locally
+      let updatedResponses = { ...responses };
       if ('values' in response.response_data) {
-        setResponses(prev => ({
-          ...prev,
+        updatedResponses = {
+          ...updatedResponses,
           [currentScenario]: response.response_data.values || []
-        }));
+        };
+        setResponses(updatedResponses);
+      } else if ('distribution' in response.response_data) {
+        updatedResponses = {
+          ...updatedResponses,
+          [currentScenario]: response.response_data.distribution || []
+        };
+        setResponses(updatedResponses);
       }
+      
+      // Save to localStorage
+      localStorage.setItem('userResponses', JSON.stringify(updatedResponses));
+      
+      // Mark scenario as completed
+      const updatedCompletedScenarios = new Set(completedScenarios);
+      updatedCompletedScenarios.add(currentScenario);
+      setCompletedScenarios(updatedCompletedScenarios);
+      
+      // Save completed scenarios to localStorage
+      localStorage.setItem('completedScenarios', 
+        JSON.stringify(Array.from(updatedCompletedScenarios)));
 
       setSubmitStatus('success');
 
@@ -116,6 +152,7 @@ export default function Home() {
             <QuestionFrame
               config={currentScenarioData}
               onSubmit={handleSubmit}
+              previousResponses={responses}
             />
             
             {submitStatus === 'success' && (
@@ -146,6 +183,7 @@ export default function Home() {
           totalScenarios={scenarios.length}
           onNavigate={handleNavigate}
           responses={responses}
+          completedScenarios={completedScenarios}
         />
       )}
     </main>

@@ -1,20 +1,35 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from './ThemeProvider';
 
 interface HistogramInputProps {
   options: string[];
   onSubmit: (value: number[]) => void;
   total_allocation?: number;
+  initialValues?: number[] | null;
 }
 
-export default function HistogramInput({ options, onSubmit, total_allocation }: HistogramInputProps) {
+export default function HistogramInput({ 
+  options, 
+  onSubmit, 
+  total_allocation,
+  initialValues = null
+}: HistogramInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
   const maxValue = 10; // Maximum height of bars
 
+  // Initialize from saved values if present
+  useEffect(() => {
+    if (initialValues && initialValues.length === options.length) {
+      setValues(initialValues);
+    } else {
+      setValues(Array(options.length).fill(0));
+    }
+  }, [initialValues, options.length]);
+  
   const totalAllocated = values.reduce((sum, val) => sum + val, 0);
   const remainingAllocations = total_allocation ? total_allocation - totalAllocated : Infinity;
 
