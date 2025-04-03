@@ -1,33 +1,59 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import QuestionFrame from '@/components/QuestionFrame';
 import ScenarioNavigation from '@/components/ScenarioNavigation';
+import ConsentPage from '@/components/ConsentPage';
+import TutorialPage from '@/components/TutorialPage';
 import { UserResponse } from '@/types/study';
 import { scenarios } from '@/data/scenarios';
+import config from '@/data/config.json';
+import { useRouter } from 'next/navigation';
+
+type StudyStage = 'consent' | 'tutorial' | 'questions';
 
 export default function Home() {
+  const router = useRouter();
+  const [studyStage, setStudyStage] = useState<StudyStage>('consent');
   const [currentScenario, setCurrentScenario] = useState(1);
   const [responses, setResponses] = useState<Record<number, number[]>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    // Check if user has already given consent
+    const hasConsent = localStorage.getItem('studyConsent');
+    if (hasConsent) {
+      // Check if they've completed the tutorial
+      const hasTutorial = localStorage.getItem('tutorialComplete');
+      if (hasTutorial) {
+        router.push('/scenarios');
+      } else {
+        router.push('/tutorial');
+      }
+    } else {
+      router.push('/consent');
+    }
+  }, [router]);
 
   const handleSubmit = async (response: UserResponse) => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      const result = await fetch('/api/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(response),
-      });
+      if (config.study.backend.enabled) {
+        const result = await fetch(config.study.backend.endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(response),
+        });
 
-      if (!result.ok) {
-        throw new Error('Failed to submit response');
+        if (!result.ok) {
+          throw new Error('Failed to submit response');
+        }
       }
 
       // Store the response locally
@@ -68,33 +94,60 @@ export default function Home() {
     return <div>Error: Scenario not found</div>;
   }
 
+  const renderContent = () => {
+    switch (studyStage) {
+      case 'consent':
+        return (
+          <ConsentPage
+            config={config.consent}
+            onConsent={() => setStudyStage('tutorial')}
+          />
+        );
+      case 'tutorial':
+        return (
+          <TutorialPage
+            config={config.tutorial}
+            onComplete={() => setStudyStage('questions')}
+          />
+        );
+      case 'questions':
+        return (
+          <>
+            <QuestionFrame
+              config={currentScenarioData}
+              onSubmit={handleSubmit}
+            />
+            
+            {submitStatus === 'success' && (
+              <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
+                Response submitted successfully!
+              </div>
+            )}
+            
+            {submitStatus === 'error' && (
+              <div className="mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
+                Error submitting response. Please try again.
+              </div>
+            )}
+          </>
+        );
+    }
+  };
+
   return (
     <main className="min-h-screen pb-20">
       <Layout config={currentScenarioData}>
-        <QuestionFrame
-          config={currentScenarioData}
-          onSubmit={handleSubmit}
-        />
-        
-        {submitStatus === 'success' && (
-          <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
-            Response submitted successfully!
-          </div>
-        )}
-        
-        {submitStatus === 'error' && (
-          <div className="mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
-            Error submitting response. Please try again.
-          </div>
-        )}
+        {renderContent()}
       </Layout>
 
-      <ScenarioNavigation
-        currentScenario={currentScenario}
-        totalScenarios={scenarios.length}
-        onNavigate={handleNavigate}
-        responses={responses}
-      />
+      {studyStage === 'questions' && (
+        <ScenarioNavigation
+          currentScenario={currentScenario}
+          totalScenarios={scenarios.length}
+          onNavigate={handleNavigate}
+          responses={responses}
+        />
+      )}
     </main>
   );
 }

@@ -1,0 +1,40 @@
+{
+  "study": {
+    "title": "Research Study",
+    "randomizeQuestions": false,
+    "backend": {
+      "enabled": true,
+      "endpoint": "/api/submit"
+    }
+  },
+  "consent": {
+    "title": "Study Consent",
+    "content": [
+      "Thank you for your interest in participating in our research study.",
+      "This study aims to [brief description of study purpose].",
+      "Your participation is voluntary and you can withdraw at any time.",
+      "All data collected will be kept confidential and used only for research purposes.",
+      "The study will take approximately [estimated duration] to complete.",
+      "By clicking 'I Consent', you agree to participate in this study."
+    ],
+    "buttonText": "I Consent"
+  },
+  "tutorial": {
+    "title": "How to Participate",
+    "sections": [
+      {
+        "title": "Understanding the Interface",
+        "content": "You will be presented with a series of scenarios and questions. Each scenario will have multiple questions that you need to answer."
+      },
+      {
+        "title": "Navigation",
+        "content": "Use the navigation buttons at the bottom to move between scenarios. You can review and change your answers before submitting."
+      },
+      {
+        "title": "Submitting Responses",
+        "content": "After answering all questions in a scenario, click the submit button to save your responses. You cannot go back to previous scenarios after submission."
+      }
+    ],
+    "buttonText": "Start Study"
+  }
+} 

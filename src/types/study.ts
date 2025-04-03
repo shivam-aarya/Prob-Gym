@@ -6,6 +6,7 @@ export interface StudyConfig {
   input_type: 'img';
   source_link: string;
   commentary: string;
+  question: string;
   options: string[];
   input_method: InputMethod;
   num_points?: number; // Number of points to create probability distribution
