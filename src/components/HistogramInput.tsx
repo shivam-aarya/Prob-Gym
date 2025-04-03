@@ -63,18 +63,16 @@ export default function HistogramInput({
           Remaining allocations: {remainingAllocations} / {total_allocation}
         </div>
       )}
-      <div className="relative pl-8"> {/* Added left padding for y-axis labels */}
-        {/* Y-axis labels
-        <div className="absolute left-0 inset-y-0 w-8 flex flex-col justify-between items-end pr-2">
-          {yAxisLabels.map((value) => (
-            <span key={value} className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`} style={{ transform: 'translateY(50%)' }}>
-              {value}
-            </span>
-          ))}
-        </div> */}
 
-        {/* Histogram Grid Background */}
-        <div className={`absolute inset-0 left-8 flex flex-col justify-between border-l ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+      {/* Main histogram container */}
+      <div className="relative">
+        {/* Y-axis line */}
+        <div className={`absolute left-0 top-0 bottom-0 w-px ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+        {/* X-axis line */}
+        <div className={`absolute right-0 top-0 bottom-0 w-px ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+
+        {/* Grid lines */}
+        <div className={`absolute inset-0 flex flex-col justify-between`}>
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
@@ -85,7 +83,7 @@ export default function HistogramInput({
         </div>
 
         {/* Histogram Bars */}
-        <div className="relative h-60 flex items-end justify-between gap-2 px-4">
+        <div className="relative h-60 flex items-end justify-between gap-1 px-4">
           {values.map((value, index) => (
             <div key={index} className="flex-1 flex flex-col items-center">
               <div className="w-full h-full flex items-end">
@@ -102,7 +100,7 @@ export default function HistogramInput({
       </div>
 
       {/* Controls */}
-      <div className="grid grid-cols-7 gap-2 px-4">
+      <div className="grid gap-1 px-4" style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}>
         {options.map((option, index) => (
           <div key={index} className="flex flex-col items-center gap-2">
             <span className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
