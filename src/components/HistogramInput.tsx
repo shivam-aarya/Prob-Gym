@@ -19,7 +19,7 @@ export default function HistogramInput({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
-  const maxValue = 10; // Maximum height of bars
+  const maxValue = total_allocation || 10; // Use total_allocation as max height if provided
 
   // Initialize from saved values if present
   useEffect(() => {

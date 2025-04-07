@@ -395,22 +395,6 @@ export default function NumberLineInput({
             ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`}
           />
 
-          {/* Distribution curve */}
-          {points.length >= 2 && (
-            <svg
-              className="absolute top-1/2 left-0 right-0 w-full h-20 -mt-10 pointer-events-none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d={`M ${points.map(p => `${(p.value / (options.length - 1)) * 100} 50`).join(' L ')}`}
-                fill="none"
-                stroke={isDark ? '#60A5FA' : '#3B82F6'}
-                strokeWidth="2"
-                className="transition-all duration-200"
-              />
-            </svg>
-          )}
-
           {/* Tick marks and labels */}
           {options.map((option, index) => {
             const position = (index / (options.length - 1)) * 100;
