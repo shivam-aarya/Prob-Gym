@@ -50,6 +50,7 @@ In the fifth match, Lane and Ollie beat Casey and Quinn.`,
     question: "There are some blocks on a table. If the table is bumped from the right, how many blocks will fall on the floor?",
     options: ["0", "1", "2", "3", "4"],
     input_method: "number_line",
-    total_allocation: 1
+    total_allocation: 1,
+    discrete: true
   }
 ]; 

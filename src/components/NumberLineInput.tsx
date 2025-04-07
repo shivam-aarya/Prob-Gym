@@ -9,6 +9,7 @@ interface NumberLineInputProps {
   total_allocation?: number;
   initialDistribution?: number[] | null;
   scenarioId?: number;
+  discrete?: boolean;
 }
 
 type InteractionMode = 'add' | 'remove' | 'move';
@@ -23,7 +24,8 @@ export default function NumberLineInput({
   onSubmit, 
   total_allocation = 5,
   initialDistribution = null,
-  scenarioId
+  scenarioId,
+  discrete = false
 }: NumberLineInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -190,8 +192,15 @@ export default function NumberLineInput({
     const rect = lineRef.current.getBoundingClientRect();
     const position = (clientX - rect.left) / rect.width;
     const clampedPosition = Math.max(0, Math.min(1, position));
+    
+    if (discrete) {
+      // For discrete input, snap to the nearest option
+      const optionIndex = Math.round(clampedPosition * (options.length - 1));
+      return optionIndex;
+    }
+    
     return Number((clampedPosition * (options.length - 1)).toFixed(2));
-  }, [options.length]);
+  }, [options.length, discrete]);
 
   const getNextAvailableId = () => {
     return availableIds[0] ?? -1;
@@ -323,6 +332,7 @@ export default function NumberLineInput({
       <div className="flex justify-between items-center">
         <div className="text-sm text-gray-600 dark:text-gray-400">
           Click to add points ({points.length}/{total_allocation})
+          {discrete && <span className="ml-2">(Discrete values only)</span>}
         </div>
         <div className="flex space-x-2">
           <button

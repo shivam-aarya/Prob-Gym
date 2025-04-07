@@ -74,6 +74,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
           options={config.options}
           onSubmit={handleNumberLineSubmit}
           total_allocation={config.total_allocation}
+          discrete={config.discrete}
           initialDistribution={previousResponse}
           scenarioId={config.scenario_id}
         />
