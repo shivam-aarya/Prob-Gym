@@ -89,6 +89,17 @@ export default function Layout({ children, config }: LayoutProps) {
                     priority
                   />
                 </div>
+              ) : config.input_type === 'video' ? (
+                <div className="relative h-[500px]">
+                  <video
+                    src={config.source_link!}
+                    controls
+                    className="w-full h-full object-contain"
+                    playsInline
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               ) : (
                 <div>
                   {config.text_sections?.map((section, index) => (
@@ -102,7 +113,7 @@ export default function Layout({ children, config }: LayoutProps) {
               )}
             </div>
             
-            {config.input_type === 'img' && (
+            {(config.input_type === 'img' || config.input_type === 'video') && (
               <div className={`p-5 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
                 <div className="text-center mb-2">
                   <span className={`text-xs uppercase tracking-wider font-semibold px-2 py-1 rounded ${isDark ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-600'}`}>

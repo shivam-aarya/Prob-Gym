@@ -10,7 +10,7 @@ export interface TextSection {
 export interface StudyConfig {
   task_name: string;
   scenario_id: number;
-  input_type: 'img' | 'text';
+  input_type: 'img' | 'text' | 'video';
   source_link?: string;
   text_content?: string;
   text_sections?: TextSection[];
