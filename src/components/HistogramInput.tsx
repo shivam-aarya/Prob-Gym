@@ -8,13 +8,15 @@ interface HistogramInputProps {
   onSubmit: (value: number[]) => void;
   total_allocation?: number;
   initialValues?: number[] | null;
+  disabled?: boolean;
 }
 
 export default function HistogramInput({ 
   options, 
   onSubmit, 
   total_allocation,
-  initialValues = null
+  initialValues = null,
+  disabled = false
 }: HistogramInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -34,6 +36,7 @@ export default function HistogramInput({
   const remainingAllocations = total_allocation ? total_allocation - totalAllocated : Infinity;
 
   const handleIncrement = (index: number) => {
+    if (disabled) return;
     if (values[index] < maxValue && remainingAllocations > 0) {
       const newValues = [...values];
       newValues[index] = newValues[index] + 1;
@@ -42,6 +45,7 @@ export default function HistogramInput({
   };
 
   const handleDecrement = (index: number) => {
+    if (disabled) return;
     if (values[index] > 0) {
       const newValues = [...values];
       newValues[index] = newValues[index] - 1;
@@ -50,6 +54,7 @@ export default function HistogramInput({
   };
 
   const handleSubmit = () => {
+    if (disabled) return;
     onSubmit(values);
   };
 
@@ -118,7 +123,7 @@ export default function HistogramInput({
             <div className="flex flex-col gap-1">
               <button
                 onClick={() => handleIncrement(index)}
-                disabled={remainingAllocations <= 0}
+                disabled={remainingAllocations <= 0 || disabled}
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
                   ${isDark 
                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500 disabled:bg-gray-800 disabled:border-gray-700' 
@@ -130,6 +135,7 @@ export default function HistogramInput({
               </button>
               <button
                 onClick={() => handleDecrement(index)}
+                disabled={disabled}
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
                   ${isDark 
                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500' 
@@ -146,7 +152,7 @@ export default function HistogramInput({
 
       <button
         onClick={handleSubmit}
-        disabled={total_allocation ? remainingAllocations > 0 : false}
+        disabled={(total_allocation ? remainingAllocations > 0 : false) || disabled}
         className={`w-full py-2 px-4 rounded-md transition-colors text-white
           ${isDark 
             ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600 disabled:hover:bg-gray-600' 

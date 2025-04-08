@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { submitDemographicData } from '@/utils/api';
 
 interface DemographicSurveyProps {
   config: {
@@ -19,6 +20,7 @@ interface DemographicSurveyProps {
 export default function DemographicSurvey({ config, onSubmit }: DemographicSurveyProps) {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (questionId: string, value: string) => {
     setResponses(prev => ({
@@ -35,7 +37,7 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate required fields
@@ -51,7 +53,29 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
       return;
     }
 
-    onSubmit(responses);
+    setIsSubmitting(true);
+    try {
+      // Submit to API
+      const result = await submitDemographicData({
+        ...responses,
+        timestamp: new Date().toISOString()
+      });
+      
+      if (result.success) {
+        // Proceed to next step even if API fails
+        onSubmit(responses);
+      } else {
+        console.error('Error submitting demographic data:', result.message);
+        // Still call onSubmit to proceed if API fails
+        onSubmit(responses);
+      }
+    } catch (error) {
+      console.error('Error submitting demographic data:', error);
+      // Proceed to next step even if API fails
+      onSubmit(responses);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -73,6 +97,7 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
               className={`w-full p-3 border rounded-lg ${
                 errors[question.id] ? 'border-red-500' : 'border-gray-300'
               }`}
+              disabled={isSubmitting}
             >
               <option value="">Select an option</option>
               {question.options.map(option => (
@@ -91,8 +116,9 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
         <button
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+          disabled={isSubmitting}
         >
-          {config.buttonText}
+          {isSubmitting ? "Submitting..." : config.buttonText}
         </button>
       </form>
     </div>

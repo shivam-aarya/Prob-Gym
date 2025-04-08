@@ -1,21 +1,34 @@
 import { NextResponse } from 'next/server';
 import { UserResponse } from '@/types/study';
+import { db } from '@/services/database';
 
 export async function POST(request: Request) {
   try {
     const response: UserResponse = await request.json();
     
-    // For demo purposes, we'll just log the response
-    console.log('Received response:', response);
+    // Validate the response data (basic validation)
+    if (!response.task_name || !response.scenario_id || !response.response_data) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid response data' },
+        { status: 400 }
+      );
+    }
     
-    // In a production environment, you would:
-    // 1. Validate the response data
-    // 2. Store it in a database
-    // 3. Handle any errors appropriately
+    // Store the response using our database service
+    const { id, error } = await db.submitResponse(response);
+    
+    if (error) {
+      console.error('Error storing response:', error);
+      return NextResponse.json(
+        { success: false, message: 'Error storing response' },
+        { status: 500 }
+      );
+    }
     
     return NextResponse.json({ 
       success: true, 
-      message: 'Response recorded successfully' 
+      message: 'Response recorded successfully',
+      id
     });
   } catch (error) {
     console.error('Error processing submission:', error);

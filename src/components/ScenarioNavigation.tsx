@@ -1,8 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from './ThemeProvider';
 import { useRouter } from 'next/navigation';
+import { scenarios } from '@/data/scenarios';
+import { UserResponse } from '@/types/study';
+import { submitResponse } from '@/utils/api';
 
 interface ScenarioNavigationProps {
   currentScenario: number;
@@ -21,12 +24,75 @@ export default function ScenarioNavigation({
   const { theme } = useTheme();
   const router = useRouter();
   const isDark = theme === 'dark';
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const allScenariosCompleted = completedScenarios.size === totalScenarios;
 
-  const handleSubmit = () => {
-    localStorage.setItem('scenariosComplete', 'true');
-    router.push('/demographic');
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    
+    try {
+      // First, get all saved responses from localStorage
+      const savedResponsesJson = localStorage.getItem('userResponses');
+      
+      if (savedResponsesJson) {
+        const savedResponses: Record<number, number[]> = JSON.parse(savedResponsesJson);
+        
+        // Submit each saved response to the API
+        for (const scenarioId of Object.keys(savedResponses).map(Number)) {
+          const scenarioData = scenarios.find(s => s.scenario_id === scenarioId);
+          
+          if (scenarioData) {
+            let response: UserResponse;
+            
+            if (scenarioData.input_method === 'histogram') {
+              response = {
+                task_name: scenarioData.task_name,
+                scenario_id: scenarioData.scenario_id,
+                response_data: {
+                  selected_value: savedResponses[scenarioId].reduce((a, b) => a + b, 0),
+                  values: savedResponses[scenarioId],
+                  timestamp: new Date().toISOString()
+                }
+              };
+            } else {
+              // Handle number_line input type
+              const pointPositionsJson = localStorage.getItem(`pointPositions_${scenarioId}`);
+              const points = pointPositionsJson ? JSON.parse(pointPositionsJson) : null;
+              
+              response = {
+                task_name: scenarioData.task_name,
+                scenario_id: scenarioData.scenario_id,
+                response_data: {
+                  selected_value: savedResponses[scenarioId].reduce((a, b) => a + b, 0),
+                  distribution: savedResponses[scenarioId],
+                  timestamp: new Date().toISOString()
+                }
+              };
+              
+              // Add points data if available
+              if (points && points.length > 0) {
+                response.response_data.points = points;
+              }
+            }
+            
+            // Submit to the API
+            await submitResponse(response);
+          }
+        }
+      }
+      
+      // Mark study as complete and redirect to demographic page
+      localStorage.setItem('scenariosComplete', 'true');
+      router.push('/demographic');
+    } catch (error) {
+      console.error('Error submitting saved responses:', error);
+      // Still mark as complete and redirect even if there's an error
+      localStorage.setItem('scenariosComplete', 'true');
+      router.push('/demographic');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -113,13 +179,14 @@ export default function ScenarioNavigation({
           {allScenariosCompleted && (
             <button
               onClick={handleSubmit}
+              disabled={isSubmitting}
               className={`px-4 py-2 rounded-md transition-colors ${
                 isDark
                   ? 'bg-green-600 hover:bg-green-700 text-white'
                   : 'bg-green-500 hover:bg-green-600 text-white'
               }`}
             >
-              Submit All Responses
+              {isSubmitting ? "Submitting..." : "Submit All Responses"}
             </button>
           )}
         </div>

@@ -24,28 +24,9 @@ export default function Demographic() {
   }, [router]);
 
   const handleSubmit = async (responses: Record<string, string>) => {
-    try {
-      if (config.study.backend.enabled) {
-        const result = await fetch('/api/submit-demographic', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(responses),
-        });
-
-        if (!result.ok) {
-          throw new Error('Failed to submit demographic data');
-        }
-      }
-
-      // Mark study as complete
-      localStorage.setItem('studyComplete', 'true');
-      router.push('/complete');
-    } catch (error) {
-      console.error('Error submitting demographic data:', error);
-      // Handle error (you might want to show an error message to the user)
-    }
+    // Mark study as complete
+    localStorage.setItem('studyComplete', 'true');
+    router.push('/complete');
   };
 
   return (

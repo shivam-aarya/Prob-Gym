@@ -11,6 +11,7 @@ interface QuestionFrameProps {
 
 export default function QuestionFrame({ config, onSubmit, previousResponses = {} }: QuestionFrameProps) {
   const [previousResponse, setPreviousResponse] = useState<number[] | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   useEffect(() => {
     // Check if there's a previous response for this scenario
@@ -35,7 +36,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
     }
   }, [config.scenario_id, previousResponses, config.input_method]);
 
-  const handleNumberLineSubmit = (distribution: number[], points?: number[]) => {
+  const handleNumberLineSubmit = async (distribution: number[], points?: number[]) => {
     const response: UserResponse = {
       task_name: config.task_name,
       scenario_id: config.scenario_id,
@@ -51,10 +52,18 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
       response.response_data.points = points;
     }
     
-    onSubmit(response);
+    // Call parent onSubmit, parent will handle API submission
+    setIsSubmitting(true);
+    try {
+      onSubmit(response);
+    } catch (error) {
+      console.error('Error handling submission:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleHistogramSubmit = (values: number[]) => {
+  const handleHistogramSubmit = async (values: number[]) => {
     const response: UserResponse = {
       task_name: config.task_name,
       scenario_id: config.scenario_id,
@@ -64,7 +73,16 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
         timestamp: new Date().toISOString(),
       },
     };
-    onSubmit(response);
+    
+    // Call parent onSubmit, parent will handle API submission
+    setIsSubmitting(true);
+    try {
+      onSubmit(response);
+    } catch (error) {
+      console.error('Error handling submission:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -77,6 +95,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
           discrete={config.discrete}
           initialDistribution={previousResponse}
           scenarioId={config.scenario_id}
+          disabled={isSubmitting}
         />
       )}
       {config.input_method === 'histogram' && (
@@ -85,6 +104,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
           onSubmit={handleHistogramSubmit}
           total_allocation={config.total_allocation}
           initialValues={previousResponse}
+          disabled={isSubmitting}
         />
       )}
     </div>

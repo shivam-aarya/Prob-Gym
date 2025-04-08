@@ -10,6 +10,7 @@ interface NumberLineInputProps {
   initialDistribution?: number[] | null;
   scenarioId?: number;
   discrete?: boolean;
+  disabled?: boolean;
 }
 
 type InteractionMode = 'add' | 'remove' | 'move';
@@ -25,7 +26,8 @@ export default function NumberLineInput({
   total_allocation = 5,
   initialDistribution = null,
   scenarioId,
-  discrete = false
+  discrete = false,
+  disabled = false
 }: NumberLineInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -207,6 +209,8 @@ export default function NumberLineInput({
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (disabled) return;
+    
     const clickedValue = calculateValue(e.clientX);
     if (clickedValue === null) return;
 
@@ -306,6 +310,8 @@ export default function NumberLineInput({
   };
 
   const handleSubmit = () => {
+    if (disabled) return;
+    
     const distribution = calculateDistribution();
     if (distribution) {
       // Also pass the actual point positions to preserve continuous values

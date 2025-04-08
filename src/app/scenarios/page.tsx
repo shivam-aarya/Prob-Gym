@@ -8,6 +8,7 @@ import { UserResponse } from '@/types/study';
 import { scenarios } from '@/data/scenarios';
 import config from '@/data/config.json';
 import { useRouter } from 'next/navigation';
+import { submitResponse } from '@/utils/api';
 
 export default function Scenarios() {
   const router = useRouter();
@@ -45,15 +46,8 @@ export default function Scenarios() {
 
     try {
       if (config.study.backend.enabled) {
-        const result = await fetch(config.study.backend.endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(response),
-        });
-
-        if (!result.ok) {
+        const result = await submitResponse(response);
+        if (!result.success) {
           throw new Error('Failed to submit response');
         }
       }

@@ -3,7 +3,7 @@
     "title": "Research Study",
     "randomizeQuestions": true,
     "backend": {
-      "enabled": false,
+      "enabled": true,
       "endpoint": "/api/submit"
     }
   },
