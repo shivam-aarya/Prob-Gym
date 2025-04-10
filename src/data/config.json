@@ -87,19 +87,6 @@
           "Doctoral degree",
           "Prefer not to say"
         ]
-      },
-      {
-        "id": "experience",
-        "type": "select",
-        "label": "How would you rate your experience with probability distributions?",
-        "required": true,
-        "options": [
-          "No experience",
-          "Beginner",
-          "Intermediate",
-          "Advanced",
-          "Expert"
-        ]
       }
     ],
     "buttonText": "Complete Survey"
