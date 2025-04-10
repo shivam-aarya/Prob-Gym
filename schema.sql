@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS participants (
   responses JSONB,
   demographic_data JSONB,
   consent_timestamp TIMESTAMP WITH TIME ZONE,
-  last_updated TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+  total_completion_time_ms BIGINT
 );
 
 -- Enable Row Level Security (RLS)

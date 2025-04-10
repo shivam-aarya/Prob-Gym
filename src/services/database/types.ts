@@ -50,4 +50,12 @@ export interface DatabaseService {
    * @returns A promise resolving to the participant data or error
    */
   getParticipantData(participantId: string): Promise<{ data?: ParticipantData; error?: Error }>;
+
+  /**
+   * Update the total completion time for a participant
+   * @param participantId The unique ID for the participant
+   * @param totalDurationMs Total time spent in milliseconds
+   * @returns A promise resolving to the success status or error
+   */
+  updateTotalCompletionTime(participantId: string, totalDurationMs: number): Promise<{ success: boolean; error?: Error }>;
 } 

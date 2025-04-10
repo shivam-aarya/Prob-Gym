@@ -12,8 +12,12 @@ interface QuestionFrameProps {
 export default function QuestionFrame({ config, onSubmit, previousResponses = {} }: QuestionFrameProps) {
   const [previousResponse, setPreviousResponse] = useState<number[] | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [startTime, setStartTime] = useState<Date | null>(null);
   
   useEffect(() => {
+    // Set start time when component mounts
+    setStartTime(new Date());
+    
     // Check if there's a previous response for this scenario
     if (previousResponses && previousResponses[config.scenario_id]) {
       setPreviousResponse(previousResponses[config.scenario_id]);
@@ -37,12 +41,20 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
   }, [config.scenario_id, previousResponses, config.input_method]);
 
   const handleNumberLineSubmit = async (values: number[]) => {
+    const endTime = new Date();
+    const duration = startTime ? endTime.getTime() - startTime.getTime() : 0;
+    
     const response: UserResponse = {
       task_name: config.task_name,
       scenario_id: config.scenario_id,
       response_data: {
         values: values,
       },
+      time_data: {
+        start_time: startTime?.toISOString() || new Date().toISOString(),
+        end_time: endTime.toISOString(),
+        duration_ms: duration
+      }
     };
     
     // Call parent onSubmit, parent will handle API submission
@@ -57,12 +69,20 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
   };
 
   const handleHistogramSubmit = async (values: number[]) => {
+    const endTime = new Date();
+    const duration = startTime ? endTime.getTime() - startTime.getTime() : 0;
+    
     const response: UserResponse = {
       task_name: config.task_name,
       scenario_id: config.scenario_id,
       response_data: {
         values: values,
       },
+      time_data: {
+        start_time: startTime?.toISOString() || new Date().toISOString(),
+        end_time: endTime.toISOString(),
+        duration_ms: duration
+      }
     };
     
     // Call parent onSubmit, parent will handle API submission

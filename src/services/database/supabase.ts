@@ -155,4 +155,28 @@ export class SupabaseService implements DatabaseService {
       return { error: error as Error };
     }
   }
+
+  /**
+   * Update the total completion time for a participant
+   * @param participantId The unique ID for the participant
+   * @param totalDurationMs Total time spent in milliseconds
+   * @returns A promise resolving to the success status or error
+   */
+  async updateTotalCompletionTime(participantId: string, totalDurationMs: number): Promise<{ success: boolean; error?: Error }> {
+    try {
+      const { error } = await supabase
+        .from('participants')
+        .update({
+          total_completion_time_ms: totalDurationMs,
+          last_updated: new Date().toISOString()
+        })
+        .eq('participant_id', participantId);
+
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      console.error('Error updating total completion time:', error);
+      return { success: false, error: error as Error };
+    }
+  }
 } 

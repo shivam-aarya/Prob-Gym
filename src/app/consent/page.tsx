@@ -31,6 +31,7 @@ export default function Consent() {
     // Store consent and participant ID in localStorage
     localStorage.setItem('studyConsent', 'true');
     localStorage.setItem('participantId', participantId);
+    localStorage.setItem('studyStartTime', new Date().toISOString());
     
     try {
       // Initialize participant in the database

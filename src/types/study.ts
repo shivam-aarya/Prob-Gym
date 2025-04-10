@@ -30,4 +30,9 @@ export interface UserResponse {
     values?: number[];  // Optional array for histogram values
     points?: number[];  // Array of selected points for timeline
   };
+  time_data?: {
+    start_time: string;  // ISO string of when user started the scenario
+    end_time: string;    // ISO string of when user completed the scenario
+    duration_ms: number; // Total time spent in milliseconds
+  };
 } 

@@ -8,6 +8,7 @@ interface Participant {
   demographic_data?: DemographicData;
   consent_timestamp: string;
   last_updated: string;
+  total_completion_time_ms?: number;
 }
 
 /**
@@ -137,6 +138,33 @@ export class InMemoryDatabaseService implements DatabaseService {
     } catch (error) {
       console.error('Error getting participant data:', error);
       return { error: error as Error };
+    }
+  }
+
+  /**
+   * Update the total completion time for a participant
+   * @param participantId The unique ID for the participant
+   * @param totalDurationMs Total time spent in milliseconds
+   * @returns A promise resolving to the success status or error
+   */
+  async updateTotalCompletionTime(participantId: string, totalDurationMs: number): Promise<{ success: boolean; error?: Error }> {
+    try {
+      // Find participant
+      const participant = Array.from(this.participants.values())
+        .find(p => p.participant_id === participantId);
+      
+      if (!participant) {
+        throw new Error(`Participant with ID ${participantId} not found`);
+      }
+
+      // Update total completion time
+      participant.total_completion_time_ms = totalDurationMs;
+      participant.last_updated = new Date().toISOString();
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Error updating total completion time:', error);
+      return { success: false, error: error as Error };
     }
   }
 } 
