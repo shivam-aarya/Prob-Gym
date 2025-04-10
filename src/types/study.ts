@@ -27,10 +27,7 @@ export interface UserResponse {
   task_name: string;
   scenario_id: number;
   response_data: {
-    selected_value: number;
     values?: number[];  // Optional array for histogram values
-    points?: number[];  // Array of selected points for probability distribution
-    distribution?: number[];  // Computed probability distribution
-    timestamp: string;
+    points?: number[];  // Array of selected points for timeline
   };
 } 

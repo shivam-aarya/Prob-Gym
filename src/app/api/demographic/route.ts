@@ -3,12 +3,29 @@ import { db } from '@/services/database';
 
 export async function POST(request: Request) {
   try {
-    const demographicData = await request.json();
+    const body = await request.json();
+    const { participantId, demographicData } = body;
     
-    // Basic validation could be added here
+    // Validate the data
+    if (!participantId) {
+      return NextResponse.json(
+        { success: false, message: 'Missing participant ID' },
+        { status: 400 }
+      );
+    }
+    
+    if (!demographicData) {
+      return NextResponse.json(
+        { success: false, message: 'Missing demographic data' },
+        { status: 400 }
+      );
+    }
+    
+    // Ensure the participant exists
+    await db.createOrUpdateParticipant(participantId);
     
     // Store the demographic data using our database service
-    const { id, error } = await db.submitDemographicData(demographicData);
+    const { success, error } = await db.submitDemographicData(participantId, demographicData);
     
     if (error) {
       console.error('Error storing demographic data:', error);
@@ -20,8 +37,7 @@ export async function POST(request: Request) {
     
     return NextResponse.json({ 
       success: true, 
-      message: 'Demographic data recorded successfully',
-      id
+      message: 'Demographic data recorded successfully'
     });
   } catch (error) {
     console.error('Error processing demographic submission:', error);

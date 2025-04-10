@@ -36,21 +36,14 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
     }
   }, [config.scenario_id, previousResponses, config.input_method]);
 
-  const handleNumberLineSubmit = async (distribution: number[], points?: number[]) => {
+  const handleNumberLineSubmit = async (values: number[]) => {
     const response: UserResponse = {
       task_name: config.task_name,
       scenario_id: config.scenario_id,
       response_data: {
-        selected_value: distribution.reduce((a, b) => a + b, 0), // Sum for compatibility
-        distribution: distribution,
-        timestamp: new Date().toISOString(),
+        values: values,
       },
     };
-    
-    // Add points data if available (for continuous values preservation)
-    if (points && points.length > 0) {
-      response.response_data.points = points;
-    }
     
     // Call parent onSubmit, parent will handle API submission
     setIsSubmitting(true);
@@ -68,9 +61,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
       task_name: config.task_name,
       scenario_id: config.scenario_id,
       response_data: {
-        selected_value: values.reduce((a, b) => a + b, 0), // Sum for compatibility
-        values: values, // Store the full distribution
-        timestamp: new Date().toISOString(),
+        values: values,
       },
     };
     

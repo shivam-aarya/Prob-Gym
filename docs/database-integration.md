@@ -21,46 +21,30 @@ The application uses an abstraction layer for database operations that allows:
 -- Run this in the Supabase SQL Editor
 -- Create tables for storing study data
 
--- Table for storing participant responses
-CREATE TABLE IF NOT EXISTS responses (
+-- Table for storing participant data (consolidated approach)
+CREATE TABLE IF NOT EXISTS participants (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  task_name TEXT NOT NULL,
-  scenario_id INTEGER NOT NULL,
-  response_data JSONB NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+  participant_id TEXT NOT NULL UNIQUE,
+  responses JSONB,
+  demographic_data JSONB,
+  consent_timestamp TIMESTAMP WITH TIME ZONE,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Create an index on scenario_id for faster retrieval
-CREATE INDEX IF NOT EXISTS responses_scenario_id_idx ON responses (scenario_id);
-
--- Table for storing demographic survey data
-CREATE TABLE IF NOT EXISTS demographics (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  age INTEGER,
-  gender TEXT,
-  education_level TEXT,
-  technical_background TEXT,
-  additional_info JSONB,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
-);
+-- Create an index on participant_id for faster retrieval
+CREATE INDEX IF NOT EXISTS participants_participant_id_idx ON participants (participant_id);
 
 -- Enable Row Level Security (RLS)
-ALTER TABLE responses ENABLE ROW LEVEL SECURITY;
-ALTER TABLE demographics ENABLE ROW LEVEL SECURITY;
+ALTER TABLE participants ENABLE ROW LEVEL SECURITY;
 
 -- Create policies that allow all operations for authenticated users
-CREATE POLICY "Allow all operations for authenticated users" ON responses
-  FOR ALL TO authenticated
-  USING (true)
-  WITH CHECK (true);
-
-CREATE POLICY "Allow all operations for authenticated users" ON demographics
+CREATE POLICY "Allow all operations for authenticated users" ON participants
   FOR ALL TO authenticated
   USING (true)
   WITH CHECK (true);
 
 -- Optionally, create policies for anonymous access if needed
-CREATE POLICY "Allow read access for anonymous users" ON responses
+CREATE POLICY "Allow read access for anonymous users" ON participants
   FOR SELECT TO anon
   USING (true);
 ```
@@ -83,9 +67,10 @@ This defines the interface that all database implementations must implement.
 
 ```typescript
 export interface DatabaseService {
-  submitResponse(response: UserResponse): Promise<{ id?: string; error?: Error }>;
-  getResponsesByScenario(scenarioId: number): Promise<{ data?: UserResponse[]; error?: Error }>;
-  submitDemographicData(data: any): Promise<{ id?: string; error?: Error }>;
+  createOrUpdateParticipant(participantId: string): Promise<{ id?: string; error?: Error }>;
+  submitResponse(participantId: string, response: UserResponse): Promise<{ success: boolean; error?: Error }>;
+  submitDemographicData(participantId: string, data: any): Promise<{ success: boolean; error?: Error }>;
+  getParticipantData(participantId: string): Promise<{ data?: any; error?: Error }>;
 }
 ```
 

@@ -42,6 +42,13 @@
     "description": "Please help us by providing some demographic information. This will help us better understand our study results.",
     "questions": [
       {
+        "id": "prolific_id",
+        "type": "text",
+        "label": "Please enter your Prolific ID",
+        "required": true,
+        "placeholder": "Enter your Prolific ID"
+      },
+      {
         "id": "age",
         "type": "select",
         "label": "What is your age?",

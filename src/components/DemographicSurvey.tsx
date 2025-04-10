@@ -10,7 +10,8 @@ interface DemographicSurveyProps {
       type: string;
       label: string;
       required: boolean;
-      options: string[];
+      options?: string[];
+      placeholder?: string;
     }>;
     buttonText: string;
   };
@@ -37,6 +38,11 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
     }
   };
 
+  const validateProlificId = (id: string): boolean => {
+    // Prolific IDs are typically alphanumeric and between 5-20 characters
+    return /^[a-zA-Z0-9]{5,20}$/.test(id);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -45,6 +51,10 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
     config.questions.forEach(question => {
       if (question.required && !responses[question.id]) {
         newErrors[question.id] = 'This field is required';
+      }
+      // Special validation for Prolific ID
+      if (question.id === 'prolific_id' && responses[question.id] && !validateProlificId(responses[question.id])) {
+        newErrors[question.id] = 'Please enter a valid Prolific ID';
       }
     });
 
@@ -55,14 +65,14 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
 
     setIsSubmitting(true);
     try {
-      // Submit to API
+      // Submit to API - this will automatically use the participant ID from localStorage
       const result = await submitDemographicData({
         ...responses,
         timestamp: new Date().toISOString()
       });
       
       if (result.success) {
-        // Proceed to next step even if API fails
+        // Proceed to next step
         onSubmit(responses);
       } else {
         console.error('Error submitting demographic data:', result.message);
@@ -91,21 +101,34 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
               {question.required && <span className="text-red-500 ml-1">*</span>}
             </label>
             
-            <select
-              value={responses[question.id] || ''}
-              onChange={(e) => handleChange(question.id, e.target.value)}
-              className={`w-full p-3 border rounded-lg ${
-                errors[question.id] ? 'border-red-500' : 'border-gray-300'
-              }`}
-              disabled={isSubmitting}
-            >
-              <option value="">Select an option</option>
-              {question.options.map(option => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            {question.type === 'select' ? (
+              <select
+                value={responses[question.id] || ''}
+                onChange={(e) => handleChange(question.id, e.target.value)}
+                className={`w-full p-3 border rounded-lg ${
+                  errors[question.id] ? 'border-red-500' : 'border-gray-300'
+                }`}
+                disabled={isSubmitting}
+              >
+                <option value="">Select an option</option>
+                {question.options?.map(option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                value={responses[question.id] || ''}
+                onChange={(e) => handleChange(question.id, e.target.value)}
+                placeholder={question.placeholder}
+                className={`w-full p-3 border rounded-lg ${
+                  errors[question.id] ? 'border-red-500' : 'border-gray-300'
+                }`}
+                disabled={isSubmitting}
+              />
+            )}
             
             {errors[question.id] && (
               <p className="text-red-500 text-sm">{errors[question.id]}</p>

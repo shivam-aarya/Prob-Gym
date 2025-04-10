@@ -5,26 +5,26 @@ import { useTheme } from './ThemeProvider';
 
 interface NumberLineInputProps {
   options: string[];
-  onSubmit: (distribution: number[], points?: number[]) => void;
+  onSubmit: (values: number[]) => void;
   total_allocation?: number;
-  initialDistribution?: number[] | null;
+  initialValues?: number[] | null;
   scenarioId?: number;
   discrete?: boolean;
   disabled?: boolean;
 }
-
-type InteractionMode = 'add' | 'remove' | 'move';
 
 interface Point {
   id: number;
   value: number;
 }
 
+type InteractionMode = 'add' | 'remove' | 'move';
+
 export default function NumberLineInput({ 
   options, 
   onSubmit, 
   total_allocation = 5,
-  initialDistribution = null,
+  initialValues = null,
   scenarioId,
   discrete = false,
   disabled = false
@@ -40,7 +40,7 @@ export default function NumberLineInput({
 
   // Check if there are saved point positions for this scenario
   useEffect(() => {
-    if (initialDistribution && initialDistribution.length > 0) {
+    if (initialValues && initialValues.length > 0) {
       // First try to load exact point positions from localStorage
       // Check for point positions using the scenarioId prop
       if (scenarioId) {
@@ -70,124 +70,20 @@ export default function NumberLineInput({
             console.error('Error parsing saved point positions:', err);
           }
         }
-      } else {
-        // If no scenarioId provided, try to extract from URL or search localStorage
-        let extractedScenarioId = -1;
-        
-        // Try to extract scenario ID from URL or DOM
-        const urlMatch = window.location.pathname.match(/\/scenarios\/(\d+)/);
-        if (urlMatch && urlMatch[1]) {
-          extractedScenarioId = parseInt(urlMatch[1], 10);
-        } else {
-          // Fallback - try to find in query params
-          const urlParams = new URLSearchParams(window.location.search);
-          const paramScenarioId = urlParams.get('scenario');
-          if (paramScenarioId) {
-            extractedScenarioId = parseInt(paramScenarioId, 10);
-          }
-        }
-        
-        // If still no ID, search localStorage for any point positions
-        if (extractedScenarioId === -1) {
-          for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key && key.startsWith('pointPositions_')) {
-              extractedScenarioId = parseInt(key.split('_')[1], 10);
-              break;
-            }
-          }
-        }
-        
-        // Now try to load the point positions
-        if (extractedScenarioId !== -1) {
-          const savedPositions = localStorage.getItem(`pointPositions_${extractedScenarioId}`);
-          if (savedPositions) {
-            try {
-              const pointValues: number[] = JSON.parse(savedPositions);
-              if (pointValues && pointValues.length > 0) {
-                // Create points from saved positions
-                const newPoints: Point[] = pointValues.map((value, index) => ({
-                  id: index,
-                  value
-                }));
-                
-                // Ensure we don't exceed total_allocation
-                const pointsToUse = newPoints.slice(0, total_allocation);
-                setPoints(pointsToUse);
-                
-                // Update available IDs
-                const usedIds = pointsToUse.map(p => p.id);
-                setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i)
-                  .filter(id => !usedIds.includes(id)));
-                  
-                return; // Skip the other initialization if we loaded points
-              }
-            } catch (err) {
-              console.error('Error parsing saved point positions:', err);
-            }
-          }
-        }
       }
-      
-      // If we couldn't load exact positions, fall back to the distribution-based approach
-      // We need to convert the distribution back to points with continuous values
-      
-      // First, identify non-zero bins and their probabilities
-      const nonZeroBins: {index: number, prob: number}[] = [];
-      initialDistribution.forEach((prob, index) => {
-        if (prob > 0) {
-          nonZeroBins.push({ index, prob });
-        }
-      });
-      
-      // Generate appropriate number of points (up to total_allocation)
-      // If we have exact point positions, we should use those
-      // For now, we'll place points strategically based on the distribution
-      const newPoints: Point[] = [];
-      
-      // Try to place points to create a similar distribution
-      if (nonZeroBins.length === 1) {
-        // If only one bin has probability, place a point at its center
-        newPoints.push({ 
-          id: 0, 
-          value: nonZeroBins[0].index + 0.5 
-        });
-      } else if (nonZeroBins.length > 1) {
-        // For multiple bins, distribute points to create a curve
-        // Sort bins by index
-        nonZeroBins.sort((a, b) => a.index - b.index);
-        
-        // Place points at edges of non-zero regions and midpoints where needed
-        // This is a simple approximation - in a real system you'd store exact point positions
-        for (let i = 0; i < Math.min(nonZeroBins.length, total_allocation); i++) {
-          const bin = nonZeroBins[i];
-          // Place points with slight variations to avoid rounding
-          const value = bin.index + (i % 2 === 0 ? 0.25 : 0.75);
-          newPoints.push({ id: i, value });
-        }
-      }
-      
-      // Ensure we don't exceed total_allocation
-      const pointsToUse = newPoints.slice(0, total_allocation);
-      setPoints(pointsToUse);
-      
-      // Update available IDs
-      const usedIds = pointsToUse.map(p => p.id);
-      setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i)
-        .filter(id => !usedIds.includes(id)));
     }
-  }, [initialDistribution, total_allocation, scenarioId]);
+  }, [initialValues, total_allocation, scenarioId]);
 
   // Reset points and available IDs when options change (new question)
   useEffect(() => {
-    if (!initialDistribution) {
+    if (!initialValues) {
       setPoints([]);
       setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i));
       setMode('add');
     }
     setIsDragging(false);
     setDraggedPointIndex(null);
-  }, [options, total_allocation, initialDistribution]);
+  }, [options, total_allocation, initialValues]);
 
   const calculateValue = useCallback((clientX: number) => {
     if (!lineRef.current) return null;
@@ -264,68 +160,16 @@ export default function NumberLineInput({
     };
   }, [isDragging, handleMouseMove]);
 
-  // Calculate probability distribution from points
-  const calculateDistribution = () => {
-    if (points.length === 0) return null;
-    
-    // Create bins for the distribution
-    const numBins = options.length;
-    const bins = new Array(numBins).fill(0);
-    
-    if (points.length === 1) {
-      // For single point, put all probability in the bin containing the point
-      const pointBin = Math.floor(points[0].value);
-      bins[pointBin] = 1;
-      return bins;
-    }
-    
-    // Calculate area for each segment between points
-    for (let i = 0; i < points.length - 1; i++) {
-      const start = points[i].value;
-      const end = points[i + 1].value;
-      const startBin = Math.floor(start);
-      const endBin = Math.floor(end);
-      
-      // Add partial areas to bins
-      for (let bin = startBin; bin <= endBin; bin++) {
-        if (bin === startBin && bin === endBin) {
-          // Point falls within single bin
-          bins[bin] += (end - start);
-        } else if (bin === startBin) {
-          // First bin
-          bins[bin] += ((bin + 1) - start);
-        } else if (bin === endBin) {
-          // Last bin
-          bins[bin] += (end - bin);
-        } else {
-          // Middle bins
-          bins[bin] += 1;
-        }
-      }
-    }
-    
-    // Normalize the distribution
-    const total = bins.reduce((sum, val) => sum + val, 0);
-    return bins.map(val => val / total);
-  };
-
   const handleSubmit = () => {
     if (disabled) return;
     
-    const distribution = calculateDistribution();
-    if (distribution) {
-      // Also pass the actual point positions to preserve continuous values
-      const pointPositions = points.map(p => p.value);
-      onSubmit(distribution, pointPositions);
-    }
+    // Pass only the point values to the backend
+    const pointValues = points.map(p => p.value);
+    onSubmit(pointValues);
   };
 
-  // Add this function to generate a color based on point ID
+  // Use HSL color space for better color distribution
   const getPointColor = (id: number) => {
-    // Use HSL color space for better color distribution
-    // Hue: 0-360 (full color spectrum)
-    // Saturation: 70% (vibrant colors)
-    // Lightness: 60% for light theme, 70% for dark theme
     const hue = (id * 137.508) % 360; // Golden angle approximation for good distribution
     const saturation = 70;
     const lightness = isDark ? 70 : 60;
@@ -389,9 +233,9 @@ export default function NumberLineInput({
       {/* Number line */}
       <div className="relative pt-6 pb-8">
         {/* Points tooltips */}
-        {points.map((point, index) => (
+        {points.map((point) => (
           <div 
-            key={index}
+            key={point.id}
             className={`absolute -top-1 transform -translate-x-1/2 px-2 py-1 rounded text-sm
               ${isDark ? 'bg-gray-700 text-gray-200' : 'bg-gray-800 text-white'}`}
             style={{ left: `${(point.value / (options.length - 1)) * 100}%` }}

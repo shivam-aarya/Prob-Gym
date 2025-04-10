@@ -50,7 +50,6 @@ export default function ScenarioNavigation({
                 task_name: scenarioData.task_name,
                 scenario_id: scenarioData.scenario_id,
                 response_data: {
-                  selected_value: savedResponses[scenarioId].reduce((a, b) => a + b, 0),
                   values: savedResponses[scenarioId],
                   timestamp: new Date().toISOString()
                 }
@@ -64,8 +63,7 @@ export default function ScenarioNavigation({
                 task_name: scenarioData.task_name,
                 scenario_id: scenarioData.scenario_id,
                 response_data: {
-                  selected_value: savedResponses[scenarioId].reduce((a, b) => a + b, 0),
-                  distribution: savedResponses[scenarioId],
+                  values: savedResponses[scenarioId],
                   timestamp: new Date().toISOString()
                 }
               };
@@ -76,7 +74,7 @@ export default function ScenarioNavigation({
               }
             }
             
-            // Submit to the API
+            // Submit to the API - this will automatically use the participant ID from localStorage
             await submitResponse(response);
           }
         }
@@ -86,8 +84,8 @@ export default function ScenarioNavigation({
       localStorage.setItem('scenariosComplete', 'true');
       router.push('/demographic');
     } catch (error) {
-      console.error('Error submitting saved responses:', error);
-      // Still mark as complete and redirect even if there's an error
+      console.error('Error submitting responses:', error);
+      // Even if there's an error, we still want to proceed to the next step
       localStorage.setItem('scenariosComplete', 'true');
       router.push('/demographic');
     } finally {

@@ -6,23 +6,32 @@ import { UserResponse } from '@/types/study';
  */
 export interface DatabaseService {
   /**
-   * Store a user response in the database
+   * Create a new participant entry or return an existing one
+   * @param participantId The unique ID for the participant
+   * @returns A promise resolving to the ID of the stored participant or error
+   */
+  createOrUpdateParticipant(participantId: string): Promise<{ id?: string; error?: Error }>;
+
+  /**
+   * Store a user response for a specific participant
+   * @param participantId The unique ID for the participant
    * @param response The user response to store
-   * @returns A promise resolving to the ID of the stored response or error
+   * @returns A promise resolving to the success status or error
    */
-  submitResponse(response: UserResponse): Promise<{ id?: string; error?: Error }>;
+  submitResponse(participantId: string, response: UserResponse): Promise<{ success: boolean; error?: Error }>;
 
   /**
-   * Retrieve user responses for a specific scenario
-   * @param scenarioId The ID of the scenario to get responses for
-   * @returns A promise resolving to an array of user responses
-   */
-  getResponsesByScenario(scenarioId: number): Promise<{ data?: UserResponse[]; error?: Error }>;
-
-  /**
-   * Store demographic survey data
+   * Store demographic survey data for a specific participant
+   * @param participantId The unique ID for the participant
    * @param data The demographic survey data to store
-   * @returns A promise resolving to the ID of the stored survey or error
+   * @returns A promise resolving to the success status or error
    */
-  submitDemographicData(data: any): Promise<{ id?: string; error?: Error }>;
+  submitDemographicData(participantId: string, data: any): Promise<{ success: boolean; error?: Error }>;
+
+  /**
+   * Retrieve all data for a specific participant
+   * @param participantId The unique ID for the participant
+   * @returns A promise resolving to the participant data or error
+   */
+  getParticipantData(participantId: string): Promise<{ data?: any; error?: Error }>;
 } 
