@@ -40,37 +40,50 @@ export default function NumberLineInput({
 
   // Check if there are saved point positions for this scenario
   useEffect(() => {
-    if (initialValues && initialValues.length > 0) {
-      // First try to load exact point positions from localStorage
-      // Check for point positions using the scenarioId prop
-      if (scenarioId) {
-        const savedPositions = localStorage.getItem(`pointPositions_${scenarioId}`);
-        if (savedPositions) {
-          try {
-            const pointValues: number[] = JSON.parse(savedPositions);
-            if (pointValues && pointValues.length > 0) {
-              // Create points from saved positions
-              const newPoints: Point[] = pointValues.map((value, index) => ({
-                id: index,
-                value
-              }));
+    // First try to load exact point positions from localStorage
+    // Check for point positions using the scenarioId prop
+    if (scenarioId) {
+      const savedPositions = localStorage.getItem(`pointPositions_${scenarioId}`);
+      if (savedPositions) {
+        try {
+          const pointValues: number[] = JSON.parse(savedPositions);
+          if (pointValues && pointValues.length > 0) {
+            // Create points from saved positions
+            const newPoints: Point[] = pointValues.map((value, index) => ({
+              id: index,
+              value
+            }));
+            
+            // Ensure we don't exceed total_allocation
+            const pointsToUse = newPoints.slice(0, total_allocation);
+            setPoints(pointsToUse);
+            
+            // Update available IDs
+            const usedIds = pointsToUse.map(p => p.id);
+            setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i)
+              .filter(id => !usedIds.includes(id)));
               
-              // Ensure we don't exceed total_allocation
-              const pointsToUse = newPoints.slice(0, total_allocation);
-              setPoints(pointsToUse);
-              
-              // Update available IDs
-              const usedIds = pointsToUse.map(p => p.id);
-              setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i)
-                .filter(id => !usedIds.includes(id)));
-                
-              return; // Skip the other initialization if we loaded points
-            }
-          } catch (err) {
-            console.error('Error parsing saved point positions:', err);
+            return; // Skip the other initialization if we loaded points
           }
+        } catch (err) {
+          console.error('Error parsing saved point positions:', err);
         }
       }
+    }
+
+    // If no saved positions or error, use initialValues if provided
+    if (initialValues && initialValues.length > 0) {
+      const newPoints: Point[] = initialValues.map((value, index) => ({
+        id: index,
+        value
+      }));
+      setPoints(newPoints);
+      const usedIds = newPoints.map(p => p.id);
+      setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i)
+        .filter(id => !usedIds.includes(id)));
+    } else {
+      setPoints([]);
+      setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i));
     }
   }, [initialValues, total_allocation, scenarioId]);
 
