@@ -60,8 +60,8 @@ In the fifth match, Lane and Ollie beat Casey and Quinn.`,
     source_link: "/assets/2025-03-04 19-38-04.mp4",
     commentary: "This is a test video scenario",
     question: "What do you observe in this video?",
-    options: ["Option 1", "Option 2", "Option 3"],
+    options: ["0", "1"],
     input_method: "number_line",
-    total_allocation: 1
+    total_allocation: 1,
   }
 ]; 
