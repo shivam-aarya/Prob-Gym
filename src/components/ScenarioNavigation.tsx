@@ -51,7 +51,6 @@ export default function ScenarioNavigation({
                 scenario_id: scenarioData.scenario_id,
                 response_data: {
                   values: savedResponses[scenarioId],
-                  timestamp: new Date().toISOString()
                 }
               };
             } else {
@@ -64,7 +63,6 @@ export default function ScenarioNavigation({
                 scenario_id: scenarioData.scenario_id,
                 response_data: {
                   values: savedResponses[scenarioId],
-                  timestamp: new Date().toISOString()
                 }
               };
               

@@ -67,6 +67,10 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
     try {
       // Submit to API - this will automatically use the participant ID from localStorage
       const result = await submitDemographicData({
+        age: responses.age || '',
+        gender: responses.gender || '',
+        education: responses.education || '',
+        experience: responses.experience || '',
         ...responses,
         timestamp: new Date().toISOString()
       });

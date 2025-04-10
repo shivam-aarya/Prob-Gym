@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { DatabaseService } from './types';
+import { DatabaseService, DemographicData, ParticipantData } from './types';
 import { UserResponse } from '@/types/study';
 
 // Initialize Supabase client
@@ -77,11 +77,7 @@ export class SupabaseService implements DatabaseService {
       // Add new response to the responses object, using scenario_id as key
       const updatedResponses = {
         ...existingResponses,
-        [response.scenario_id]: {
-          task_name: response.task_name,
-          response_data: response.response_data,
-          timestamp: new Date().toISOString()
-        }
+        [response.scenario_id]: response
       };
 
       // Update the participant record
@@ -107,17 +103,14 @@ export class SupabaseService implements DatabaseService {
    * @param data The demographic survey data to store
    * @returns A promise resolving to the success status or error
    */
-  async submitDemographicData(participantId: string, data: any): Promise<{ success: boolean; error?: Error }> {
+  async submitDemographicData(participantId: string, data: DemographicData): Promise<{ success: boolean; error?: Error }> {
     try {
-      // Extract timestamp and remove it from data object
-      const { timestamp, ...demographicData } = data;
-      
       // Update the participant record with demographic data
       const { error } = await supabase
         .from('participants')
         .update({
-          demographic_data: demographicData,
-          last_updated: timestamp || new Date().toISOString()
+          demographic_data: data,
+          last_updated: new Date().toISOString()
         })
         .eq('participant_id', participantId);
 
@@ -134,7 +127,7 @@ export class SupabaseService implements DatabaseService {
    * @param participantId The unique ID for the participant
    * @returns A promise resolving to the participant data or error
    */
-  async getParticipantData(participantId: string): Promise<{ data?: any; error?: Error }> {
+  async getParticipantData(participantId: string): Promise<{ data?: ParticipantData; error?: Error }> {
     try {
       const { data, error } = await supabase
         .from('participants')
@@ -143,7 +136,20 @@ export class SupabaseService implements DatabaseService {
         .single();
 
       if (error) throw error;
-      return { data };
+      
+      if (!data) {
+        throw new Error(`Participant with ID ${participantId} not found`);
+      }
+
+      const participantData: ParticipantData = {
+        id: data.id,
+        responses: Object.values(data.responses || {}),
+        demographicData: data.demographic_data,
+        createdAt: data.consent_timestamp,
+        updatedAt: data.last_updated
+      };
+
+      return { data: participantData };
     } catch (error) {
       console.error('Error getting participant data:', error);
       return { error: error as Error };

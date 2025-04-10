@@ -1,11 +1,11 @@
-import { DatabaseService } from './types';
+import { DatabaseService, DemographicData, ParticipantData } from './types';
 import { UserResponse } from '@/types/study';
 
 interface Participant {
   id: string;
   participant_id: string;
-  responses: Record<number, any>;
-  demographic_data?: any;
+  responses: Record<number, UserResponse>;
+  demographic_data?: DemographicData;
   consent_timestamp: string;
   last_updated: string;
 }
@@ -72,11 +72,7 @@ export class InMemoryDatabaseService implements DatabaseService {
       // Update responses
       participant.responses = {
         ...participant.responses,
-        [response.scenario_id]: {
-          task_name: response.task_name,
-          response_data: response.response_data,
-          timestamp: new Date().toISOString()
-        }
+        [response.scenario_id]: response
       };
       
       participant.last_updated = new Date().toISOString();
@@ -94,7 +90,7 @@ export class InMemoryDatabaseService implements DatabaseService {
    * @param data The demographic survey data to store
    * @returns A promise resolving to the success status or error
    */
-  async submitDemographicData(participantId: string, data: any): Promise<{ success: boolean; error?: Error }> {
+  async submitDemographicData(participantId: string, data: DemographicData): Promise<{ success: boolean; error?: Error }> {
     try {
       // Find participant
       const participant = Array.from(this.participants.values())
@@ -104,12 +100,9 @@ export class InMemoryDatabaseService implements DatabaseService {
         throw new Error(`Participant with ID ${participantId} not found`);
       }
 
-      // Extract timestamp
-      const { timestamp, ...demographicData } = data;
-      
       // Update demographic data
-      participant.demographic_data = demographicData;
-      participant.last_updated = timestamp || new Date().toISOString();
+      participant.demographic_data = data;
+      participant.last_updated = new Date().toISOString();
       
       return { success: true };
     } catch (error) {
@@ -123,7 +116,7 @@ export class InMemoryDatabaseService implements DatabaseService {
    * @param participantId The unique ID for the participant
    * @returns A promise resolving to the participant data or error
    */
-  async getParticipantData(participantId: string): Promise<{ data?: any; error?: Error }> {
+  async getParticipantData(participantId: string): Promise<{ data?: ParticipantData; error?: Error }> {
     try {
       const participant = Array.from(this.participants.values())
         .find(p => p.participant_id === participantId);
@@ -132,7 +125,15 @@ export class InMemoryDatabaseService implements DatabaseService {
         throw new Error(`Participant with ID ${participantId} not found`);
       }
       
-      return { data: { ...participant } };
+      const participantData: ParticipantData = {
+        id: participant.id,
+        responses: Object.values(participant.responses),
+        demographicData: participant.demographic_data,
+        createdAt: participant.consent_timestamp,
+        updatedAt: participant.last_updated
+      };
+      
+      return { data: participantData };
     } catch (error) {
       console.error('Error getting participant data:', error);
       return { error: error as Error };

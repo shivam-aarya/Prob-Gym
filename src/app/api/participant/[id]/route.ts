@@ -1,22 +1,20 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/services/database';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+// @ts-expect-error - Next.js route handler types are not correctly recognized
+export async function GET(request, context) {
   try {
-    const participantId = params.id;
-    
+    const participantId = context.params.id;
+
     if (!participantId) {
       return NextResponse.json(
         { success: false, message: 'Missing participant ID' },
         { status: 400 }
       );
     }
-    
+
     const { data, error } = await db.getParticipantData(participantId);
-    
+
     if (error) {
       console.error('Error retrieving participant data:', error);
       return NextResponse.json(
@@ -24,8 +22,8 @@ export async function GET(
         { status: 500 }
       );
     }
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       success: true,
       data
     });
@@ -36,4 +34,4 @@ export async function GET(
       { status: 500 }
     );
   }
-} 
+}

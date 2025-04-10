@@ -23,7 +23,7 @@ export default function Demographic() {
     }
   }, [router]);
 
-  const handleSubmit = async (responses: Record<string, string>) => {
+  const handleSubmit = async () => {
     // Mark study as complete
     localStorage.setItem('studyComplete', 'true');
     router.push('/complete');

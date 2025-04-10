@@ -72,16 +72,10 @@ export default function Home() {
 
       // Store the response locally
       let updatedResponses = { ...responses };
-      if ('values' in response.response_data) {
+      if ('values' in response.response_data && response.response_data.values) {
         updatedResponses = {
           ...updatedResponses,
-          [currentScenario]: response.response_data.values || []
-        };
-        setResponses(updatedResponses);
-      } else if ('distribution' in response.response_data) {
-        updatedResponses = {
-          ...updatedResponses,
-          [currentScenario]: response.response_data.distribution || []
+          [currentScenario]: response.response_data.values 
         };
         setResponses(updatedResponses);
       }

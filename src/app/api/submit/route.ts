@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { UserResponse } from '@/types/study';
 import { db } from '@/services/database';
 
 export async function POST(request: Request) {
@@ -26,7 +25,7 @@ export async function POST(request: Request) {
     await db.createOrUpdateParticipant(participantId);
     
     // Store the response using our database service
-    const { success, error } = await db.submitResponse(participantId, response);
+    const { error } = await db.submitResponse(participantId, response);
     
     if (error) {
       console.error('Error storing response:', error);

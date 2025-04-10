@@ -60,18 +60,12 @@ export default function Scenarios() {
           [currentScenario]: response.response_data.values || []
         };
         setResponses(updatedResponses);
-      } else if ('distribution' in response.response_data) {
-        updatedResponses = {
-          ...updatedResponses,
-          [currentScenario]: response.response_data.distribution || []
-        };
-        setResponses(updatedResponses);
-        
-        // Store the points positions if available (for continuous values)
-        if ('points' in response.response_data && response.response_data.points) {
-          localStorage.setItem(`pointPositions_${currentScenario}`, 
-            JSON.stringify(response.response_data.points));
-        }
+      }
+      
+      // Store the points positions if available (for continuous values)
+      if ('points' in response.response_data && response.response_data.points) {
+        localStorage.setItem(`pointPositions_${currentScenario}`, 
+          JSON.stringify(response.response_data.points));
       }
       
       // Save to localStorage

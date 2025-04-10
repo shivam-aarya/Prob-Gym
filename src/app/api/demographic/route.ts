@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     await db.createOrUpdateParticipant(participantId);
     
     // Store the demographic data using our database service
-    const { success, error } = await db.submitDemographicData(participantId, demographicData);
+    const { error } = await db.submitDemographicData(participantId, demographicData);
     
     if (error) {
       console.error('Error storing demographic data:', error);

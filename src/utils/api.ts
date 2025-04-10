@@ -1,4 +1,5 @@
 import { UserResponse } from '@/types/study';
+import { DemographicData } from '@/services/database/types';
 
 /**
  * Generate a unique participant ID
@@ -53,7 +54,7 @@ export async function submitResponse(response: UserResponse) {
  * @param data The demographic data to submit
  * @returns A promise with the submission result
  */
-export async function submitDemographicData(data: any) {
+export async function submitDemographicData(data: DemographicData) {
   try {
     const participantId = getOrCreateParticipantId();
     
