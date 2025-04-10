@@ -16,11 +16,11 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
 
   if (!section.isCollapsible) {
     return (
-      <div className={`mb-6 ${isDark ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-6`}>
-        <h3 className={`text-xl font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+      <div className={`mb-3 ${isDark ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4`}>
+        <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
           {section.title}
         </h3>
-        <pre className={`whitespace-pre-wrap font-sans text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+        <pre className={`whitespace-pre-wrap font-sans text-base leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
           {section.content}
         </pre>
       </div>
@@ -28,16 +28,16 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
   }
 
   return (
-    <div className={`mb-6 ${isDark ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg overflow-hidden`}>
+    <div className={`mb-3 ${isDark ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg overflow-hidden`}>
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className={`w-full p-6 flex justify-between items-center ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-100'}`}
+        className={`w-full p-4 flex justify-between items-center ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-100'}`}
       >
-        <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
           {section.title}
         </h3>
         <svg
-          className={`w-6 h-6 transform transition-transform ${isExpanded ? 'rotate-180' : ''} ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
+          className={`w-5 h-5 transform transition-transform ${isExpanded ? 'rotate-180' : ''} ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -46,8 +46,8 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
         </svg>
       </button>
       {isExpanded && (
-        <div className="p-6 pt-0">
-          <pre className={`whitespace-pre-wrap font-sans text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+        <div className="p-4 pt-0">
+          <pre className={`whitespace-pre-wrap font-sans text-base leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
             {section.content}
           </pre>
         </div>
@@ -63,11 +63,11 @@ export default function Layout({ children, config }: LayoutProps) {
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <ThemeToggle />
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="container mx-auto px-4 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100vh-8rem)]">
           {/* Left Column - Scenario Info and Content */}
-          <div className={`rounded-lg shadow-md p-8 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
-            <div className="flex items-center gap-3 mb-6">
+          <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto`}>
+            <div className="flex items-center gap-3 mb-4">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
                 <span className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {config.scenario_id}
@@ -78,9 +78,9 @@ export default function Layout({ children, config }: LayoutProps) {
               </h2>
             </div>
             
-            <div className="mb-6">
+            <div className="mb-4">
               {config.input_type === 'img' ? (
-                <div className="relative h-[500px]">
+                <div className="relative h-[60vh] min-h-[400px] max-h-[700px]">
                   <Image
                     src={config.source_link!}
                     alt={`Scenario ${config.scenario_id}`}
@@ -90,7 +90,7 @@ export default function Layout({ children, config }: LayoutProps) {
                   />
                 </div>
               ) : config.input_type === 'video' ? (
-                <div className="relative h-[500px]">
+                <div className="relative h-[60vh] min-h-[400px] max-h-[700px]">
                   <video
                     src={config.source_link!}
                     controls
@@ -101,7 +101,7 @@ export default function Layout({ children, config }: LayoutProps) {
                   </video>
                 </div>
               ) : (
-                <div>
+                <div className="space-y-2">
                   {config.text_sections?.map((section, index) => (
                     <TextSectionComponent
                       key={index}
@@ -114,13 +114,13 @@ export default function Layout({ children, config }: LayoutProps) {
             </div>
             
             {(config.input_type === 'img' || config.input_type === 'video') && (
-              <div className={`p-5 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                <div className="text-center mb-2">
+              <div className={`p-3 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                <div className="text-center mb-1">
                   <span className={`text-xs uppercase tracking-wider font-semibold px-2 py-1 rounded ${isDark ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-600'}`}>
                     Commentary
                   </span>
                 </div>
-                <p className={`text-lg leading-relaxed text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <p className={`text-base leading-relaxed text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                   &quot;{config.commentary}&quot;
                 </p>
               </div>
@@ -128,8 +128,8 @@ export default function Layout({ children, config }: LayoutProps) {
           </div>
           
           {/* Right Column - Question */}
-          <div className={`rounded-lg shadow-md p-6 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+          <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto`}>
+            <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-4">
               <h3 className={`text-xl font-semibold mb-2 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 {config.question}
               </h3>
