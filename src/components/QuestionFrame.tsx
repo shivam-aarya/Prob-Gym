@@ -3,7 +3,6 @@ import { StudyConfig, UserResponse } from '@/types/study';
 import NumberLineInput from './NumberLineInput';
 import HistogramInput from './HistogramInput';
 import { useAdditionalInfo } from '@/components/AdditionalInfoContext';
-import { useTheme } from './ThemeProvider';
 
 interface QuestionFrameProps {
   config: StudyConfig;
@@ -16,9 +15,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
   const [previousResponse, setPreviousResponse] = useState<number[] | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
-  const { additionalInfo, setAdditionalInfo } = useAdditionalInfo(scenarioId);
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
+  const { additionalInfo } = useAdditionalInfo(scenarioId);
   
   useEffect(() => {
     // Set start time when component mounts
@@ -99,37 +96,6 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
       onSubmit(response);
     } catch (error) {
       console.error('Error handling submission:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!previousResponse) return;
-    setIsSubmitting(true);
-    try {
-      const endTime = new Date();
-      const duration = startTime ? endTime.getTime() - startTime.getTime() : 0;
-      
-      const response: UserResponse = {
-        task_name: config.task_name,
-        scenario_id: scenarioId,
-        response_data: {
-          values: previousResponse,
-          additional_info: additionalInfo
-        },
-        time_data: {
-          start_time: startTime?.toISOString() || new Date().toISOString(),
-          end_time: endTime.toISOString(),
-          duration_ms: duration
-        }
-      };
-      
-      await onSubmit(response);
-      setPreviousResponse(null);
-      setAdditionalInfo('');
-    } catch (error) {
-      console.error('Error submitting response:', error);
     } finally {
       setIsSubmitting(false);
     }
