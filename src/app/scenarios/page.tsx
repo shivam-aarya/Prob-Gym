@@ -137,6 +137,7 @@ export default function Scenarios() {
           config={currentScenarioData}
           onSubmit={handleSubmit}
           previousResponses={responses}
+          scenarioId={currentScenario}
         />
         
         {submitStatus === 'success' && (

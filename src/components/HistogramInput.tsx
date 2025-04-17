@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTheme } from './ThemeProvider';
+import { useAdditionalInfo } from './AdditionalInfoContext';
 
 interface HistogramInputProps {
   options: string[];
@@ -10,6 +11,7 @@ interface HistogramInputProps {
   initialValues?: number[] | null;
   disabled?: boolean;
   randomize_order?: boolean;
+  scenarioId: number;
 }
 
 export default function HistogramInput({ 
@@ -18,10 +20,12 @@ export default function HistogramInput({
   total_allocation,
   initialValues = null,
   disabled = false,
-  randomize_order = false
+  randomize_order = false,
+  scenarioId
 }: HistogramInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const { additionalInfo, setAdditionalInfo } = useAdditionalInfo(scenarioId);
   
   // Create a mapping between original and displayed indices
   const [displayOrder, setDisplayOrder] = useState<number[]>([]);
@@ -171,6 +175,25 @@ export default function HistogramInput({
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Additional Info Text Box */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          What additional information would you add to the stimuli to alter your response above?
+        </label>
+        <textarea
+          value={additionalInfo}
+          onChange={(e) => setAdditionalInfo(e.target.value)}
+          placeholder="Please provide any additional information about your response..."
+          className={`w-full p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+            ${isDark 
+              ? 'bg-gray-800 border-gray-700 text-gray-200' 
+              : 'bg-white border-gray-300 text-gray-900'
+            }`}
+          rows={4}
+          disabled={disabled}
+        />
       </div>
 
       <button

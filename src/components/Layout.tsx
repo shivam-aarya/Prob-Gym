@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { StudyConfig, TextSection } from '@/types/study';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from './ThemeProvider';
+import { AdditionalInfoProvider, useAdditionalInfo } from './AdditionalInfoContext';
 
 interface LayoutProps {
   children: React.ReactNode;

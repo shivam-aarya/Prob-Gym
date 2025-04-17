@@ -2,13 +2,14 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useTheme } from './ThemeProvider';
+import { useAdditionalInfo } from './AdditionalInfoContext';
 
 interface NumberLineInputProps {
   options: string[];
   onSubmit: (values: number[]) => void;
   total_allocation?: number;
   initialValues?: number[] | null;
-  scenarioId?: number;
+  scenarioId: number;
   discrete?: boolean;
   disabled?: boolean;
 }
@@ -31,6 +32,7 @@ export default function NumberLineInput({
 }: NumberLineInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const { additionalInfo, setAdditionalInfo } = useAdditionalInfo(scenarioId);
   const [points, setPoints] = useState<Point[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPointIndex, setDraggedPointIndex] = useState<number | null>(null);
@@ -305,6 +307,25 @@ export default function NumberLineInput({
         </div>
       </div>
 
+      {/* Additional Info Text Box */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          What additional information would you add to the stimuli to alter your response above?
+        </label>
+        <textarea
+          value={additionalInfo}
+          onChange={(e) => setAdditionalInfo(e.target.value)}
+          placeholder="Please provide any additional information about your response..."
+          className={`w-full p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+            ${isDark 
+              ? 'bg-gray-800 border-gray-700 text-gray-200' 
+              : 'bg-white border-gray-300 text-gray-900'
+            }`}
+          rows={4}
+          disabled={disabled}
+        />
+      </div>
+
       {/* Submit button */}
       <div className="space-y-2">
         {points.length < total_allocation && (
@@ -314,7 +335,7 @@ export default function NumberLineInput({
         )}
         <button
           onClick={handleSubmit}
-          disabled={points.length < total_allocation}
+          disabled={points.length < total_allocation || disabled}
           className={`w-full py-2 px-4 rounded-md transition-colors text-white
             ${isDark 
               ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600' 

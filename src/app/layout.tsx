@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AdditionalInfoProvider } from "@/components/AdditionalInfoContext";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -43,7 +44,9 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} transition-colors duration-200`}>
         <ThemeProvider>
-          {children}
+          <AdditionalInfoProvider>
+            {children}
+          </AdditionalInfoProvider>
         </ThemeProvider>
       </body>
     </html>
