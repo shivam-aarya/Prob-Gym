@@ -21,6 +21,7 @@ export interface StudyConfig {
   num_points?: number; // Number of points to create probability distribution
   total_allocation?: number; // Total number of allocations allowed for histogram
   discrete?: boolean; // Whether the input should be discrete (snap to option values)
+  randomize_order?: boolean; // Whether to randomize the display order of options
 }
 
 export interface UserResponse {

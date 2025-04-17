@@ -9,6 +9,7 @@ interface HistogramInputProps {
   total_allocation?: number;
   initialValues?: number[] | null;
   disabled?: boolean;
+  randomize_order?: boolean;
 }
 
 export default function HistogramInput({ 
@@ -16,12 +17,32 @@ export default function HistogramInput({
   onSubmit, 
   total_allocation,
   initialValues = null,
-  disabled = false
+  disabled = false,
+  randomize_order = false
 }: HistogramInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  
+  // Create a mapping between original and displayed indices
+  const [displayOrder, setDisplayOrder] = useState<number[]>([]);
+  
+  // Initialize display order
+  useEffect(() => {
+    if (randomize_order) {
+      const order = [...Array(options.length).keys()];
+      // Fisher-Yates shuffle
+      for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+      setDisplayOrder(order);
+    } else {
+      setDisplayOrder([...Array(options.length).keys()]);
+    }
+  }, [options.length, randomize_order]);
+
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
-  const maxValue = total_allocation || 10; // Use total_allocation as max height if provided
+  const maxValue = total_allocation || 10;
 
   // Initialize from saved values if present
   useEffect(() => {
@@ -35,27 +56,29 @@ export default function HistogramInput({
   const totalAllocated = values.reduce((sum, val) => sum + val, 0);
   const remainingAllocations = total_allocation ? total_allocation - totalAllocated : Infinity;
 
-  const handleIncrement = (index: number) => {
+  const handleIncrement = (displayIndex: number) => {
     if (disabled) return;
-    if (values[index] < maxValue && remainingAllocations > 0) {
+    const originalIndex = displayOrder[displayIndex];
+    if (values[originalIndex] < maxValue && remainingAllocations > 0) {
       const newValues = [...values];
-      newValues[index] = newValues[index] + 1;
+      newValues[originalIndex] = newValues[originalIndex] + 1;
       setValues(newValues);
     }
   };
 
-  const handleDecrement = (index: number) => {
+  const handleDecrement = (displayIndex: number) => {
     if (disabled) return;
-    if (values[index] > 0) {
+    const originalIndex = displayOrder[displayIndex];
+    if (values[originalIndex] > 0) {
       const newValues = [...values];
-      newValues[index] = newValues[index] - 1;
+      newValues[originalIndex] = newValues[originalIndex] - 1;
       setValues(newValues);
     }
   };
 
   const handleSubmit = () => {
     if (disabled) return;
-    onSubmit(values);
+    onSubmit(values); // Submit original order values
   };
 
   // Generate y-axis labels
@@ -98,13 +121,13 @@ export default function HistogramInput({
 
         {/* Histogram Bars */}
         <div className="relative h-60 flex items-end justify-between gap-1 pl-12 pr-4">
-          {values.map((value, index) => (
-            <div key={index} className="flex-1 flex flex-col items-center">
+          {displayOrder.map((originalIndex, displayIndex) => (
+            <div key={displayIndex} className="flex-1 flex flex-col items-center">
               <div className="w-full h-full flex items-end">
                 <div
                   className={`w-full rounded-t transition-all duration-200 ease-in-out ${isDark ? 'bg-blue-400' : 'bg-blue-500'}`}
                   style={{
-                    height: value > 0 ? `${(value / maxValue) * 240}px` : '0',
+                    height: values[originalIndex] > 0 ? `${(values[originalIndex] / maxValue) * 240}px` : '0',
                   }}
                 />
               </div>
@@ -115,33 +138,33 @@ export default function HistogramInput({
 
       {/* Controls */}
       <div className="grid gap-1 px-4 pl-12" style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}>
-        {options.map((option, index) => (
-          <div key={index} className="flex flex-col items-center gap-2">
+        {displayOrder.map((originalIndex, displayIndex) => (
+          <div key={displayIndex} className="flex flex-col items-center gap-2">
             <span className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-              {option}
+              {options[originalIndex]}
             </span>
             <div className="flex flex-col gap-1">
               <button
-                onClick={() => handleIncrement(index)}
+                onClick={() => handleIncrement(displayIndex)}
                 disabled={remainingAllocations <= 0 || disabled}
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
                   ${isDark 
                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500 disabled:bg-gray-800 disabled:border-gray-700' 
                     : 'bg-white border-gray-300 hover:bg-gray-50 active:bg-gray-100 disabled:bg-gray-100 disabled:border-gray-200'
                   } border`}
-                aria-label={`Increase value for ${option}`}
+                aria-label={`Increase value for ${options[originalIndex]}`}
               >
                 <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'} ${remainingAllocations <= 0 ? 'opacity-50' : ''}`}>+</span>
               </button>
               <button
-                onClick={() => handleDecrement(index)}
+                onClick={() => handleDecrement(displayIndex)}
                 disabled={disabled}
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
                   ${isDark 
                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500' 
                     : 'bg-white border-gray-300 hover:bg-gray-50 active:bg-gray-100'
                   } border`}
-                aria-label={`Decrease value for ${option}`}
+                aria-label={`Decrease value for ${options[originalIndex]}`}
               >
                 <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>−</span>
               </button>

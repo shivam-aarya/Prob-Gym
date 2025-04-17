@@ -114,6 +114,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
           options={config.options}
           onSubmit={handleHistogramSubmit}
           total_allocation={config.total_allocation}
+          randomize_order={config.randomize_order}
           initialValues={previousResponse}
           disabled={isSubmitting}
         />
