@@ -333,16 +333,25 @@ export default function NumberLineInput({
             Please place all {total_allocation} points before submitting
           </div>
         )}
+        {!additionalInfo && (
+          <div className={`text-sm text-center ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            Please provide additional information before submitting
+          </div>
+        )}
         <button
           onClick={handleSubmit}
-          disabled={points.length < total_allocation || disabled}
+          disabled={points.length < total_allocation || disabled || !additionalInfo}
           className={`w-full py-2 px-4 rounded-md transition-colors text-white
             ${isDark 
               ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600' 
               : 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-300'
             } disabled:cursor-not-allowed`}
         >
-          Submit Response
+          {points.length < total_allocation 
+            ? `Place ${total_allocation - points.length} more points to submit`
+            : !additionalInfo
+            ? 'Please provide additional information'
+            : 'Submit Response'}
         </button>
       </div>
     </div>

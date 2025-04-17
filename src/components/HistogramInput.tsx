@@ -198,7 +198,7 @@ export default function HistogramInput({
 
       <button
         onClick={handleSubmit}
-        disabled={(total_allocation ? remainingAllocations > 0 : false) || disabled}
+        disabled={(total_allocation ? remainingAllocations > 0 : false) || disabled || !additionalInfo}
         className={`w-full py-2 px-4 rounded-md transition-colors text-white
           ${isDark 
             ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600 disabled:hover:bg-gray-600' 
@@ -207,6 +207,8 @@ export default function HistogramInput({
       >
         {total_allocation && remainingAllocations > 0 
           ? `Allocate ${remainingAllocations} more to submit` 
+          : !additionalInfo
+          ? 'Please provide additional information'
           : 'Submit Response'}
       </button>
     </div>
