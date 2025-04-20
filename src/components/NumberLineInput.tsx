@@ -307,25 +307,6 @@ export default function NumberLineInput({
         </div>
       </div>
 
-      {/* Additional Info Text Box */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          What additional information would you add to the stimuli to alter your response above?
-        </label>
-        <textarea
-          value={additionalInfo}
-          onChange={(e) => setAdditionalInfo(e.target.value)}
-          placeholder="Please provide any additional information about your response..."
-          className={`w-full p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-            ${isDark 
-              ? 'bg-gray-800 border-gray-700 text-gray-200' 
-              : 'bg-white border-gray-300 text-gray-900'
-            }`}
-          rows={4}
-          disabled={disabled}
-        />
-      </div>
-
       {/* Submit button */}
       <div className="space-y-2">
         {points.length < total_allocation && (
@@ -333,14 +314,9 @@ export default function NumberLineInput({
             Please place all {total_allocation} points before submitting
           </div>
         )}
-        {!additionalInfo && (
-          <div className={`text-sm text-center ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-            Please provide additional information before submitting
-          </div>
-        )}
         <button
           onClick={handleSubmit}
-          disabled={points.length < total_allocation || disabled || !additionalInfo}
+          disabled={points.length < total_allocation || disabled}
           className={`w-full py-2 px-4 rounded-md transition-colors text-white
             ${isDark 
               ? 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-gray-600' 
@@ -349,8 +325,6 @@ export default function NumberLineInput({
         >
           {points.length < total_allocation 
             ? `Place ${total_allocation - points.length} more points to submit`
-            : !additionalInfo
-            ? 'Please provide additional information'
             : 'Submit Response'}
         </button>
       </div>

@@ -59,6 +59,7 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
 export default function Layout({ children, config }: LayoutProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const [additionalInfo, setAdditionalInfo] = useState('');
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -114,15 +115,21 @@ export default function Layout({ children, config }: LayoutProps) {
             </div>
             
             {(config.input_type === 'img' || config.input_type === 'video') && (
-              <div className={`p-3 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                <div className="text-center mb-1">
-                  <span className={`text-xs uppercase tracking-wider font-semibold px-2 py-1 rounded ${isDark ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-600'}`}>
-                    Commentary
-                  </span>
-                </div>
-                <p className={`text-base leading-relaxed text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                  &quot;{config.commentary}&quot;
-                </p>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  What additional information would you add to the stimuli to alter your response above?
+                </label>
+                <textarea
+                  value={additionalInfo}
+                  onChange={(e) => setAdditionalInfo(e.target.value)}
+                  placeholder="Please provide any additional information about your response..."
+                  className={`w-full p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                    ${isDark 
+                      ? 'bg-gray-800 border-gray-700 text-gray-200' 
+                      : 'bg-white border-gray-300 text-gray-900'
+                    }`}
+                  rows={4}
+                />
               </div>
             )}
           </div>
