@@ -25,7 +25,7 @@ export default function HistogramInput({
 }: HistogramInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const { additionalInfo, setAdditionalInfo } = useAdditionalInfo(scenarioId);
+  const { additionalInfo } = useAdditionalInfo(scenarioId);
   
   // Create a mapping between original and displayed indices
   const [displayOrder, setDisplayOrder] = useState<number[]>([]);
@@ -48,7 +48,7 @@ export default function HistogramInput({
     // Generate alphabetical labels (A, B, C, D, etc.)
     const labels = options.map((_, index) => String.fromCharCode(65 + index));
     setOptionLabels(labels);
-  }, [options.length, randomize_order]);
+  }, [options.length, randomize_order, options]);
 
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
   const maxValue = total_allocation || 10;

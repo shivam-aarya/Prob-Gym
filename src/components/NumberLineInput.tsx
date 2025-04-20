@@ -32,7 +32,7 @@ export default function NumberLineInput({
 }: NumberLineInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const { additionalInfo, setAdditionalInfo } = useAdditionalInfo(scenarioId);
+  const { additionalInfo } = useAdditionalInfo(scenarioId);
   const [points, setPoints] = useState<Point[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPointIndex, setDraggedPointIndex] = useState<number | null>(null);
