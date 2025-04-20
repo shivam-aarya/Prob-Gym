@@ -25,8 +25,9 @@ export default function HistogramInput({
   
   // Create a mapping between original and displayed indices
   const [displayOrder, setDisplayOrder] = useState<number[]>([]);
+  const [optionLabels, setOptionLabels] = useState<string[]>([]);
   
-  // Initialize display order
+  // Initialize display order and option labels
   useEffect(() => {
     if (randomize_order) {
       const order = [...Array(options.length).keys()];
@@ -39,6 +40,10 @@ export default function HistogramInput({
     } else {
       setDisplayOrder([...Array(options.length).keys()]);
     }
+
+    // Generate alphabetical labels (A, B, C, D, etc.)
+    const labels = options.map((_, index) => String.fromCharCode(65 + index));
+    setOptionLabels(labels);
   }, [options.length, randomize_order]);
 
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
@@ -86,6 +91,19 @@ export default function HistogramInput({
 
   return (
     <div className="space-y-8">
+      {/* Option labels mapping */}
+      <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'} space-y-2`}>
+        <div className="font-medium">Option Labels:</div>
+        <div className="flex flex-wrap justify-center gap-4">
+          {displayOrder.map((originalIndex, displayIndex) => (
+            <div key={displayIndex} className="flex items-center gap-2">
+              <span className="font-bold">{optionLabels[displayIndex]}:</span>
+              <span>{options[originalIndex]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {total_allocation && (
         <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
           Remaining allocations: {remainingAllocations} / {total_allocation}
@@ -141,7 +159,7 @@ export default function HistogramInput({
         {displayOrder.map((originalIndex, displayIndex) => (
           <div key={displayIndex} className="flex flex-col items-center gap-2">
             <span className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-              {options[originalIndex]}
+              {optionLabels[displayIndex]}
             </span>
             <div className="flex flex-col gap-1">
               <button
@@ -152,7 +170,7 @@ export default function HistogramInput({
                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500 disabled:bg-gray-800 disabled:border-gray-700' 
                     : 'bg-white border-gray-300 hover:bg-gray-50 active:bg-gray-100 disabled:bg-gray-100 disabled:border-gray-200'
                   } border`}
-                aria-label={`Increase value for ${options[originalIndex]}`}
+                aria-label={`Increase value for ${optionLabels[displayIndex]}`}
               >
                 <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'} ${remainingAllocations <= 0 ? 'opacity-50' : ''}`}>+</span>
               </button>
@@ -164,7 +182,7 @@ export default function HistogramInput({
                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600 active:bg-gray-500' 
                     : 'bg-white border-gray-300 hover:bg-gray-50 active:bg-gray-100'
                   } border`}
-                aria-label={`Decrease value for ${options[originalIndex]}`}
+                aria-label={`Decrease value for ${optionLabels[displayIndex]}`}
               >
                 <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>−</span>
               </button>

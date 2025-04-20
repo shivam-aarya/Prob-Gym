@@ -8,7 +8,7 @@ export const scenarios: StudyConfig[] = [
     source_link: "/assets/blocks_world.png",
     commentary: "The ball is very heavy",
     question: "The red Plinko ball is dropped from above. Which bin will it fall in? Please click the bin numbers 15 times to indicate the distribution of locations you think the ball will fall into if dropped 15 times.",
-    options: ["1", "2", "3", "4", "5", "6", "7"],
+    options: ["McDonalds", "Starbucks", "Wendy's", "Burger King", "Taco Bell", "Chick-fil-A", "Subway"],
     input_method: "histogram",
     total_allocation: 15,
     randomize_order: true
