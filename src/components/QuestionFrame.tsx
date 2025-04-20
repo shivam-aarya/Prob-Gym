@@ -52,6 +52,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
       scenario_id: scenarioId,
       response_data: {
         values: values,
+        options: config.options,
         additional_info: additionalInfo
       },
       time_data: {
@@ -81,6 +82,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
       scenario_id: scenarioId,
       response_data: {
         values: values,
+        options: config.options,
         additional_info: additionalInfo
       },
       time_data: {
