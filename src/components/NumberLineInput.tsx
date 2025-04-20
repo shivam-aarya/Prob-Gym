@@ -154,8 +154,9 @@ export default function NumberLineInput({
 
     setPoints(prev => {
       const newPoints = [...prev];
+      // Only update the dragged point's position
       newPoints[draggedPointIndex] = { ...newPoints[draggedPointIndex], value: newValue };
-      return newPoints.sort((a, b) => a.value - b.value);
+      return newPoints;
     });
   }, [isDragging, draggedPointIndex, mode, calculateValue]);
 
@@ -262,7 +263,7 @@ export default function NumberLineInput({
         {/* Click area */}
         <div
           ref={lineRef}
-          className="relative h-12 cursor-pointer"
+          className="relative h-12 cursor-pointer select-none"
           onMouseDown={handleMouseDown}
         >
           {/* Background line */}
