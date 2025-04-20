@@ -90,7 +90,7 @@ export default function Layout({ children, config }: LayoutProps) {
                   />
                 </div>
               ) : config.input_type === 'video' ? (
-                <div className="relative h-[60vh] min-h-[400px] max-h-[700px]">
+                <div className="relative h-[40vh] min-h-[300px] max-h-[500px]">
                   <video
                     src={config.source_link!}
                     controls
@@ -112,28 +112,24 @@ export default function Layout({ children, config }: LayoutProps) {
                 </div>
               )}
             </div>
-            
-            {(config.input_type === 'img' || config.input_type === 'video') && (
-              <div className={`p-3 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                <div className="text-center mb-1">
-                  <span className={`text-xs uppercase tracking-wider font-semibold px-2 py-1 rounded ${isDark ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-600'}`}>
-                    Commentary
-                  </span>
-                </div>
-                <p className={`text-base leading-relaxed text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                  &quot;{config.commentary}&quot;
+
+            <div className={`border-t border-gray-200 dark:border-gray-700 pt-4`}>
+              <div className={`flex items-center gap-2 mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-sm font-medium uppercase tracking-wider">Question</span>
+              </div>
+              <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                  {config.question}
                 </p>
               </div>
-            )}
+            </div>
           </div>
           
-          {/* Right Column - Question */}
+          {/* Right Column - Response Area */}
           <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto`}>
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-4">
-              <h3 className={`text-xl font-semibold mb-2 text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                {config.question}
-              </h3>
-            </div>
             {children}
           </div>
         </div>

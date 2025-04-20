@@ -49,6 +49,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
       scenario_id: config.scenario_id,
       response_data: {
         values: values,
+        options: config.options,
       },
       time_data: {
         start_time: startTime?.toISOString() || new Date().toISOString(),
@@ -77,6 +78,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
       scenario_id: config.scenario_id,
       response_data: {
         values: values,
+        options: config.options,
       },
       time_data: {
         start_time: startTime?.toISOString() || new Date().toISOString(),

@@ -30,6 +30,7 @@ export interface UserResponse {
   response_data: {
     values?: number[];  // Optional array for histogram values
     points?: number[];  // Array of selected points for timeline
+    options?: string[]; // The options associated with the values/points
   };
   time_data?: {
     start_time: string;  // ISO string of when user started the scenario

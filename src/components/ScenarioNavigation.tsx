@@ -51,6 +51,7 @@ export default function ScenarioNavigation({
                 scenario_id: scenarioData.scenario_id,
                 response_data: {
                   values: savedResponses[scenarioId],
+                  options: scenarioData.options
                 }
               };
             } else {
@@ -63,6 +64,7 @@ export default function ScenarioNavigation({
                 scenario_id: scenarioData.scenario_id,
                 response_data: {
                   values: savedResponses[scenarioId],
+                  options: scenarioData.options
                 }
               };
               
