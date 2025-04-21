@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Layout from './Layout';
 import QuestionFrame from './QuestionFrame';
 import { StudyConfig, UserResponse } from '@/types/study';
+import Image from 'next/image';
 
 interface TutorialContent {
   type: 'text' | 'image' | 'video' | 'gif' | 'blockquote' | 'scenario';
@@ -61,7 +61,7 @@ const ContentRenderer: React.FC<{
           </div>
           {showConfirmation && (
             <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
-              Great! You've completed the test scenario. Click the "Start Study" button below to begin the main study.
+              Great! You&apos;ve completed the test scenario. Click the &quot;Start Study&quot; button below to begin the main study.
             </div>
           )}
         </div>
@@ -69,10 +69,13 @@ const ContentRenderer: React.FC<{
     case 'image':
       return (
         <div className="mb-4">
-          <img 
-            src={content.src} 
-            alt={content.alt} 
+          <Image 
+            src={content.src || ''} 
+            alt={content.alt || ''} 
+            width={800}
+            height={600}
             className="w-full rounded-lg shadow-md"
+            style={{ objectFit: 'contain', maxHeight: 'auto', width: '100%' }}
           />
           {content.caption && (
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 text-center">
@@ -99,10 +102,13 @@ const ContentRenderer: React.FC<{
     case 'gif':
       return (
         <div className="mb-4">
-          <img 
-            src={content.src} 
-            alt={content.alt} 
+          <Image 
+            src={content.src || ''} 
+            alt={content.alt || ''} 
+            width={800}
+            height={600}
             className="w-full rounded-lg shadow-md"
+            style={{ objectFit: 'contain', maxHeight: 'auto', width: '100%' }}
           />
           {content.caption && (
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 text-center">
@@ -117,11 +123,9 @@ const ContentRenderer: React.FC<{
 };
 
 export default function TutorialPage({ config, onComplete }: TutorialPageProps) {
-  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
   const [testScenarioCompleted, setTestScenarioCompleted] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   // Use localStorage to restore state on page refresh
   useEffect(() => {
@@ -181,7 +185,7 @@ export default function TutorialPage({ config, onComplete }: TutorialPageProps) 
     }
   };
 
-  const handleTestScenarioSubmit = (response: UserResponse) => {
+  const handleTestScenarioSubmit = () => {
     try {
       // Store a simplified mock response
       localStorage.setItem('testScenarioCompleted', 'true');
@@ -189,8 +193,8 @@ export default function TutorialPage({ config, onComplete }: TutorialPageProps) 
       // Mark scenario as completed
       setTestScenarioCompleted(true);
       setShowConfirmation(true);
-    } catch (error) {
-      console.error('Error in test scenario submission:', error);
+    } catch (err) {
+      console.error('Error in test scenario submission:', err);
       // Still mark as completed even if there was an error saving to localStorage
       setTestScenarioCompleted(true);
       setShowConfirmation(true);
@@ -212,7 +216,7 @@ export default function TutorialPage({ config, onComplete }: TutorialPageProps) 
             <ContentRenderer 
               key={index} 
               content={content}
-              onTestSubmit={currentPage === config.pages.length - 1 ? handleTestScenarioSubmit : undefined}
+              onTestSubmit={currentPage === config.pages.length - 1 ? () => handleTestScenarioSubmit() : undefined}
               showConfirmation={currentPage === config.pages.length - 1 && showConfirmation}
             />
           ))}

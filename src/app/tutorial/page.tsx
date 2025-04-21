@@ -4,6 +4,28 @@ import React, { useEffect, useState } from 'react';
 import TutorialPage from '@/components/TutorialPage';
 import config from '@/data/config.json';
 import { useRouter } from 'next/navigation';
+import { StudyConfig } from '@/types/study';
+
+// Define the interfaces from TutorialPage component
+interface TutorialContent {
+  type: 'text' | 'image' | 'video' | 'gif' | 'blockquote' | 'scenario';
+  value?: string;
+  src?: string;
+  alt?: string;
+  caption?: string;
+  config?: StudyConfig;
+}
+
+interface TutorialPageType {
+  title: string;
+  content: TutorialContent[];
+}
+
+interface TutorialConfig {
+  title: string;
+  pages: TutorialPageType[];
+  buttonText: string;
+}
 
 export default function Tutorial() {
   const router = useRouter();
@@ -48,7 +70,7 @@ export default function Tutorial() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
       <TutorialPage
-        config={config.tutorial as any}
+        config={config.tutorial as TutorialConfig}
         onComplete={handleComplete}
       />
     </main>
