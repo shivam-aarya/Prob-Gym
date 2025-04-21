@@ -80,7 +80,7 @@ export default function Layout({ children, config }: LayoutProps) {
             
             <div className="mb-4">
               {config.input_type === 'img' ? (
-                <div className="relative h-[60vh] min-h-[400px] max-h-[700px]">
+                <div className="relative h-[45vh] min-h-[300px] max-h-[500px]">
                   <Image
                     src={config.source_link!}
                     alt={`Scenario ${config.scenario_id}`}

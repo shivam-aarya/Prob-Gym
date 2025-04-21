@@ -8,31 +8,137 @@
     }
   },
   "consent": {
-    "title": "Study Consent",
+    "title": "Welcome to our study",
     "content": [
-      "Thank you for your interest in participating in our research study.",
-      "This study aims to collect user data on beliefs about probability distributions.",
-      "Your participation is voluntary and you can withdraw at any time.",
-      "All data collected will be kept confidential and used only for research purposes.",
-      "The study will take approximately 5 minutes to complete.",
-      "By clicking 'I Consent', you agree to participate in this study."
+      "In this study, we are interested in studying how people's uncertainty when observing and reason about other agents. You will read 20 scenarios and answer questions about the agents. The experiment should take 20 minutes in total.",
+      "You will be compensated for your time at the end of the study at 15 dollars / hour.",
+      "What should I know about a research study?",
+      "• Whether or not you take part is up to you.",
+      "• Your participation is completely voluntary.",
+      "• You can choose not to take part.",
+      "• You can agree to take part and later change your mind.",
+      "• Your decision will not be held against you.",
+      "• Your refusal to participate will not result in any consequences or any loss of benefits that you are otherwise entitled to receive.",
+      "• You can ask all the questions you want before you decide.",
+      "For any questions, please feel free to contact lanceying@mit.edu"
     ],
-    "buttonText": "I Consent"
+    "buttonText": "Continue"
   },
   "tutorial": {
     "title": "How to Participate",
-    "sections": [
+    "pages": [
       {
-        "title": "Understanding the Interface",
-        "content": "You will be presented with a series of scenarios and questions. Each scenario may have multiple questions that you need to answer."
+        "title": "Understanding Probability Judgments",
+        "content": [
+          {
+            "type": "text",
+            "value": "For each scenario in this study, we are interested in measuring how people assign probability in their judgments. You will answer the questions by indicating your uncertainty over the answer options."
+          },
+          {
+            "type": "text",
+            "value": "You will either use an interactive panel to draw a histogram below:"
+          },
+          {
+            "type": "image",
+            "src": "/tutorial/histogram-example.png",
+            "alt": "Example of histogram response interface",
+            "caption": "Interactive histogram for probability judgments"
+          },
+          {
+            "type": "text",
+            "value": "Or answer your probabilistic judgment using a linear scale:"
+          },
+          {
+            "type": "image",
+            "src": "/tutorial/linear-scale-example.png",
+            "alt": "Example of linear scale response interface",
+            "caption": "Linear scale for probability judgments"
+          },
+          {
+            "type": "text",
+            "value": "You will first go through two questions as part of the tutorial. Then you will proceed to the main experiment."
+          }
+        ]
       },
       {
-        "title": "Navigation",
-        "content": "Use the navigation buttons at the bottom to move between scenarios. You can review and change your answers before submitting."
+        "title": "Modifying Scenarios",
+        "content": [
+          {
+            "type": "text",
+            "value": "After you answer the question, we will ask you to modify the scenario by giving some additional background information which would change how you would respond to the question above. For example, consider the following example:"
+          },
+          {
+            "type": "blockquote",
+            "value": "Alice is going out for lunch. There is a shop A, which is 3 minutes away, and shop B, which is 6 minutes away. You observe Alice going for shop A. Which shop does Alice like best?"
+          },
+          {
+            "type": "text",
+            "value": "You may be uncertain about Alice's preference, because although she went to shop A, it may be due to the fact that it is a closer option."
+          },
+          {
+            "type": "text",
+            "value": "Now you are asked to modify the scenario. What information, if true, would change your judgment?"
+          },
+          {
+            "type": "text",
+            "value": "Some example answers could be:",
+            "style": "font-weight: bold;"
+          },
+          {
+            "type": "text",
+            "value": "• \"Today is Sunday and shop B is closed\"",
+            "style": "margin-left: 1rem;"
+          },
+          {
+            "type": "text",
+            "value": "• \"Shop A is having a massive discount today!\"",
+            "style": "margin-left: 1rem;"
+          },
+          {
+            "type": "text",
+            "value": "Try to be creative!"
+          },
+          {
+            "type": "text",
+            "value": "You will next go through a test run as part of the tutorial. Then you will proceed to the main experiment."
+          }
+        ]
       },
       {
-        "title": "Submitting Responses",
-        "content": "After answering all scenarios, a green button will appear to submit your responses. Once completed, you will be redirected to a quick demographic survey, after which your participation in the study will be complete."
+        "title": "Test Run",
+        "content": [
+          {
+            "type": "text",
+            "value": "Now, let's try a simple test scenario. This will help you get familiar with the interface before starting the actual study."
+          },
+          {
+            "type": "scenario",
+            "config": {
+              "task_name": "tutorial_test",
+              "scenario_id": 0,
+              "input_type": "text",
+              "text_sections": [
+                {
+                  "title": "Background",
+                  "content": "In this simple scenario, you'll practice making a probability judgment.",
+                  "isCollapsible": true,
+                  "isInitiallyExpanded": true
+                }
+              ],
+              "commentary": "This is a practice scenario",
+              "question": "A fair coin is flipped. What is the probability it lands on heads?",
+              "options": ["Heads", "Tails"],
+              "input_method": "histogram",
+              "total_allocation": 10,
+              "randomize_order": false,
+              "discrete": false
+            }
+          },
+          {
+            "type": "text",
+            "value": "After completing this test question, click the 'Start Study' button to proceed to the main experiment."
+          }
+        ]
       }
     ],
     "buttonText": "Start Study"
