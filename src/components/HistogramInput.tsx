@@ -44,7 +44,7 @@ export default function HistogramInput({
     // Generate alphabetical labels (A, B, C, D, etc.)
     const labels = options.map((_, index) => String.fromCharCode(65 + index));
     setOptionLabels(labels);
-  }, [options.length, randomize_order]);
+  }, [options.length, randomize_order, options]);
 
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
   const maxValue = total_allocation || 10;
