@@ -114,19 +114,18 @@ export default function HistogramInput({
     onSubmit(values); // Submit original order values
   };
 
-  // Generate y-axis labels
-  // const yAxisLabels = Array.from({ length: 6 }, (_, i) => maxValue - (i * 2));
-
   return (
     <div className="space-y-8">
       {/* Option labels mapping */}
-      <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'} space-y-2`}>
-        <div className="font-medium">Option Labels:</div>
-        <div className="flex flex-wrap justify-center gap-4">
+      <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
+        <div className="flex flex-wrap justify-center gap-2">
           {displayOrder.map((originalIndex, displayIndex) => (
-            <div key={displayIndex} className="flex items-center gap-2">
-              <span className="font-bold">{optionLabels[displayIndex]}:</span>
-              <span>{options[originalIndex]}</span>
+            <div key={displayIndex} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-opacity-10 shadow-sm"
+              style={{
+                backgroundColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.03)'
+              }}>
+              <span className={`font-semibold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>{optionLabels[displayIndex]}</span>
+              <span className="text-sm font-medium">{options[originalIndex]}</span>
             </div>
           ))}
         </div>
@@ -234,4 +233,4 @@ export default function HistogramInput({
       </button>
     </div>
   );
-} 
+}
