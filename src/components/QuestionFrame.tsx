@@ -119,6 +119,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
           randomize_order={config.randomize_order}
           initialValues={previousResponse}
           disabled={isSubmitting}
+          scenarioId={config.scenario_id}
         />
       )}
     </div>

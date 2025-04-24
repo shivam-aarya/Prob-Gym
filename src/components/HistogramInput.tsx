@@ -10,6 +10,7 @@ interface HistogramInputProps {
   initialValues?: number[] | null;
   disabled?: boolean;
   randomize_order?: boolean;
+  scenarioId?: number;
 }
 
 export default function HistogramInput({ 
@@ -18,7 +19,8 @@ export default function HistogramInput({
   total_allocation,
   initialValues = null,
   disabled = false,
-  randomize_order = false
+  randomize_order = false,
+  scenarioId
 }: HistogramInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -29,14 +31,26 @@ export default function HistogramInput({
   
   // Initialize display order and option labels
   useEffect(() => {
-    if (randomize_order) {
-      const order = [...Array(options.length).keys()];
-      // Fisher-Yates shuffle
-      for (let i = order.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [order[i], order[j]] = [order[j], order[i]];
+    if (randomize_order && scenarioId) {
+      // Try to load existing display order from localStorage
+      const savedOrder = localStorage.getItem(`histogramOrder_${scenarioId}`);
+      if (savedOrder) {
+        try {
+          const parsedOrder = JSON.parse(savedOrder);
+          if (Array.isArray(parsedOrder) && parsedOrder.length === options.length) {
+            setDisplayOrder(parsedOrder);
+          } else {
+            // If saved order is invalid, generate new one
+            generateAndSaveOrder();
+          }
+        } catch (err) {
+          console.error('Error parsing saved display order:', err);
+          generateAndSaveOrder();
+        }
+      } else {
+        // No saved order, generate new one
+        generateAndSaveOrder();
       }
-      setDisplayOrder(order);
     } else {
       setDisplayOrder([...Array(options.length).keys()]);
     }
@@ -44,7 +58,21 @@ export default function HistogramInput({
     // Generate alphabetical labels (A, B, C, D, etc.)
     const labels = options.map((_, index) => String.fromCharCode(65 + index));
     setOptionLabels(labels);
-  }, [options.length, randomize_order, options]);
+  }, [options.length, randomize_order, options, scenarioId]);
+
+  // Helper function to generate and save display order
+  const generateAndSaveOrder = () => {
+    const order = [...Array(options.length).keys()];
+    // Fisher-Yates shuffle
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    setDisplayOrder(order);
+    if (scenarioId) {
+      localStorage.setItem(`histogramOrder_${scenarioId}`, JSON.stringify(order));
+    }
+  };
 
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
   const maxValue = total_allocation || 10;
