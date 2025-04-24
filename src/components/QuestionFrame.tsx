@@ -127,7 +127,8 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
             initialValues={previousResponse}
             scenarioId={scenarioId}
             disabled={isSubmitting}
-          />
+            scenarioId={config.scenario_id}
+        />
         );
       default:
         return null;
