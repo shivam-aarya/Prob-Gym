@@ -33,6 +33,20 @@ export default function HistogramInput({
   
   // Initialize display order
   useEffect(() => {
+    // Helper function to generate and save display order
+    const generateAndSaveOrder = () => {
+      const order = [...Array(options.length).keys()];
+      // Fisher-Yates shuffle
+      for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+      setDisplayOrder(order);
+      if (scenarioId) {
+        localStorage.setItem(`histogramOrder_${scenarioId}`, JSON.stringify(order));
+      }
+    };
+
     if (randomize_order && scenarioId) {
       // Try to load existing display order from localStorage
       const savedOrder = localStorage.getItem(`histogramOrder_${scenarioId}`);
@@ -61,20 +75,6 @@ export default function HistogramInput({
     const labels = options.map((_, index) => String.fromCharCode(65 + index));
     setOptionLabels(labels);
   }, [options.length, randomize_order, options, scenarioId]);
-
-  // Helper function to generate and save display order
-  const generateAndSaveOrder = () => {
-    const order = [...Array(options.length).keys()];
-    // Fisher-Yates shuffle
-    for (let i = order.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [order[i], order[j]] = [order[j], order[i]];
-    }
-    setDisplayOrder(order);
-    if (scenarioId) {
-      localStorage.setItem(`histogramOrder_${scenarioId}`, JSON.stringify(order));
-    }
-  };
 
   const [values, setValues] = useState<number[]>(Array(options.length).fill(0));
   const maxValue = total_allocation || 10;

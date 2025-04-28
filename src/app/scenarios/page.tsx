@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import QuestionFrame from '@/components/QuestionFrame';
 import ScenarioNavigation from '@/components/ScenarioNavigation';
-import { UserResponse } from '@/types/study';
-import { scenarios } from '@/data/scenarios';
+import { UserResponse, StudyConfig } from '@/types/study';
 import config from '@/data/config.json';
 import { useRouter } from 'next/navigation';
 import { submitResponse } from '@/utils/api';
+import { getSelectedScenarios } from '@/utils/scenarioSelection';
 
 export default function Scenarios() {
   const router = useRouter();
@@ -16,6 +16,7 @@ export default function Scenarios() {
   const [responses, setResponses] = React.useState<Record<number, number[]>>({});
   const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
   const [completedScenarios, setCompletedScenarios] = React.useState<Set<number>>(new Set());
+  const [selectedScenarios, setSelectedScenarios] = useState<StudyConfig[]>([]);
 
   useEffect(() => {
     // Check if user has completed consent and tutorial
@@ -27,6 +28,10 @@ export default function Scenarios() {
     } else if (!hasTutorial) {
       router.push('/tutorial');
     }
+    
+    // Get the selected scenarios for this participant
+    const scenarios = getSelectedScenarios();
+    setSelectedScenarios(scenarios);
     
     // Load saved responses from localStorage
     const savedResponses = localStorage.getItem('userResponses');
@@ -45,8 +50,18 @@ export default function Scenarios() {
     setSubmitStatus('idle');
 
     try {
+      // Get the current scenario data
+      const currentScenarioData = selectedScenarios.find(s => s.scenario_id === currentScenario);
+      if (!currentScenarioData) {
+        throw new Error('Current scenario not found');
+      }
+
+      // Use the original scenario ID for API submission if available
+      const submissionScenarioId = currentScenarioData.original_scenario_id || currentScenarioData.scenario_id;
+      const apiResponse = {...response, scenario_id: submissionScenarioId};
+
       if (config.study.backend.enabled) {
-        const result = await submitResponse(response);
+        const result = await submitResponse(apiResponse);
         if (!result.success) {
           throw new Error('Failed to submit response');
         }
@@ -82,14 +97,14 @@ export default function Scenarios() {
       setSubmitStatus('success');
 
       // Auto-advance to next scenario after a successful submission
-      if (currentScenario < scenarios.length) {
+      if (currentScenario < selectedScenarios.length) {
         setTimeout(() => {
           setCurrentScenario(currentScenario + 1);
           setSubmitStatus('idle');
         }, 1000);
       } else {
         // Check if all scenarios are completed
-        const allCompleted = scenarios.every(scenario => 
+        const allCompleted = selectedScenarios.every(scenario => 
           updatedCompletedScenarios.has(scenario.scenario_id)
         );
 
@@ -100,7 +115,7 @@ export default function Scenarios() {
           }, 1000);
         } else {
           // Find the first incomplete scenario
-          const firstIncomplete = scenarios.find(
+          const firstIncomplete = selectedScenarios.find(
             scenario => !updatedCompletedScenarios.has(scenario.scenario_id)
           );
           if (firstIncomplete) {
@@ -118,13 +133,31 @@ export default function Scenarios() {
   };
 
   const handleNavigate = (scenarioId: number) => {
-    if (scenarioId >= 1 && scenarioId <= scenarios.length) {
+    if (scenarioId >= 1 && scenarioId <= selectedScenarios.length) {
       setCurrentScenario(scenarioId);
       setSubmitStatus('idle');
     }
   };
 
-  const currentScenarioData = scenarios.find(s => s.scenario_id === currentScenario);
+  const handleResetStudy = () => {
+    if (confirm('This will reset your study progress. Continue?')) {
+      // Clear localStorage items
+      localStorage.removeItem('selectedScenarios');
+      localStorage.removeItem('userResponses');
+      localStorage.removeItem('completedScenarios');
+      localStorage.removeItem('scenariosComplete');
+      
+      // Reload the page to reset state
+      window.location.reload();
+    }
+  };
+
+  // If scenarios aren't loaded yet, show a loading indicator
+  if (selectedScenarios.length === 0) {
+    return <div className="flex items-center justify-center min-h-screen">Loading scenarios...</div>;
+  }
+
+  const currentScenarioData = selectedScenarios.find(s => s.scenario_id === currentScenario);
 
   if (!currentScenarioData) {
     return <div>Error: Scenario not found</div>;
@@ -132,6 +165,17 @@ export default function Scenarios() {
 
   return (
     <main className="min-h-screen pb-20">
+      {/* Reset button - only in development mode */}
+      {process.env.NODE_ENV === 'development' && (
+        <button
+          onClick={handleResetStudy}
+          className="fixed top-4 right-4 px-3 py-1 bg-red-500 text-white rounded-md text-xs"
+          style={{ zIndex: 1000 }}
+        >
+          Reset Study
+        </button>
+      )}
+
       <Layout config={currentScenarioData}>
         <QuestionFrame
           config={currentScenarioData}
@@ -155,7 +199,7 @@ export default function Scenarios() {
 
       <ScenarioNavigation
         currentScenario={currentScenario}
-        totalScenarios={scenarios.length}
+        totalScenarios={selectedScenarios.length}
         onNavigate={handleNavigate}
         completedScenarios={completedScenarios}
       />
