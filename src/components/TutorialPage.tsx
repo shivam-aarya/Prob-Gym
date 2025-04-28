@@ -54,6 +54,7 @@ const ContentRenderer: React.FC<{
                   config={content.config}
                   onSubmit={onTestSubmit || (() => {})}
                   previousResponses={{}}
+                  scenarioId={content.config.scenario_id}
                 />
               </div>
             </Layout>

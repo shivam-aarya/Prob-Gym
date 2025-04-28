@@ -25,7 +25,7 @@ export default function HistogramInput({
 }: HistogramInputProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const { additionalInfo, setAdditionalInfo } = useAdditionalInfo(scenarioId);
+  const { additionalInfo, setAdditionalInfo } = useAdditionalInfo(scenarioId || 0);
   
   // Create a mapping between original and displayed indices
   const [displayOrder, setDisplayOrder] = useState<number[]>([]);
