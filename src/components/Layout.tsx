@@ -126,13 +126,13 @@ export default function Layout({ children, config }: LayoutProps) {
             <div className={`border-t border-gray-200 dark:border-gray-700 pt-4`}>
               <div className={`flex items-center gap-2 mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="text-sm font-medium uppercase tracking-wider">Commentary</span>
+                <span className="text-sm font-medium uppercase tracking-wider">Question</span>
               </div>
               <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
                 <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-                  {config.commentary}
+                  {config.question}
                 </p>
               </div>
             </div>
@@ -140,14 +140,7 @@ export default function Layout({ children, config }: LayoutProps) {
           
           {/* Right Column - Response Area */}
           <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto`}>
-            <div className={`mb-4 text-center ${isDark ? 'border-gray-700' : 'border-gray-200'} pb-1`}>
-              <p className={`text-xl font-medium leading-relaxed ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                {config.question}
-              </p>
-            </div>
-            <div className={`border-t ${isDark ? 'border-gray-700' : 'border-gray-200'} pt-4`}>
               {children}
-            </div>
           </div>
         </div>
       </div>
