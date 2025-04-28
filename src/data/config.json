@@ -2,6 +2,7 @@
   "study": {
     "title": "Research Study",
     "randomizeQuestions": true,
+    "questionsPerParticipant": 2,
     "backend": {
       "enabled": true,
       "endpoint": "/api/submit"
@@ -126,7 +127,7 @@
                 }
               ],
               "commentary": "This is a practice scenario",
-              "question": "A fair coin is flipped. What is the probability it lands on heads?",
+              "question": "A fair coin is flipped. How likely is it to land on either side?",
               "options": ["Heads", "Tails"],
               "input_method": "histogram",
               "total_allocation": 10,

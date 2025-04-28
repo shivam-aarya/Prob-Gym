@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import { useTheme } from './ThemeProvider';
 import { useRouter } from 'next/navigation';
-import { scenarios } from '@/data/scenarios';
-import { UserResponse } from '@/types/study';
+import { UserResponse, StudyConfig } from '@/types/study';
 import { submitResponse } from '@/utils/api';
+import { getSelectedScenarios } from '@/utils/scenarioSelection';
 
 interface ScenarioNavigationProps {
   currentScenario: number;
@@ -37,18 +37,22 @@ export default function ScenarioNavigation({
       
       if (savedResponsesJson) {
         const savedResponses: Record<number, number[]> = JSON.parse(savedResponsesJson);
+        const selectedScenarios = getSelectedScenarios();
         
         // Submit each saved response to the API
         for (const scenarioId of Object.keys(savedResponses).map(Number)) {
-          const scenarioData = scenarios.find(s => s.scenario_id === scenarioId);
+          const scenarioData = selectedScenarios.find((s: StudyConfig) => s.scenario_id === scenarioId);
           
           if (scenarioData) {
             let response: UserResponse;
             
+            // Use the original scenario ID for API submission if available
+            const submissionScenarioId = scenarioData.original_scenario_id || scenarioData.scenario_id;
+            
             if (scenarioData.input_method === 'histogram') {
               response = {
                 task_name: scenarioData.task_name,
-                scenario_id: scenarioData.scenario_id,
+                scenario_id: submissionScenarioId,
                 response_data: {
                   values: savedResponses[scenarioId],
                   options: scenarioData.options
@@ -61,7 +65,7 @@ export default function ScenarioNavigation({
               
               response = {
                 task_name: scenarioData.task_name,
-                scenario_id: scenarioData.scenario_id,
+                scenario_id: submissionScenarioId,
                 response_data: {
                   values: savedResponses[scenarioId],
                   options: scenarioData.options

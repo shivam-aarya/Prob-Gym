@@ -10,6 +10,7 @@ export interface TextSection {
 export interface StudyConfig {
   task_name: string;
   scenario_id: number;
+  original_scenario_id?: number; // Added for reference to original ID during random selection
   input_type: 'img' | 'text' | 'video';
   source_link?: string;
   text_content?: string;
