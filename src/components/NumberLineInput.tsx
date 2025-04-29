@@ -245,7 +245,7 @@ export default function NumberLineInput({
       </div>
 
       {/* Number line */}
-      <div className="relative pt-6 pb-8">
+      <div className="relative pt-6 pb-8 mx-auto max-w-[90%]">
         {/* Points tooltips */}
         {points.map((point) => (
           <div 
