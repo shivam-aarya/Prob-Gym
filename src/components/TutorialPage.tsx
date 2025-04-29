@@ -73,9 +73,9 @@ const ContentRenderer: React.FC<{
           <Image 
             src={content.src || ''} 
             alt={content.alt || ''} 
-            width={800}
-            height={600}
-            className="w-full rounded-lg shadow-md"
+            width={600}
+            height={450}
+            className="w-full max-w-[600px] mx-auto rounded-lg shadow-md"
             style={{ objectFit: 'contain', maxHeight: 'auto', width: '100%' }}
           />
           {content.caption && (

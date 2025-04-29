@@ -97,7 +97,7 @@
           },
           {
             "type": "text",
-            "value": "Try to be creative!"
+            "value": "Try to be creative! But make sure you are keeping some uncertainty in the scenario and not making the question too trivial (e.g. “Alice likes shop A” is not a good statement to add)"
           },
           {
             "type": "text",

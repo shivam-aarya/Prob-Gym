@@ -21,7 +21,10 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
         <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
           {section.title}
         </h3>
-        <pre className={`whitespace-pre-wrap font-sans text-base leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+        <pre className={`whitespace-pre-wrap font-sans text-base leading-relaxed select-none ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+             onCopy={(e) => e.preventDefault()}
+             onCut={(e) => e.preventDefault()}
+             onContextMenu={(e) => e.preventDefault()}>
           {section.content}
         </pre>
       </div>
@@ -48,7 +51,10 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
       </button>
       {isExpanded && (
         <div className="p-4 pt-0">
-          <pre className={`whitespace-pre-wrap font-sans text-base leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+          <pre className={`whitespace-pre-wrap font-sans text-base leading-relaxed select-none ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+               onCopy={(e) => e.preventDefault()}
+               onCut={(e) => e.preventDefault()}
+               onContextMenu={(e) => e.preventDefault()}>
             {section.content}
           </pre>
         </div>
@@ -68,7 +74,8 @@ export default function Layout({ children, config }: LayoutProps) {
       <div className="container mx-auto px-4 py-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100vh-8rem)]">
           {/* Left Column - Scenario Info and Content */}
-          <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto`}>
+          <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto select-none`} 
+               style={{ WebkitUserSelect: 'none', msUserSelect: 'none' }}>
             <div className="flex items-center gap-3 mb-4">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
                 <span className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -131,7 +138,10 @@ export default function Layout({ children, config }: LayoutProps) {
                 <span className="text-sm font-medium uppercase tracking-wider">Question</span>
               </div>
               <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                <p className={`text-lg leading-relaxed select-none ${isDark ? 'text-gray-200' : 'text-gray-800'}`}
+                   onCopy={(e) => e.preventDefault()}
+                   onCut={(e) => e.preventDefault()}
+                   onContextMenu={(e) => e.preventDefault()}>
                   {config.question}
                 </p>
               </div>

@@ -118,6 +118,11 @@ export default function HistogramInput({
 
   return (
     <div className="space-y-8">
+      {/* Answer Options Heading */}
+      <h3 className={`text-lg font-semibold text-center ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2`}>
+        Answer Options
+      </h3>
+
       {/* Option labels mapping */}
       <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
         <div className="flex flex-wrap justify-center gap-2">
@@ -223,7 +228,7 @@ export default function HistogramInput({
       {/* Additional Info Text Box */}
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          What additional information would you add to the stimuli to alter your response above?
+          What additional information would you add to the stimulus that, if true, would change the distributional response for the question above? (Be creative! The information you provide should alter, but not remove all the uncertainty in the scenario.)
         </label>
         <textarea
           value={additionalInfo}
