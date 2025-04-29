@@ -24,6 +24,10 @@ export default function Complete() {
         <p className="text-lg">
           You may now close this window.
         </p>
+        <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <h2 className="text-xl font-semibold mb-2">Study Completion Code</h2>
+          <p className="text-2xl font-mono bg-white dark:bg-gray-700 p-3 rounded">CEFZC2WE</p>
+        </div>
       </div>
     </main>
   );

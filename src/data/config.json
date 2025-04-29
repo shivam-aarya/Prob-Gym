@@ -2,7 +2,7 @@
   "study": {
     "title": "Research Study",
     "randomizeQuestions": true,
-    "questionsPerParticipant": 2,
+    "questionsPerParticipant": 15,
     "backend": {
       "enabled": true,
       "endpoint": "/api/submit"
@@ -127,7 +127,7 @@
                 }
               ],
               "commentary": "This is a practice scenario",
-              "question": "A fair coin is flipped. How likely is it to land on either side?",
+              "question": "A fair coin is flipped. How likely is it to land on either side? Please click the histogram ten times to indicate the side you think the coin will land on if flipped 10 times.",
               "options": ["Heads", "Tails"],
               "input_method": "histogram",
               "total_allocation": 10,
@@ -194,6 +194,13 @@
           "Doctoral degree",
           "Prefer not to say"
         ]
+      },
+      {
+        "id": "feedback",
+        "type": "text",
+        "label": "Please provide any feedback you have about the study.",
+        "required": false,
+        "placeholder": "Enter your feedback here"
       }
     ],
     "buttonText": "Complete Survey"

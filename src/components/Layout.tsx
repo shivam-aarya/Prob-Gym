@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { StudyConfig, TextSection } from '@/types/study';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from './ThemeProvider';
+import ReplayableGif from './ReplayableGif';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -59,6 +60,7 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
 export default function Layout({ children, config }: LayoutProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const isGif = config.source_link?.toLowerCase().endsWith('.gif');
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -81,13 +83,21 @@ export default function Layout({ children, config }: LayoutProps) {
             <div className="mb-4">
               {config.input_type === 'img' ? (
                 <div className="relative h-[45vh] min-h-[300px] max-h-[500px]">
-                  <Image
-                    src={config.source_link!}
-                    alt={`Scenario ${config.scenario_id}`}
-                    fill
-                    className="object-contain"
-                    priority
-                  />
+                  {isGif ? (
+                    <ReplayableGif 
+                      src={config.source_link!}
+                      alt={`Scenario ${config.scenario_id}`}
+                      className="absolute inset-0"
+                    />
+                  ) : (
+                    <Image
+                      src={config.source_link!}
+                      alt={`Scenario ${config.scenario_id}`}
+                      fill
+                      className="object-contain"
+                      priority
+                    />
+                  )}
                 </div>
               ) : config.input_type === 'video' ? (
                 <div className="relative h-[40vh] min-h-[300px] max-h-[500px]">

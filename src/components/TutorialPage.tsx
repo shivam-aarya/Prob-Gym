@@ -3,6 +3,7 @@ import Layout from './Layout';
 import QuestionFrame from './QuestionFrame';
 import { StudyConfig, UserResponse } from '@/types/study';
 import Image from 'next/image';
+import ReplayableGif from './ReplayableGif';
 
 interface TutorialContent {
   type: 'text' | 'image' | 'video' | 'gif' | 'blockquote' | 'scenario';
@@ -101,14 +102,13 @@ const ContentRenderer: React.FC<{
     case 'gif':
       return (
         <div className="mb-4">
-          <Image 
-            src={content.src || ''} 
-            alt={content.alt || ''} 
-            width={800}
-            height={600}
-            className="w-full rounded-lg shadow-md"
-            style={{ objectFit: 'contain', maxHeight: 'auto', width: '100%' }}
-          />
+          <div className="relative w-full h-[400px] rounded-lg shadow-md">
+            <ReplayableGif 
+              src={content.src || ''} 
+              alt={content.alt || ''} 
+              className="group"
+            />
+          </div>
           {content.caption && (
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 text-center">
               {content.caption}
