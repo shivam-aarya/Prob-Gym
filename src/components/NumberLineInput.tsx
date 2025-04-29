@@ -310,7 +310,9 @@ export default function NumberLineInput({
       {/* Additional Info Text Box */}
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          What additional information would you add to the stimulus that, if true, would change the distributional response for the question above? (Be creative! The information you provide should alter, but not remove all the uncertainty in the scenario.)
+          What additional information would you add to the stimulus that, if true, would change the distributional response for the question above?
+          <br />
+          (Be creative! The information you provide should alter, but not remove all the uncertainty in the scenario.)
         </label>
         <textarea
           value={additionalInfo}
