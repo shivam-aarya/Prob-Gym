@@ -13,7 +13,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,stimuli_number_adjustment,timeframe_adjustment,distractor_detail,analogous_choices_swap,base_rate_shift,social_endorsement,decoy_option,default_bias,ambiguity_introduction,risk_level_change,framing_effect,partial_information,contradictory_cues,outcome_probability_change,additional_constraint,emotional_tone_shift",
-    "question": "Which type of book will Sarah most likely buy?",
+    "question": "Which type of book will Sarah buy? Please respond with a probability distribution",
     "options": [
       "Sci-fi novel",
       "Non-fiction book",
@@ -37,7 +37,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,stimuli_number_adjustment,timeframe_adjustment,distractor_detail,analogous_choices_swap,base_rate_shift,social_endorsement,decoy_option,default_bias,ambiguity_introduction,risk_level_change,framing_effect,partial_information,contradictory_cues,outcome_probability_change,additional_constraint,emotional_tone_shift",
-    "question": "Which type of beverage will Alex most likely choose?",
+    "question": "Which type of beverage will Alex choose? Please respond with a probability distribution",
     "options": [
       "Coffee",
       "Hot chocolate",
@@ -61,7 +61,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,stimuli_number_adjustment,timeframe_adjustment,distractor_detail,analogous_choices_swap,base_rate_shift,social_endorsement,decoy_option,default_bias,ambiguity_introduction,risk_level_change,framing_effect,partial_information,contradictory_cues,outcome_probability_change,additional_constraint,emotional_tone_shift",
-    "question": "Which type of beverage will Alex most likely choose?",
+    "question": "Which type of beverage will Alex choose? Please respond with a probability distribution",
     "options": [
       "Coffee",
       "Hot chocolate",
@@ -85,7 +85,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,stimuli_number_adjustment,outcome_stakes_change,timeframe_adjustment,distractor_detail,analogous_choices_swap,base_rate_shift,evidential_hint,social_endorsement,decoy_option,default_bias,ambiguity_introduction,risk_level_change,framing_effect,partial_information,contradictory_cues,outcome_probability_change,additional_constraint,emotional_tone_shift",
-    "question": "Which activity will Maya most likely choose?",
+    "question": "Which activity will Maya choose? Please respond with a probability distribution",
     "options": [
       "Swimming",
       "Hiking",
@@ -109,7 +109,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,stimuli_number_adjustment,outcome_stakes_change,timeframe_adjustment,distractor_detail,analogous_choices_swap,base_rate_shift,evidential_hint,social_endorsement,decoy_option,default_bias,ambiguity_introduction,risk_level_change,framing_effect,partial_information,contradictory_cues,outcome_probability_change,additional_constraint,emotional_tone_shift",
-    "question": "Which fruit will David most likely buy?",
+    "question": "Which fruit will David buy? Please respond with a probability distribution",
     "options": [
       "Apples",
       "Oranges",
@@ -133,7 +133,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,stimuli_number_adjustment,outcome_stakes_change,timeframe_adjustment,distractor_detail,analogous_choices_swap,base_rate_shift,evidential_hint,social_endorsement,decoy_option,default_bias,ambiguity_introduction,risk_level_change,framing_effect,partial_information,contradictory_cues,outcome_probability_change,additional_constraint,emotional_tone_shift",
-    "question": "Which entertainment option will Elena most likely choose?",
+    "question": "Which entertainment option will Elena choose? Please respond with a probability distribution",
     "options": [
       "Comedy show",
       "Action movie",
@@ -157,7 +157,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,analogous_choices_swap,distractor_detail",
-    "question": "What can an observer infer about the student's preferences for the three food trucks?",
+    "question": "What do you think is the student's favorite food truck? Please respond with a probability distribution",
     "options": [
       "Korean",
       "Lebanese",
@@ -181,7 +181,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,analogous_choices_swap,distractor_detail",
-    "question": "What can an observer infer about the traveler's preferences for the four destinations?",
+    "question": "What do you think is the traveler's favorite destination? Please respond with a probability distribution",
     "options": [
       "Mountains",
       "Beach",
@@ -205,7 +205,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,analogous_choices_swap,distractor_detail",
-    "question": "What can an observer infer about the shopper's preferences for the four authors?",
+    "question": "Who do you think is the shopper's favorite author? Please respond with a probability distribution",
     "options": [
       "Johnson",
       "Smith",
@@ -229,7 +229,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,distractor_detail,analogous_choices_swap,evidential_hint",
-    "question": "What can an observer infer about the customer's preferences for the four flavors?",
+    "question": "What is the customer's favorite flavor? Please respond with a probability distribution.",
     "options": [
       "Chocolate",
       "Vanilla",
@@ -272,18 +272,17 @@ export const scenarios: StudyConfig[] = [
     "text_sections": [
       {
         "title": "Scenario",
-        "content": "Alex is choosing a streaming service for movie night. A researcher is observing their choice to determine their preferences. The services offer different combinations of movies: \n\nService 1: Comedy and science fiction\nService 2: Comedy and drama\nService 3: Comedy and documentary\nService 4: Comedy and animation\n\nAlex chooses Service 1 (comedy and science fiction).",
+        "content": "Alex is choosing a streaming service for movie night. A researcher is observing their choice to determine their preferences. The services offer different combinations of movies: \n\nService 1: Comedy and science fiction\nService 2: Comedy and drama\nService 3: Comedy and documentary\n\nAlex chooses Service 1 (comedy and science fiction).",
         "isCollapsible": false
       }
     ],
     "commentary": "Variation tags: surface_story_swap,analogous_choices_swap,outcome_probability_change",
-    "question": "Based on this single observation, what can we infer about Alex's preferences? Please respond with a probability distribution",
+    "question": "Based on this single observation, what is Alex's favorite genre? Please respond with a probability distribution",
     "options": [
       "Comedy",
       "Science fiction",
       "Drama",
-      "Documentary",
-      "Animation"
+      "Documentary"
     ],
     "input_method": "histogram",
     "total_allocation": 10,
@@ -302,7 +301,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,analogous_choices_swap,distractor_detail",
-    "question": "Based on this single observation, what can we infer about Raj's preferences? Please respond with a probability distribution",
+    "question": "Based on this single observation, what is the most important feature for Raj? Please respond with a probability distribution",
     "options": [
       "Pastries",
       "Comfortable seating",
@@ -327,7 +326,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,analogous_choices_swap,distractor_detail",
-    "question": "Based on this single observation, what can we infer about Priya's preferences? Please respond with a probability distribution",
+    "question": "Based on this single observation, what do you think is Priya's favorite genre? Please respond with a probability distribution",
     "options": [
       "Romance",
       "Historical fiction",
@@ -352,7 +351,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: surface_story_swap,analogous_choices_swap,distractor_detail",
-    "question": "Based on this single observation, what can we infer about Sofia's preferences? Please respond with a probability distribution",
+    "question": "Based on this single observation, what do you think is the most important feature for Sofia? Please respond with a probability distribution",
     "options": [
       "Modern kitchen",
       "Covered parking",
@@ -377,7 +376,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: analogous_choices_swap,distractor_detail,social_endorsement",
-    "question": "Based on this single observation, what can we infer about Kwame's preferences? Please respond with a probability distribution",
+    "question": "Based on this single observation, what do you think is the most important feature for Kwame? Please respond with a probability distribution",
     "options": [
       "Expert instructor",
       "Small class size",
@@ -402,7 +401,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: decoy_option,outcome_probability_change,default_bias",
-    "question": "Which transportation method will Jason most likely choose?",
+    "question": "Which transportation method will Jason most likely choose? Please respond with a probability distribution.",
     "options": [
       "Car",
       "Express bus",
@@ -426,7 +425,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "commentary": "Variation tags: decoy_option,outcome_probability_change,default_bias",
-    "question": "What will Priya most likely choose for lunch?",
+    "question": "What will Priya most likely choose for lunch? Please respond with a probability distribution.",
     "options": [
       "Sandwich",
       "Salad",
@@ -450,7 +449,7 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     commentary: "Variation tags: stimuli_number_adjustment,timeframe_adjustment,surface_story_swap,outcome_stakes_change",
-    question: "Which fitness class will Marcus most likely choose?",
+    question: "Which fitness class will Marcus most likely choose? Please respond with a probability distribution.",
     options: [
       "Yoga",
       "Spinning",
@@ -469,17 +468,15 @@ export const scenarios: StudyConfig[] = [
     "text_sections": [
       {
         "title": "Scenario",
-        "content": "Olivia watches TV shows and movies on streaming services and has been considering subscribing to StreamFlix, ViewMax, ShowTime, or ScreenPlus. She particularly enjoys the content on StreamFlix and ScreenPlus. StreamFlix costs $15/month with a 6-month commitment, ViewMax costs $10/month with no commitment, ShowTime costs $8/month but has advertisements, and ScreenPlus costs $18/month with a 12-month commitment. Olivia subscribes to ViewMax. Later, all services announce new pricing: $12/month with no commitment and no advertisements.",
+        "content": "Two team members (Alice and Ben) need to choose one of two software tools (Tool A, Tool B) for a joint project. Using the same tool can improve efficiency. Alice is more skilled with Tool A, while Ben is more skilled with Tool B. Tool A is more commonly used by the community.",
         "isCollapsible": false
       }
     ],
-    "commentary": "Variation tags: stimuli_number_adjustment,surface_story_swap,outcome_stakes_change,default_bias",
-    "question": "Which streaming service will Olivia most likely subscribe to?",
+    "commentary": "Zhu Game",
+    "question": "Which tool would Ben use?",
     "options": [
-      "StreamFlix",
-      "ViewMax",
-      "ShowTime",
-      "ScreenPlus"
+      "Tool A",
+      "Tool B",
     ],
     "input_method": "histogram",
     "total_allocation": 10,
@@ -493,17 +490,17 @@ export const scenarios: StudyConfig[] = [
     "text_sections": [
       {
         "title": "Scenario",
-        "content": "Raj is planning a vacation and is considering traveling to the mountains, the beach, a major city, or a historical site. He particularly enjoys mountain and city vacations. A mountain trip costs $1,200 and requires 8 hours of travel time. A beach vacation costs $950 and requires 4 hours of travel time. A city trip costs $1,400 and requires 6 hours of travel time. A historical site visit costs $800 and requires 5 hours of travel time. Raj chooses the beach vacation. Later, a travel agency offers a special deal where all destinations cost $950 and travel times have been reduced to 4 hours for all locations due to new direct flights.",
+        "content": "Imagine two colleagues who get separated in a city without phones. Near them there are a coffee shop, a burger joint, a tower, and a train station. The tower is the furthest away and the coffee shop is the closest.",
         "isCollapsible": false
       }
     ],
-    "commentary": "Variation tags: stimuli_number_adjustment,surface_story_swap,outcome_stakes_change,default_bias",
-    "question": "Where will Raj most likely choose to vacation?",
+    "commentary": "Shelling",
+    "question": "Where would one go to look for the other colleague? Please respond with a probability distribution.",
     "options": [
-      "Mountains",
-      "Beach",
-      "City",
-      "Historical site"
+      "Coffee shop",
+      "Burger joint",
+      "Tower",
+      "Train station"
     ],
     "input_method": "histogram",
     "total_allocation": 10,
@@ -1028,5 +1025,55 @@ export const scenarios: StudyConfig[] = [
     "input_method": "histogram",
     "total_allocation": 10,
     "randomize_order": true
+  },
+  {
+    "task_name": "effort_inference_1",
+    "scenario_id": 52,
+    "input_type": "text",
+    "text_sections": [
+      {
+        "title": "Scenario",
+        "content": "In this event, four athletes (Tom, David, John, and Alex) are competing in a series of canoe racing tournaments. \n\n In the first race, Alex beats David. \n In the second race, Alex lost to John. \n In the third race, Alex lost to Josh. \n In the fourth race, John lost to David. \n",
+        "isCollapsible": false
+      }
+    ],
+    "commentary": "Variation tags: surface_story_swap,distractor_detail,evidential_hint,ambiguity_introduction",
+    "question": "How much effort did Alex put into the second race? Please output a probability distribution",
+    "options": [
+      "No effort at all",
+      "Very little effort",
+      "Some effort",
+      "A lot of effort",
+      "All his effort"
+    ],
+    "input_method": "histogram",
+    "total_allocation": 10,
+    "randomize_order": true,
+    "discrete": false
+  },
+    {
+    "task_name": "strength_inference_1",
+    "scenario_id": 53,
+    "input_type": "text",
+    "text_sections": [
+      {
+        "title": "Scenario",
+        "content": "In this event, four athletes (Tom, David, John, and Alex) are competing in a series of canoe racing tournaments. \n\n In the first race, Alex beats David. \n In the second race, Alex lost to John. \n In the third race, Alex lost to Josh. \n In the fourth race, John lost to David. \n",
+        "isCollapsible": false
+      }
+    ],
+    "commentary": "Variation tags: surface_story_swap,distractor_detail,evidential_hint,ambiguity_introduction",
+    "question": "Now suppose each athlete can only know the results of the race they participated in (i.e. Alex doesn't know the result of the fourth race). How strong does Alex think he is among the athletes?",
+    "options": [
+      "Extremely weak",
+      "Weak",
+      "Average",
+      "Strong",
+      "Extremely strong"
+    ],
+    "input_method": "histogram",
+    "total_allocation": 10,
+    "randomize_order": true,
+    "discrete": false
   },
 ]; 

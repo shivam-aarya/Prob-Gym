@@ -116,6 +116,11 @@ export default function HistogramInput({
 
   return (
     <div className="space-y-8">
+      {/* Answer Options Heading */}
+      <h3 className={`text-lg font-semibold text-center ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2`}>
+        Answer Options
+      </h3>
+
       {/* Option labels mapping */}
       <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
         <div className="flex flex-wrap justify-center gap-2">
