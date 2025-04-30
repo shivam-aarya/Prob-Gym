@@ -39,8 +39,8 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
   };
 
   const validateProlificId = (id: string): boolean => {
-    // Prolific IDs are typically alphanumeric and between 5-20 characters
-    return /^[a-zA-Z0-9]{5,20}$/.test(id);
+    // Prolific IDs are alphanumeric and minimum 5 characters
+    return /^[a-zA-Z0-9]{5,}$/.test(id);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
