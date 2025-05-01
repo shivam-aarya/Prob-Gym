@@ -116,6 +116,25 @@ export default function HistogramInput({
 
   return (
     <div className="space-y-8">
+      {/* Answer Options Heading */}
+      <h3 className={`text-lg font-semibold text-center ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2`}>
+        Answer Options
+      </h3>
+
+      {/* Option labels mapping */}
+      <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
+        <div className="flex flex-wrap justify-center gap-2">
+          {displayOrder.map((originalIndex, displayIndex) => (
+            <div key={displayIndex} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-opacity-10 shadow-sm"
+              style={{
+                backgroundColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.03)'
+              }}>
+              <span className={`font-semibold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>{optionLabels[displayIndex]}</span>
+              <span className="text-sm font-medium">{options[originalIndex]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {total_allocation && (
         <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -227,26 +246,6 @@ export default function HistogramInput({
           ? `Allocate ${remainingAllocations} more to submit` 
           : 'Submit Response'}
       </button>
-
-      {/* Answer Options Heading */}
-      <h3 className={`text-lg font-semibold text-center ${isDark ? 'text-gray-200' : 'text-gray-800'} mb-2`}>
-        Answer Options
-      </h3>
-
-      {/* Option labels mapping */}
-      <div className={`text-center ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
-        <div className="flex flex-wrap justify-center gap-2">
-          {displayOrder.map((originalIndex, displayIndex) => (
-            <div key={displayIndex} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-opacity-10 shadow-sm"
-              style={{
-                backgroundColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.03)'
-              }}>
-              <span className={`font-semibold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>{optionLabels[displayIndex]}</span>
-              <span className="text-sm font-medium">{options[originalIndex]}</span>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
