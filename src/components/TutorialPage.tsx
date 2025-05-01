@@ -60,8 +60,11 @@ const ContentRenderer: React.FC<{
             </Layout>
           </div>
           {showConfirmation && (
-            <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
-              Feedback: A reasonable answer would assign “Taco stand” the highest score and “Pizza truck” the lowest, because Timmy went to check behind his house. Had he liked seafood or pizza the best, he would have gone directly to them since they are all visible and near his place.
+            <div className="mt-6 p-6 bg-red-600 dark:bg-red-800 text-white rounded-md shadow-lg border-2 border-red-400 dark:border-red-600 animate-fadeIn">
+              <h3 className="text-xl font-bold mb-2">Important Feedback</h3>
+              <p className="text-lg">
+                A reasonable answer would assign &quot;Taco stand&quot; the highest score and &quot;Pizza truck&quot; the lowest, because Timmy went to check behind his house. Had he liked seafood or pizza the best, he would have gone directly to them since they are all visible and near his place.
+              </p>
             </div>
           )}
         </div>
