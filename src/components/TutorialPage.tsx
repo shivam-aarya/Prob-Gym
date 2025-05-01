@@ -61,7 +61,7 @@ const ContentRenderer: React.FC<{
           </div>
           {showConfirmation && (
             <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
-              Great! You&apos;ve completed the test scenario. Feedback: A reasonable answer would assign “Taco stand” the highest score and “Pizza truck” the lowest, because Timmy went to check behind his house. Had he liked seafood or pizza the best, he would have gone directly to them since they are all visible and near his place.
+              Feedback: A reasonable answer would assign “Taco stand” the highest score and “Pizza truck” the lowest, because Timmy went to check behind his house. Had he liked seafood or pizza the best, he would have gone directly to them since they are all visible and near his place.
             </div>
           )}
         </div>
