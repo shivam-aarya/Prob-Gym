@@ -2,7 +2,7 @@
   "study": {
     "title": "Research Study",
     "randomizeQuestions": true,
-    "questionsPerParticipant": 2,
+    "questionsPerParticipant": 15,
     "backend": {
       "enabled": true,
       "endpoint": "/api/submit"
