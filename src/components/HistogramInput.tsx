@@ -146,7 +146,7 @@ export default function HistogramInput({
       <div className="relative">
         {/* Y-axis labels */}
         <div className="absolute left-0 top-0 bottom-0 w-8 flex flex-col justify-between items-end pr-2">
-          {[100, 80, 60, 40, 20, 0].map((value) => (
+          {[10, 8, 6, 4, 2, 0].map((value) => (
             <span key={value} className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               {value}
             </span>
