@@ -145,21 +145,31 @@ export default function HistogramInput({
       {/* Main histogram container */}
       <div className="relative">
         {/* Y-axis labels */}
-        <div className="absolute left-0 top-0 bottom-0 w-8 flex flex-col justify-between items-end pr-2">
+        <div className="absolute left-0 top-0 bottom-0 w-24 flex flex-col justify-between items-end pr-2">
           {[10, 8, 6, 4, 2, 0].map((value) => (
             <span key={value} className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-              {value}
+              {value === 10 ? "Definitely - 10" : 
+               value === 0 ? "Impossible - 0" : 
+               value}
             </span>
           ))}
         </div>
+        
+        {/* "Probably" label between 4 and 6 */}
+        <div className="absolute -left-7 w-24 flex items-center justify-end pr-2" 
+             style={{ top: 'calc(50% - 0.5rem)' }}>
+          <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            Probably
+          </span>
+        </div>
 
         {/* Y-axis line */}
-        <div className={`absolute left-8 top-0 bottom-0 w-px ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+        <div className={`absolute left-24 top-0 bottom-0 w-px ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
         {/* X-axis line */}
         <div className={`absolute right-0 top-0 bottom-0 w-px ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
 
         {/* Grid lines */}
-        <div className={`absolute inset-0 left-8 flex flex-col justify-between`}>
+        <div className={`absolute inset-0 left-24 flex flex-col justify-between`}>
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
@@ -170,7 +180,7 @@ export default function HistogramInput({
         </div>
 
         {/* Histogram Bars */}
-        <div className="relative h-60 flex items-end justify-between gap-1 pl-12 pr-4">
+        <div className="relative h-60 flex items-end justify-between gap-1 pl-28 pr-4">
           {displayOrder.map((originalIndex, displayIndex) => (
             <div key={displayIndex} className="flex-1 flex flex-col items-center">
               <div className="w-full h-full flex items-end">
@@ -187,7 +197,7 @@ export default function HistogramInput({
       </div>
 
       {/* Controls */}
-      <div className="grid gap-1 px-4 pl-12" style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}>
+      <div className="grid gap-1 px-4 pl-28" style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}>
         {displayOrder.map((originalIndex, displayIndex) => (
           <div key={displayIndex} className="flex flex-col items-center gap-2">
             <span className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
