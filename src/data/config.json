@@ -2,7 +2,7 @@
   "study": {
     "title": "Research Study",
     "randomizeQuestions": true,
-    "questionsPerParticipant": 15,
+    "questionsPerParticipant": 2,
     "backend": {
       "enabled": true,
       "endpoint": "/api/submit"
@@ -11,7 +11,7 @@
   "consent": {
     "title": "Welcome to our study",
     "content": [
-      "In this study, we are interested in studying how people's uncertainty when observing and reason about other agents. You will read 20 scenarios and answer questions about the agents. The experiment should take 20 minutes in total.",
+      "In this study, we are interested in studying people's uncertainty when observing and reason about other agents. You will read 15 scenarios and answer questions about the agents. The experiment should take 20 minutes in total.",
       "You will be compensated for your time at the end of the study at 15 dollars / hour.",
       "What should I know about a research study?",
       "• Whether or not you take part is up to you.",
@@ -33,11 +33,16 @@
         "content": [
           {
             "type": "text",
-            "value": "For each scenario in this study, we are interested in measuring how people assign probability in their judgments. You will answer the questions by indicating your uncertainty over the answer options."
+            "value": "In this experiment, you will watch a short video and read a description about an agent. Then you will answer questions about their beliefs or preferences. The tasks are intentionally designed to be somewhat ambiguous. For each scenario in this study, instead of multiple choice questions, we are interested in measuring how you evaluate the likelihood for the answer options."
+          },
+
+          {
+            "type": "text",
+            "value": "The tasks often require some thinking and reasoning. Please spend at least 45 seconds on each scenario. Your response will significantly affect the results of our study, so please think carefully before you answer."
           },
           {
             "type": "text",
-            "value": "You will either use an interactive panel to draw a histogram below:"
+            "value": "For each reasoning problem, you will use an interactive panel to distribute 10 points among the answer options. If you think one answer option is more likely, you can assign it a higher value. For example, if you think answer option B is the most likely, while A and C are still somewhat possible, you can answer like this."
           },
           {
             "type": "image",
@@ -47,61 +52,7 @@
           },
           {
             "type": "text",
-            "value": "Or answer your probabilistic judgment using a linear scale:"
-          },
-          {
-            "type": "image",
-            "src": "/tutorial/linear-scale-example.png",
-            "alt": "Example of linear scale response interface",
-            "caption": "Linear scale for probability judgments"
-          },
-          {
-            "type": "text",
-            "value": "You will first go through two questions as part of the tutorial. Then you will proceed to the main experiment."
-          }
-        ]
-      },
-      {
-        "title": "Modifying Scenarios",
-        "content": [
-          {
-            "type": "text",
-            "value": "After you answer the question, we will ask you to modify the scenario by giving some additional background information which would change how you would respond to the question above. For example, consider the following example:"
-          },
-          {
-            "type": "blockquote",
-            "value": "Alice is going out for lunch. There is a shop A, which is 3 minutes away, and shop B, which is 6 minutes away. You observe Alice going for shop A. Which shop does Alice like best?"
-          },
-          {
-            "type": "text",
-            "value": "You may be uncertain about Alice's preference, because although she went to shop A, it may be due to the fact that it is a closer option."
-          },
-          {
-            "type": "text",
-            "value": "Now you are asked to modify the scenario. What information, if true, would change your judgment?"
-          },
-          {
-            "type": "text",
-            "value": "Some example answers could be:",
-            "style": "font-weight: bold;"
-          },
-          {
-            "type": "text",
-            "value": "• \"Today is Sunday and shop B is closed\"",
-            "style": "margin-left: 1rem;"
-          },
-          {
-            "type": "text",
-            "value": "• \"Shop A is having a massive discount today!\"",
-            "style": "margin-left: 1rem;"
-          },
-          {
-            "type": "text",
-            "value": "Try to be creative! But make sure you are keeping some uncertainty in the scenario and not making the question too trivial (e.g. “Alice likes shop A” is not a good statement to add)"
-          },
-          {
-            "type": "text",
-            "value": "You will next go through a test run as part of the tutorial. Then you will proceed to the main experiment."
+            "value": "You will first go through a trial run. Then you will proceed to the main experiment."
           }
         ]
       },
@@ -186,13 +137,6 @@
           "Doctoral degree",
           "Prefer not to say"
         ]
-      },
-      {
-        "id": "feedback",
-        "type": "text",
-        "label": "Please provide any feedback you have about the study.",
-        "required": false,
-        "placeholder": "Enter your feedback here"
       }
     ],
     "buttonText": "Complete Survey"
