@@ -115,24 +115,16 @@
           {
             "type": "scenario",
             "config": {
-              "task_name": "tutorial_test",
+              "task_name": "getting_lunch_2",
               "scenario_id": 0,
-              "input_type": "text",
-              "text_sections": [
-                {
-                  "title": "Background",
-                  "content": "In this simple scenario, you'll practice making a probability judgment.",
-                  "isCollapsible": true,
-                  "isInitiallyExpanded": true
-                }
-              ],
+              "input_type": "img",
+              "source_link": "/assets/s1_1_3.gif",
               "commentary": "This is a practice scenario",
-              "question": "A fair coin is flipped. How likely is it to land on either side? Please click the histogram ten times to indicate the side you think the coin will land on if flipped 10 times.",
-              "options": ["Heads", "Tails"],
+              "question": "Timmy is heading out for lunch after working remotely from home. There is a seafood market next to his place. Additionally, there is usually foodtrucks or foodstands parked near and behind his house. The food options are usually a taco stand and a pizza truck, although they dont come everyday. There is a wall behind his house that he cannot see past, therefore he does not know what food option is available behind his house. You observe Timmy’s trajectory as follows. Given what you see about Timmy’s actions, what do you think is Timmy’s favorite food place?",
+              "options": ["Taco Stand", "Seafood market", "Pizza Truck"],
               "input_method": "histogram",
               "total_allocation": 10,
-              "randomize_order": false,
-              "discrete": false
+              "randomize_order": true
             }
           },
           {
