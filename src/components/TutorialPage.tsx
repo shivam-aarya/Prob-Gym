@@ -12,6 +12,10 @@ interface TutorialContent {
   alt?: string;
   caption?: string;
   config?: StudyConfig;
+  feedback?: {
+    title?: string;
+    content: string;
+  };
 }
 
 interface TutorialPage {
@@ -59,11 +63,11 @@ const ContentRenderer: React.FC<{
               </div>
             </Layout>
           </div>
-          {showConfirmation && (
+          {showConfirmation && content.feedback && (
             <div className="mt-6 p-6 bg-red-600 dark:bg-red-800 text-white rounded-md shadow-lg border-2 border-red-400 dark:border-red-600 animate-fadeIn">
-              <h3 className="text-xl font-bold mb-2">Important Feedback</h3>
+              <h3 className="text-xl font-bold mb-2">{content.feedback.title || "Important Feedback"}</h3>
               <p className="text-lg">
-                A reasonable answer would assign &quot;Taco stand&quot; the highest score and &quot;Pizza truck&quot; the lowest, because Timmy went to check behind his house. Had he liked seafood or pizza the best, he would have gone directly to them since they are all visible and near his place.
+                {content.feedback.content}
               </p>
             </div>
           )}

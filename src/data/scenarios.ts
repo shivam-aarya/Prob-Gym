@@ -1,184 +1,1060 @@
 import { StudyConfig } from '@/types/study';
 
 export const scenarios: StudyConfig[] = [
-  {
-    "task_name": "getting_lunch",
-    "scenario_id": 37,
-    "input_type": "img",
-    "source_link": "/assets/s1_1_1.gif",
-    commentary: "NaN",
-    "question": "Timmy is heading out for lunch after working remotely from home. There is usually foodtrucks or foodstands parked in front and behind his house. The food options are usually a taco truck, a pizza truck, or a hotdog stand. There is a wall behind his house that he cannot see past, therefore he does not know what food option is available behind him. Given what you see about Timmy's actions, what do you think is Timmy's favorite food place?",
-    "options": ["Hotdog Stand", "Taco Truck", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_2",
-    "scenario_id": 38,
-    "input_type": "img",
-    "source_link": "/assets/s1_1_3.gif",
-    commentary: "NaN",
-    "question": "Timmy is heading out for lunch after working remotely from home. There is usually foodtrucks or foodstands parked in front and behind his house. The food options are usually a taco truck, a pizza truck, or a hotdog stand. There is a wall behind his house that he cannot see past, therefore he does not know what food option is available behind him. Given what you see about Timmy's actions, what do you think is Timmy's favorite food place?",
-    "options": ["Hotdog Stand", "Taco Truck", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_3",
-    "scenario_id": 39,
-    "input_type": "img",
-    "source_link": "/assets/s1_2_2.gif",
-    commentary: "NaN",
-    "question": "Timmy is heading out for lunch after working remotely from home. There is usually foodtrucks or foodstands parked in front and behind his house. The food options are usually a taco truck, a pizza truck, or a hotdog stand. There is a wall behind his house that he cannot see past, therefore he does not know what food option is available behind him. What did Timmy believe was behind his house?",
-    "options": ["Hotdog Stand", "Taco Truck", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_4",
-    "scenario_id": 40,
-    "input_type": "img",
-    "source_link": "/assets/s1_3_2.gif",
-    commentary: "NaN",
-    "question": "Timmy is heading out for lunch after finishing his chores. There is a ramen restaraunt behind Timmy's house and a foodtruck in front to the left of his house. The foodtruck is usually a hotdog stand or a pizza truck. Timmy is aware that there is a ramen restaraunt behind him since that ramen spot has been there for a while. What is Timmy's favorite food place?",
-    "options": ["Ramen Shop", "Hotdog Stand", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_5",
-    "scenario_id": 41,
-    "input_type": "img",
-    "source_link": "/assets/s2_1_2.gif",
-    commentary: "NaN",
-    "question": "Timmy is heading out for lunch for a lunch break after hardwork at his office. There are usually two foodtrucks in close proximity to his office,but the foodtrucks are not always the same everyday. The potential food options are a taco truck, a pizza truck, and a hotdog stand. Timmy cannot see the foodtruck behind his office building and therefore doesn't know what foodtruck is there today. Timmy's favorite food is hotdogs and tacos. What did Timmy believe there to be behind his office building?",
-    "options": ["Hotdog Stand", "Taco Truck", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_6",
-    "scenario_id": 42,
-    "input_type": "img",
-    "source_link": "/assets/s2_2_3.gif",
-    commentary: "NaN",
-    "question": "Timmy is heading out for lunch for a lunch break after hardwork at his office. There are usually two foodtrucks in close proximity to his office,but the foodtrucks are not always the same everyday. The potential food options are a taco truck, a pizza truck, and a hotdog stand. Timmy cannot see the foodtruck behind his office building and therefore doesn't know what foodtruck is there today. Timmy's favorite food is hotdogs and tacos. What did Timmy believe there to be behind his office building?",
-    "options": ["Hotdog Stand", "Taco Truck", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_7",
-    "scenario_id": 43,
-    "input_type": "img",
-    "source_link": "/assets/s3_1_5.gif",
-    commentary: "NaN",
-    "question": "Timmy is heading from for lunch from his friend's house after having a fun hangout in the morning. There is a Seafood Market next to the house and two fast-food options in close proximity. The foodtruck that is behind the house can't be seen so Timmy since the house is blocking his vision and therefore does not know what food option is there. What is Timmy's favorite food place?",
-    "options": ["Taco Truck","Seafood Market", "Hotdog Stand", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_8",
-    "scenario_id": 44,
-    "input_type": "img",
-    "source_link": "/assets/s3_2_3.gif",
-    commentary: "NaN",
-    "question": "Timmy is heading from for lunch from his friend's house after having a fun hangout in the morning. There is a Seafood Market next to the house and two fast-food options in close proximity. The foodtruck that is behind the house can't be seen so Timmy since the house is blocking his vision and therefore does not know what food option is there. What is Timmy's favorite food place?",
-    "options": ["Taco Truck", "Seafood Market", "Hotdog Stand", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_9",
-    "scenario_id": 45,
-    "input_type": "img",
-    "source_link": "/assets/s5_1_2.gif",
-    commentary: "NaN",
-    "question": "Timmy has just gotten off the bus and is eagarly ready to try out some new food spots. Near this bus stop there are two designated locations for foodtrucks/foodstands and Seafood Market. Timmy cannot initially see what foodtrucks/foodstands are available since they are obscured by the tall brick walls. The food options are usually a taco truck, a pizza truck, and a hotdog stand. What is Timmy's favorite food place?",
-    "options": ["Taco Truck", "Seafood Market", "Hotdog Stand", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_10",
-    "scenario_id": 46,
-    "input_type": "img",
-    "source_link": "/assets/s5_1_3.gif",
-    commentary: "NaN",
-    "question": "Timmy has just gotten off the bus and is eagarly ready to try out some food spots. Near this bus stop there are two designated locations for foodtrucks/foodstands and Seafood Market. Timmy cannot initially see what foodtrucks/foodstands are available since they are obscured by the tall brick walls. The food options are usually a taco truck, a pizza truck, and a hotdog stand. Given what you observe about his trajectory, what is Timmy's favorite food option?",
-    "options": ["Hotdogs", "Tacos", "Seafood", "Pizza"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_11",
-    "scenario_id": 47,
-    "input_type": "img",
-    "source_link": "/assets/s5_2_3.gif",
-    commentary: "NaN",
-    "question": "Timmy has just gotten off the bus and is eagarly ready to try out some new food spots. Near this bus stop there are two designated locations for foodtrucks/foodstands and Seafood Market. Timmy cannot initially see what foodtrucks/foodstands are available since they are obscured by the tall brick walls. The food options are usually a taco truck, a pizza truck, and a hotdog stand. What is Timmy's favorite food place?",
-    "options": ["Taco Truck", "Seafood Market", "Hotdog Stand", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_12",
-    "scenario_id": 48,
-    "input_type": "img",
-    "source_link": "/assets/s6_1_4.gif",
-    commentary: "NaN",
-    "question": "Timmy has just gotten off work after a meeting to go get some lunch. There is a Seafood Market and a ramen shop nearby, but there is also a designated area for foodtrucks and foodstands. Timmy cannot initially see what foodtruck/foodstand there is after getting off work however, and therefore doesn't know what is available today. There are two potential food options behind the wall, a taco-truck and a pizza-truck. Given what you see, what is Timmy's favorite food option?",
-    "options": ["Taco Truck", "Seafood Market", "Ramen Shop", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_13",
-    "scenario_id": 49,
-    "input_type": "img",
-    "source_link": "/assets/s7_1_1.gif",
-    commentary: "NaN",
-    "question": "Timmy just got off work for his lunch break and is heading out for food. There is a Seafood Market and sushi restaraunt next to his office and a designated area for foodtrucks and foodstands. The usually food options that pop up in that area is a taco truck, a pizza truck, and a hotdog stand. Timmy cannot see what foodtruck/foodstand is available today as his view is obscured by the trees. What is Timmy's favorite food place?",
-    "options": ["Seafood Market", "Sushi Restaraunt", "Hotdog Stand", "Taco Truck", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_14",
-    "scenario_id": 50,
-    "input_type": "img",
-    "source_link": "/assets/s8_1_3.gif",
-    commentary: "NaN",
-    "question": "Timmy is on his lunch break from work and is heading out to grab some food. There is a ramen shop that is next to the office and two foodtrucks that are behind his office. He cannot see what foodtrucks are available today since his building is blocking his view. Moreover, there is a brickwall dividing the two foodtruck areas, so he does not know what foodtrucks are available today and he can only observe them one by one. The possible foodtrucks are a taco truck, a pizza truck, and a hotdog stand. What is Timmy's favorite food place?",
-    "options": ["Pizza Truck", "Taco Truck", "Hotdog Stand", "Ramen Shop"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "getting_lunch_15",
-    "scenario_id": 51,
-    "input_type": "img",
-    "source_link": "/assets/s9_1_4.gif",
-    commentary: "NaN",
-    "question": "Here you observe Timmy heading out for lunch from his house after working remotely from home. There is a seafood market next to his place, and there is usually a foodtruck parked behind the market. Usually it's either a hotdog stand, a taco-truck or a pizza truck. Timmy cannot see behind past the trees behind his house and therefore cannot see what foodtruck is there today. Timmy's favorite food is hotdogs. What foodtruck did Timmy believe is behind the house today?",
-    "options": ["Hotdog Stand", "Taco Truck", "Pizza Truck"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-]; 
+{
+  "task_name": "preference_inference_vegetables_1",
+  "scenario_id": 1,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has only one bundle of vegetables to choose from. This is the bundle: \n\n1. an onion\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_2",
+  "scenario_id": 2,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has only one bundle of vegetables to choose from. This is the bundle: \n\n1. an onion, a radish\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_3",
+  "scenario_id": 3,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. a cucumber\n2. a tomato\n\nAlex purchased bundle 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_4",
+  "scenario_id": 4,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has only one bundle of vegetables to choose from. This is the bundle: \n\n1. a tomato, a cucumber, a radish\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_5",
+  "scenario_id": 5,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. an onion, a cucumber\n2. a radish, an onion\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_6",
+  "scenario_id": 6,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. a tomato, a cucumber\n2. an onion\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_7",
+  "scenario_id": 7,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. a tomato, a cucumber\n2. a tomato, an onion\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_8",
+  "scenario_id": 8,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 3 bundles of vegetables to choose from. These are the bundles: \n\n1. an onion\n2. a cucumber\n3. a tomato\n\nAlex purchased bundle 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_9",
+  "scenario_id": 9,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. an onion\n2. a tomato, a radish\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_10",
+  "scenario_id": 10,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has only one bundle of vegetables to choose from. This is the bundle: \n\n1. a tomato, a radish, an onion, a cucumber\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_11",
+  "scenario_id": 11,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. a cucumber, a tomato, an onion\n2. a cucumber, a tomato, a radish\n\nAlex purchased bundle 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_12",
+  "scenario_id": 12,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 3 bundles of vegetables to choose from. These are the bundles: \n\n1. a radish, an onion\n2. a radish, a tomato\n3. a radish, a cucumber\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_13",
+  "scenario_id": 13,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 3 bundles of vegetables to choose from. These are the bundles: \n\n1. a tomato\n2. an onion, a cucumber\n3. a cucumber, a radish\n\nAlex purchased bundle 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_14",
+  "scenario_id": 14,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. a tomato\n2. a radish, a cucumber, an onion\n\nAlex purchased bundle 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_15",
+  "scenario_id": 15,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 3 bundles of vegetables to choose from. These are the bundles: \n\n1. a cucumber\n2. a radish\n3. a tomato, an onion\n\nAlex purchased bundle 3.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_16",
+  "scenario_id": 16,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 3 bundles of vegetables to choose from. These are the bundles: \n\n1. a cucumber, a tomato\n2. an onion, a radish\n3. a tomato, a radish\n\nAlex purchased bundle 3.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_17",
+  "scenario_id": 17,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. an onion, a tomato\n2. a radish, a cucumber\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_18",
+  "scenario_id": 18,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. an onion, a radish, a tomato\n2. a cucumber, a tomato, a radish\n\nAlex purchased bundle 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_19",
+  "scenario_id": 19,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 3 bundles of vegetables to choose from. These are the bundles: \n\n1. a radish, a cucumber\n2. a cucumber, an onion\n3. a tomato, a cucumber\n\nAlex purchased bundle 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_20",
+  "scenario_id": 20,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 4 bundles of vegetables to choose from. These are the bundles: \n\n1. a radish\n2. a cucumber\n3. a tomato\n4. an onion\n\nAlex purchased bundle 3.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_21",
+  "scenario_id": 21,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 3 bundles of vegetables to choose from. These are the bundles: \n\n1. an onion, a radish\n2. a tomato\n3. a cucumber\n\nAlex purchased bundle 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vegetables_22",
+  "scenario_id": 22,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles: \n\n1. a radish, a tomato, an onion\n2. a cucumber\n\nAlex purchased bundle 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vegetable items, which of the following do you think Alex likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a cucumber",
+    "a tomato",
+    "an onion",
+    "a radish"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_1",
+  "scenario_id": 1,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers only one vacation package to choose from. This is the package: \n\n1. a hot air balloon ride\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_2",
+  "scenario_id": 2,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers only one vacation package to choose from. This is the package: \n\n1. a meal at a fine dining restaurant, a hot air balloon ride\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_3",
+  "scenario_id": 3,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a guided tour of a historical site\n2. a hot air balloon ride\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_4",
+  "scenario_id": 4,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers only one vacation package to choose from. This is the package: \n\n1. a guided tour of a historical site, a hot air balloon ride, a meal at a fine dining restaurant\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_5",
+  "scenario_id": 5,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a guided tour of a historical site, a hot air balloon ride\n2. a meal at a fine dining restaurant, a guided tour of a historical site\n\nBenny selected package 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_6",
+  "scenario_id": 6,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a hot air balloon ride\n2. a meal at a fine dining restaurant, a skiing lesson\n\nBenny selected package 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_7",
+  "scenario_id": 7,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a guided tour of a historical site, a skiing lesson\n2. a skiing lesson, a meal at a fine dining restaurant\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_8",
+  "scenario_id": 8,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 3 vacation packages to choose from. These are the packages: \n\n1. a hot air balloon ride\n2. a meal at a fine dining restaurant\n3. a guided tour of a historical site\n\nBenny selected package 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_9",
+  "scenario_id": 9,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a meal at a fine dining restaurant, a hot air balloon ride\n2. a guided tour of a historical site\n\nBenny selected package 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_10",
+  "scenario_id": 10,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers only one vacation package to choose from. This is the package: \n\n1. a hot air balloon ride, a meal at a fine dining restaurant, a guided tour of a historical site, a skiing lesson\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_11",
+  "scenario_id": 11,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a guided tour of a historical site, a meal at a fine dining restaurant, a skiing lesson\n2. a meal at a fine dining restaurant, a hot air balloon ride, a guided tour of a historical site\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_12",
+  "scenario_id": 12,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 3 vacation packages to choose from. These are the packages: \n\n1. a meal at a fine dining restaurant, a guided tour of a historical site\n2. a skiing lesson, a guided tour of a historical site\n3. a hot air balloon ride, a guided tour of a historical site\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_13",
+  "scenario_id": 13,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 3 vacation packages to choose from. These are the packages: \n\n1. a skiing lesson, a hot air balloon ride\n2. a hot air balloon ride, a meal at a fine dining restaurant\n3. a guided tour of a historical site\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_14",
+  "scenario_id": 14,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a skiing lesson, a meal at a fine dining restaurant, a guided tour of a historical site\n2. a hot air balloon ride\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_15",
+  "scenario_id": 15,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 3 vacation packages to choose from. These are the packages: \n\n1. a hot air balloon ride\n2. a meal at a fine dining restaurant, a guided tour of a historical site\n3. a skiing lesson\n\nBenny selected package 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_16",
+  "scenario_id": 16,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 3 vacation packages to choose from. These are the packages: \n\n1. a hot air balloon ride, a skiing lesson\n2. a hot air balloon ride, a meal at a fine dining restaurant\n3. a guided tour of a historical site, a meal at a fine dining restaurant\n\nBenny selected package 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_17",
+  "scenario_id": 17,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a hot air balloon ride, a skiing lesson\n2. a guided tour of a historical site, a meal at a fine dining restaurant\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_18",
+  "scenario_id": 18,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a hot air balloon ride, a skiing lesson, a meal at a fine dining restaurant\n2. a guided tour of a historical site, a hot air balloon ride, a meal at a fine dining restaurant\n\nBenny selected package 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_19",
+  "scenario_id": 19,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 3 vacation packages to choose from. These are the packages: \n\n1. a skiing lesson, a guided tour of a historical site\n2. a skiing lesson, a meal at a fine dining restaurant\n3. a hot air balloon ride, a skiing lesson\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_20",
+  "scenario_id": 20,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 4 vacation packages to choose from. These are the packages: \n\n1. a guided tour of a historical site\n2. a hot air balloon ride\n3. a skiing lesson\n4. a meal at a fine dining restaurant\n\nBenny selected package 2.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_21",
+  "scenario_id": 21,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 3 vacation packages to choose from. These are the packages: \n\n1. a hot air balloon ride, a meal at a fine dining restaurant\n2. a skiing lesson\n3. a guided tour of a historical site\n\nBenny selected package 3.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+},
+{
+  "task_name": "preference_inference_vacation_22",
+  "scenario_id": 22,
+  "input_type": "text",
+  "text_sections": [
+    {
+      "title": "Scenario",
+      "content": "Benny got a free all-inclusive vacation package from a travel agency! He is choosing from the vacation packages offered. He does not have to pay for any of the activities in the package. The travel agency currently offers 2 vacation packages to choose from. These are the packages: \n\n1. a hot air balloon ride\n2. a guided tour of a historical site, a meal at a fine dining restaurant, a skiing lesson\n\nBenny selected package 1.",
+      "isCollapsible": false
+    }
+  ],
+  "commentary": "Variation tags: preference inference, choice observation",
+  "question": "Based on this single observation, among the following vacation items, which of the following do you think Benny likes the most? Please respond with a probability distribution.",
+  "options": [
+    "a hot air balloon ride",
+    "a guided tour of a historical site",
+    "a skiing lesson",
+    "a meal at a fine dining restaurant"
+  ],
+  "input_method": "histogram",
+  "total_allocation": 10,
+  "randomize_order": true,
+  "discrete": false
+}
+]

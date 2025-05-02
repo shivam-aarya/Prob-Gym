@@ -33,7 +33,7 @@
         "content": [
           {
             "type": "text",
-            "value": "In this experiment, you will read a short description about an agent. Then you will answer questions about their preferences. The tasks are intentionally designed to be somewhat ambiguous. For each scenario in this study, instead of multiple choice questions, we are interested in measuring how you evaluate the likelihood for the answer options."
+            "value": "In this experiment, you will watch a short video and read a description about an agent. Then you will answer questions about their beliefs or preferences. The tasks are intentionally designed to be somewhat ambiguous. For each scenario in this study, instead of multiple choice questions, we are interested in measuring how you evaluate the likelihood for the answer options."
           },
 
           {
@@ -66,29 +66,21 @@
           {
             "type": "scenario",
             "config": {
-              "task_name": "tutorial_test",
+              "task_name": "getting_lunch_2",
               "scenario_id": 0,
-              "input_type": "text",
-              "text_sections": [
-                {
-                  "title": "Background",
-                  "content": "In this simple scenario, you'll practice making a probability judgment.",
-                  "isCollapsible": true,
-                  "isInitiallyExpanded": true
-                }
-              ],
+              "input_type": "img",
+              "source_link": "/assets/s1_1_3.gif",
               "commentary": "This is a practice scenario",
-              "question": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles:  \n 1. a cucumber, a tomato \n2. a cucumber, a radish \nAlex purchased bundle 2.\nBased on this single observation, which of the following do you think Alex likes the most? Please respond with a probability distribution. ",
-              "options": ["onion", "tomato", "radish", "onion"],
+              "question": "Timmy is heading out for lunch after working remotely from home. There is a seafood market next to his place. Additionally, there is usually foodtrucks or foodstands parked near and behind his house. The food options are usually a taco stand and a pizza truck, although they dont come everyday. There is a wall behind his house that he cannot see past, therefore he does not know what food option is available behind his house. You observe Timmy’s trajectory as follows. Given what you see about Timmy’s actions, what do you think is Timmy’s favorite food place?",
+              "options": ["Taco Stand", "Seafood market", "Pizza Truck"],
               "input_method": "histogram",
               "total_allocation": 10,
-              "randomize_order": false,
-              "discrete": false
-            },
-            "feedback": {
-              "title": "Important Feedback",
-              "content": "Although many answers are possible here. One would expect Alex to like radish more than tomato. Additionally, it's still possible that Alex likes onion, even if it is not available, or cucumber, which is in both bundles. One reasonable answer could be [onion - 2, tomato - 1, radish - 5, cucumber - 2]"
+              "randomize_order": true
             }
+          },
+          {
+            "type": "text",
+            "value": "After completing this test question, click the 'Start Study' button to proceed to the main experiment."
           }
         ]
       }

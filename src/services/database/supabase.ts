@@ -164,6 +164,23 @@ export class SupabaseService implements DatabaseService {
    */
   async updateTotalCompletionTime(participantId: string, totalDurationMs: number): Promise<{ success: boolean; error?: Error }> {
     try {
+      console.log('Updating completion time:', { participantId, totalDurationMs });
+      
+      // First check if the participant exists
+      const { data: participant, error: fetchError } = await supabase
+        .from('participants')
+        .select('id')
+        .eq('participant_id', participantId)
+        .single();
+      
+      if (fetchError) {
+        console.error('Error fetching participant:', fetchError);
+        console.error('Participant might not exist with ID:', participantId);
+        return { success: false, error: new Error(`Participant not found: ${participantId}`) };
+      }
+      
+      console.log('Found participant:', participant);
+      
       const { error } = await supabase
         .from('participants')
         .update({
@@ -176,6 +193,7 @@ export class SupabaseService implements DatabaseService {
       return { success: true };
     } catch (error) {
       console.error('Error updating total completion time:', error);
+      console.error('Error details:', JSON.stringify(error, null, 2));
       return { success: false, error: error as Error };
     }
   }

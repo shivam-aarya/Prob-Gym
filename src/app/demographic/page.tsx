@@ -34,10 +34,22 @@ export default function Demographic() {
         
         // Get participant ID
         const participantId = localStorage.getItem('participantId');
+        console.log('Retrieved participantId from localStorage:', participantId);
+        
         if (participantId) {
           // Update total completion time in database
-          await db.updateTotalCompletionTime(participantId, totalDurationMs);
+          console.log('Attempting to update completion time for participant:', participantId);
+          const result = await db.updateTotalCompletionTime(participantId, totalDurationMs);
+          console.log('Update completion time result:', result);
+          
+          if (!result.success) {
+            console.error('Failed to update completion time:', result.error);
+          }
+        } else {
+          console.error('No participantId found in localStorage');
         }
+      } else {
+        console.error('No study start time found in localStorage');
       }
 
       // Mark study as complete
