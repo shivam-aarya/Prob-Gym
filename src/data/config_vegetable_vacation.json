@@ -33,7 +33,7 @@
         "content": [
           {
             "type": "text",
-            "value": "In this experiment, you will watch a video about an agent. Then you will answer questions about their belief. The tasks are intentionally designed to be somewhat ambiguous. For each scenario in this study, instead of multiple choice questions, we are interested in measuring how you evaluate the likelihood for the answer options."
+            "value": "In this experiment, you will read a short description about an agent. Then you will answer questions about their preferences. The tasks are intentionally designed to be somewhat ambiguous. For each scenario in this study, instead of multiple choice questions, we are interested in measuring how you evaluate the likelihood for the answer options."
           },
 
           {
@@ -78,8 +78,8 @@
                 }
               ],
               "commentary": "This is a practice scenario",
-              "question": "Alex is looking for a bag of rice among the 5 cabinets. Despite some searching, Alex still has not found the rice yet. After Alex searched through these cabinets, where do you think Alex now believe the bag of rice is located?",
-              "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
+              "question": "Alex is choosing from bundled packs of vegetables at the supermarket. All bundles are the same price. Alex currently has 2 bundles of vegetables to choose from. These are the bundles:  \n 1. a cucumber, a tomato \n2. a cucumber, a radish \nAlex purchased bundle 2.\nBased on this single observation, which of the following do you think Alex likes the most? Please respond with a probability distribution. ",
+              "options": ["onion", "tomato", "radish", "onion"],
               "input_method": "histogram",
               "total_allocation": 10,
               "randomize_order": false,
@@ -87,7 +87,7 @@
             },
             "feedback": {
               "title": "Important Feedback",
-              "content": "although many answers are possible here. One would expect Alex to not believe the rice is in cabinet 1 or 2, since she already searched those. Additionally, Alex walked towards cabinet 3, but it's possible that she's not sure. One reasonable answer could be [2,2,6,0,0]"
+              "content": "Although many answers are possible here. One would expect Alex to like radish more than tomato. Additionally, it's still possible that Alex likes onion, even if it is not available, or cucumber, which is in both bundles. One reasonable answer could be [onion - 2, tomato - 1, radish - 5, cucumber - 2]"
             }
           }
         ]

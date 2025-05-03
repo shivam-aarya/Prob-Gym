@@ -141,8 +141,8 @@ export default function Layout({ children, config }: LayoutProps) {
                 <p className={`text-lg leading-relaxed select-none ${isDark ? 'text-gray-200' : 'text-gray-800'}`}
                    onCopy={(e) => e.preventDefault()}
                    onCut={(e) => e.preventDefault()}
-                   onContextMenu={(e) => e.preventDefault()}>
-                  {config.question}
+                   onContextMenu={(e) => e.preventDefault()}
+                   dangerouslySetInnerHTML={{ __html: config.question }}>
                 </p>
               </div>
             </div>
