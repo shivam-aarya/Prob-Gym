@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StudyConfig, UserResponse } from '@/types/study';
 import NumberLineInput from './NumberLineInput';
 import HistogramInput from './HistogramInput';
+import SliderInput from './SliderInput';
 
 interface QuestionFrameProps {
   config: StudyConfig;
@@ -72,7 +73,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
   const handleHistogramSubmit = async (values: number[]) => {
     const endTime = new Date();
     const duration = startTime ? endTime.getTime() - startTime.getTime() : 0;
-    
+
     const response: UserResponse = {
       task_name: config.task_name,
       scenario_id: config.scenario_id,
@@ -86,7 +87,36 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
         duration_ms: duration
       }
     };
-    
+
+    // Call parent onSubmit, parent will handle API submission
+    setIsSubmitting(true);
+    try {
+      onSubmit(response);
+    } catch (error) {
+      console.error('Error handling submission:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSliderSubmit = async (values: number[]) => {
+    const endTime = new Date();
+    const duration = startTime ? endTime.getTime() - startTime.getTime() : 0;
+
+    const response: UserResponse = {
+      task_name: config.task_name,
+      scenario_id: config.scenario_id,
+      response_data: {
+        values: values,
+        options: config.options,
+      },
+      time_data: {
+        start_time: startTime?.toISOString() || new Date().toISOString(),
+        end_time: endTime.toISOString(),
+        duration_ms: duration
+      }
+    };
+
     // Call parent onSubmit, parent will handle API submission
     setIsSubmitting(true);
     try {
@@ -120,6 +150,26 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
           initialValues={previousResponse}
           disabled={isSubmitting}
           scenarioId={config.scenario_id}
+        />
+      )}
+      {config.input_method === 'slider' && (
+        <SliderInput
+          options={config.options}
+          onSubmit={handleSliderSubmit}
+          initialValues={previousResponse}
+          scenarioId={config.scenario_id}
+          disabled={isSubmitting}
+          randomize_order={config.randomize_order}
+          min={config.slider_config?.min}
+          max={config.slider_config?.max}
+          step={config.slider_config?.step}
+          default_value={config.slider_config?.default_value}
+          show_value={config.slider_config?.show_value}
+          require_all={config.slider_config?.require_all}
+          constrain_sum={config.slider_config?.constrain_sum}
+          labels={config.slider_config?.labels}
+          show_label_values={config.slider_config?.show_label_values}
+          label_padding={config.slider_config?.label_padding}
         />
       )}
     </div>

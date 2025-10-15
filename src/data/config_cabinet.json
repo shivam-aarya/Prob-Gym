@@ -1,0 +1,152 @@
+{
+  "study": {
+    "title": "Research Study",
+    "randomizeQuestions": true,
+    "questionsPerParticipant": 15,
+    "backend": {
+      "enabled": true,
+      "endpoint": "/api/submit"
+    }
+  },
+  "consent": {
+    "title": "Welcome to our study",
+    "content": [
+      "In this study, we are interested in studying people's uncertainty when observing and reason about other agents. You will read 15 scenarios and answer questions about the agents. The experiment should take 20 minutes in total.",
+      "You will be compensated for your time at the end of the study at 15 dollars / hour.",
+      "What should I know about a research study?",
+      "• Whether or not you take part is up to you.",
+      "• Your participation is completely voluntary.",
+      "• You can choose not to take part.",
+      "• You can agree to take part and later change your mind.",
+      "• Your decision will not be held against you.",
+      "• Your refusal to participate will not result in any consequences or any loss of benefits that you are otherwise entitled to receive.",
+      "• You can ask all the questions you want before you decide.",
+      "For any questions, please feel free to contact lanceying@mit.edu"
+    ],
+    "buttonText": "Continue"
+  },
+  "tutorial": {
+    "title": "How to Participate",
+    "pages": [
+      {
+        "title": "Understanding Probability Judgments",
+        "content": [
+          {
+            "type": "text",
+            "value": "In this experiment, you will watch a video about an agent. Then you will answer questions about their belief. The tasks are intentionally designed to be somewhat ambiguous. For each scenario in this study, instead of multiple choice questions, we are interested in measuring how you evaluate the likelihood for the answer options."
+          },
+
+          {
+            "type": "text",
+            "value": "The tasks often require some thinking and reasoning. Please spend at least 45 seconds on each scenario. Your response will significantly affect the results of our study, so please think carefully before you answer."
+          },
+          {
+            "type": "text",
+            "value": "For each reasoning problem, you will use an interactive panel to distribute 10 points among the answer options. If you think one answer option is more likely, you can assign it a higher value. For example, if you think answer option B is the most likely, while A and C are still somewhat possible, you can answer like this."
+          },
+          {
+            "type": "image",
+            "src": "/tutorial/histogram-example.png",
+            "alt": "Example of histogram response interface",
+            "caption": "Interactive histogram for probability judgments"
+          },
+          {
+            "type": "text",
+            "value": "You will first go through a trial run. Then you will proceed to the main experiment."
+          }
+        ]
+      },
+      {
+        "title": "Test Run",
+        "content": [
+          {
+            "type": "text",
+            "value": "Now, let's try a simple test scenario. This will help you get familiar with the interface before starting the actual study."
+          },
+          {
+            "type": "scenario",
+            "config": {
+              "task_name": "tutorial_test",
+              "scenario_id": 0,
+              "input_type": "text",
+              "text_sections": [
+                {
+                  "title": "Background",
+                  "content": "In this simple scenario, you'll practice making a probability judgment.",
+                  "isCollapsible": true,
+                  "isInitiallyExpanded": true
+                }
+              ],
+              "commentary": "This is a practice scenario",
+              "question": "Alex is looking for a bag of rice among the 5 cabinets. Despite some searching, Alex still has not found the rice yet. After Alex searched through these cabinets, where do you think Alex now believe the bag of rice is located?",
+              "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
+              "input_method": "histogram",
+              "total_allocation": 10,
+              "randomize_order": false,
+              "discrete": false
+            },
+            "feedback": {
+              "title": "Important Feedback",
+              "content": "although many answers are possible here. One would expect Alex to not believe the rice is in cabinet 1 or 2, since she already searched those. Additionally, Alex walked towards cabinet 3, but it's possible that she's not sure. One reasonable answer could be [2,2,6,0,0]"
+            }
+          }
+        ]
+      }
+    ],
+    "buttonText": "Start Study"
+  },
+  "demographic": {
+    "title": "Demographic Information",
+    "description": "Please help us by providing some demographic information. This will help us better understand our study results.",
+    "questions": [
+      {
+        "id": "prolific_id",
+        "type": "text",
+        "label": "Please enter your Prolific ID",
+        "required": true,
+        "placeholder": "Enter your Prolific ID"
+      },
+      {
+        "id": "age",
+        "type": "select",
+        "label": "What is your age?",
+        "required": true,
+        "options": [
+          "18-24",
+          "25-34",
+          "35-44",
+          "45-54",
+          "55-64",
+          "65+"
+        ]
+      },
+      {
+        "id": "gender",
+        "type": "select",
+        "label": "What is your gender?",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Non-binary",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "education",
+        "type": "select",
+        "label": "What is your highest level of education?",
+        "required": true,
+        "options": [
+          "High school or less",
+          "Some college",
+          "Bachelor's degree",
+          "Master's degree",
+          "Doctoral degree",
+          "Prefer not to say"
+        ]
+      }
+    ],
+    "buttonText": "Complete Survey"
+  }
+} 

@@ -1,4 +1,4 @@
-export type InputMethod = 'number_line' | 'histogram';
+export type InputMethod = 'number_line' | 'histogram' | 'slider';
 
 export interface TextSection {
   title: string;
@@ -23,6 +23,19 @@ export interface StudyConfig {
   total_allocation?: number; // Total number of allocations allowed for histogram
   discrete?: boolean; // Whether the input should be discrete (snap to option values)
   randomize_order?: boolean; // Whether to randomize the display order of options
+  // Slider-specific configuration
+  slider_config?: {
+    min?: number; // Minimum slider value (default: 0)
+    max?: number; // Maximum slider value (default: 100)
+    step?: number; // Step size for slider (default: 1)
+    default_value?: number; // Default starting value (default: 50)
+    show_value?: boolean; // Whether to show numeric value (default: true)
+    require_all?: boolean; // Whether all sliders must be moved from default (default: false)
+    constrain_sum?: number; // Optional: constrain sum of all sliders to this value
+    labels?: Array<{ value: number; label: string }>; // Custom labels at specific values
+    show_label_values?: boolean; // Whether to show numeric values in labels (default: false)
+    label_padding?: number; // Horizontal padding percentage for label area (default: 5)
+  };
 }
 
 export interface UserResponse {

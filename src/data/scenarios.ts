@@ -2,1443 +2,739 @@ import { StudyConfig } from '@/types/study';
 
 export const scenarios: StudyConfig[] = [
   {
-    "task_name": "cabinet_60",
-    "scenario_id": 60,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/60.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_61",
-    "scenario_id": 61,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/61.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_62",
-    "scenario_id": 62,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/62.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_63",
-    "scenario_id": 63,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/63.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_64",
-    "scenario_id": 64,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/64.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_65",
-    "scenario_id": 65,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/65.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_66",
-    "scenario_id": 66,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/66.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_67",
-    "scenario_id": 67,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/67.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_68",
-    "scenario_id": 68,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/68.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_69",
-    "scenario_id": 69,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/69.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_70",
-    "scenario_id": 70,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/70.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_71",
-    "scenario_id": 71,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/71.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_72",
-    "scenario_id": 72,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/72.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_73",
-    "scenario_id": 73,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/73.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_74",
-    "scenario_id": 74,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/74.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_75",
-    "scenario_id": 75,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/75.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_76",
-    "scenario_id": 76,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/76.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_77",
-    "scenario_id": 77,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/77.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_78",
-    "scenario_id": 78,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/78.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_79",
-    "scenario_id": 79,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/79.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_80",
-    "scenario_id": 80,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/80.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_81",
-    "scenario_id": 81,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/81.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_82",
-    "scenario_id": 82,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/82.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_83",
-    "scenario_id": 83,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/83.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_84",
-    "scenario_id": 84,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/84.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_85",
-    "scenario_id": 85,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/85.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_86",
-    "scenario_id": 86,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/86.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_87",
-    "scenario_id": 87,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/87.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_88",
-    "scenario_id": 88,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/88.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_89",
-    "scenario_id": 89,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/89.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_90",
-    "scenario_id": 90,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/90.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_91",
-    "scenario_id": 91,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/91.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_92",
-    "scenario_id": 92,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/92.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_93",
-    "scenario_id": 93,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/93.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_94",
-    "scenario_id": 94,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/94.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_95",
-    "scenario_id": 95,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/95.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_96",
-    "scenario_id": 96,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/96.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_97",
-    "scenario_id": 97,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/97.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_98",
-    "scenario_id": 98,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/98.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_99",
-    "scenario_id": 99,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/99.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_100",
-    "scenario_id": 100,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/100.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_101",
-    "scenario_id": 101,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/101.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_102",
-    "scenario_id": 102,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/102.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_103",
-    "scenario_id": 103,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/103.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_104",
-    "scenario_id": 104,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/104.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_105",
-    "scenario_id": 105,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/105.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_106",
-    "scenario_id": 106,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/106.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_107",
-    "scenario_id": 107,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/107.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_108",
-    "scenario_id": 108,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/108.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_109",
-    "scenario_id": 109,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/109.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_110",
-    "scenario_id": 110,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/110.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_111",
-    "scenario_id": 111,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/111.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_112",
-    "scenario_id": 112,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/112.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_113",
-    "scenario_id": 113,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/113.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_114",
-    "scenario_id": 114,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/114.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_115",
-    "scenario_id": 115,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/115.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_116",
-    "scenario_id": 116,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/116.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_117",
-    "scenario_id": 117,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/117.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_118",
-    "scenario_id": 118,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/118.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_119",
-    "scenario_id": 119,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/119.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 5 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_120",
-    "scenario_id": 120,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/120.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_121",
-    "scenario_id": 121,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/121.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_122",
-    "scenario_id": 122,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/122.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_123",
-    "scenario_id": 123,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/123.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_124",
-    "scenario_id": 124,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/124.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_125",
-    "scenario_id": 125,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/125.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_126",
-    "scenario_id": 126,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/126.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_127",
-    "scenario_id": 127,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/127.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_128",
-    "scenario_id": 128,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/128.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_129",
-    "scenario_id": 129,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/129.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_130",
-    "scenario_id": 130,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/130.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_131",
-    "scenario_id": 131,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/131.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_132",
-    "scenario_id": 132,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/132.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_133",
-    "scenario_id": 133,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/133.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_134",
-    "scenario_id": 134,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/134.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_135",
-    "scenario_id": 135,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/135.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_136",
-    "scenario_id": 136,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/136.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_137",
-    "scenario_id": 137,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/137.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_138",
-    "scenario_id": 138,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/138.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_139",
-    "scenario_id": 139,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/139.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_140",
-    "scenario_id": 140,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/140.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_141",
-    "scenario_id": 141,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/141.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_142",
-    "scenario_id": 142,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/142.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_143",
-    "scenario_id": 143,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/143.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_144",
-    "scenario_id": 144,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/144.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_145",
-    "scenario_id": 145,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/145.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_146",
-    "scenario_id": 146,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/146.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_147",
-    "scenario_id": 147,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/147.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_148",
-    "scenario_id": 148,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/148.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_149",
-    "scenario_id": 149,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/149.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_150",
-    "scenario_id": 150,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/150.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_151",
-    "scenario_id": 151,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/151.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_152",
-    "scenario_id": 152,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/152.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_153",
-    "scenario_id": 153,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/153.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_154",
-    "scenario_id": 154,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/154.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_155",
-    "scenario_id": 155,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/155.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_156",
-    "scenario_id": 156,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/156.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_157",
-    "scenario_id": 157,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/157.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_158",
-    "scenario_id": 158,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/158.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_159",
-    "scenario_id": 159,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/159.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_160",
-    "scenario_id": 160,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/160.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_161",
-    "scenario_id": 161,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/161.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_162",
-    "scenario_id": 162,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/162.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_163",
-    "scenario_id": 163,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/163.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_164",
-    "scenario_id": 164,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/164.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_165",
-    "scenario_id": 165,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/165.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_166",
-    "scenario_id": 166,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/166.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_167",
-    "scenario_id": 167,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/167.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_168",
-    "scenario_id": 168,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/168.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_169",
-    "scenario_id": 169,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/169.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_170",
-    "scenario_id": 170,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/170.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_171",
-    "scenario_id": 171,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/171.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_172",
-    "scenario_id": 172,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/172.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_173",
-    "scenario_id": 173,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/173.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_174",
-    "scenario_id": 174,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/174.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_175",
-    "scenario_id": 175,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/175.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_176",
-    "scenario_id": 176,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/176.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_177",
-    "scenario_id": 177,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/177.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_178",
-    "scenario_id": 178,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/178.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
-    "randomize_order": false
-  },
-  {
-    "task_name": "cabinet_179",
-    "scenario_id": 179,
-    "input_type": "video",
-    "source_link": "/assets/cabinet/179.mp4",
-    "commentary": "NaN",
-    "question": "The agent is looking for a pressure cooker. There are 6 cabinets in the kitchen. You observe their actions as follows. Where does the agent <strong> now </strong> believe the item is?",
-    "options": ["Cabinet 6", "Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-    "input_method": "histogram",
-    "total_allocation": 10,
+    "task_name": "1_1",
+    "scenario_id": 0,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_1_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "2_1",
+    "scenario_id": 1,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_2_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "3_1",
+    "scenario_id": 2,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_3_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "4_1",
+    "scenario_id": 3,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_4_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "5_1",
+    "scenario_id": 4,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_5_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "6_1",
+    "scenario_id": 5,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_6_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "7_1",
+    "scenario_id": 6,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_7_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "8_1",
+    "scenario_id": 7,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_8_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "9_1",
+    "scenario_id": 8,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_9_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "10_1",
+    "scenario_id": 9,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_10_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "11_1",
+    "scenario_id": 10,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_11_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "12_1",
+    "scenario_id": 11,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_12_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "13_1",
+    "scenario_id": 12,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_13_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "14_1",
+    "scenario_id": 13,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_14_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "15_1",
+    "scenario_id": 14,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_15_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "16_1",
+    "scenario_id": 15,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_16_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "17_1",
+    "scenario_id": 16,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_17_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "18_1",
+    "scenario_id": 17,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_18_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "19_1",
+    "scenario_id": 18,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_19_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "20_1",
+    "scenario_id": 19,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_20_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "21_1",
+    "scenario_id": 20,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_21_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "22_1",
+    "scenario_id": 21,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_22_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "23_1",
+    "scenario_id": 22,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_23_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "24_1",
+    "scenario_id": 23,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_24_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "25_1",
+    "scenario_id": 24,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_25_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "26_1",
+    "scenario_id": 25,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_26_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "27_1",
+    "scenario_id": 26,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_27_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "28_1",
+    "scenario_id": 27,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_28_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "29_1",
+    "scenario_id": 28,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_29_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "30_1",
+    "scenario_id": 29,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_30_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "31_1",
+    "scenario_id": 30,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_31_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
+    "randomize_order": false
+  },
+  {
+    "task_name": "32_1",
+    "scenario_id": 31,
+    "input_type": "img",
+    "source_link": "/assets/segments/s_32_2.gif",
+    "commentary": "NaN",
+    "question": "Based on the player's actions, how likely is each gem to be their goal?",
+    "options": ["Gem A", "Gem B", "Gem C", "Gem D"],
+    "input_method": "slider",
+    "slider_config": {
+      "min": 0,
+      "max": 100,
+      "default_value": 50,
+      "labels": [
+        { "value": 0, "label": "Extremely unlikely" },
+        { "value": 50, "label": "Neutral" },
+        { "value": 100, "label": "Extremely likely" }
+      ],
+      "show_label_values": true,
+      "require_all": true
+    },
     "randomize_order": false
   }
-]; 
+];

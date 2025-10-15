@@ -33,3 +33,31 @@ body {
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-in-out;
 }
+
+/* Styles for HTML content in tutorial and scenario descriptions */
+.caption-image {
+  display: inline-block;
+  height: 1.5em;
+  width: auto;
+  vertical-align: middle;
+  margin: 0 0.2em;
+}
+
+/* Ensure proper spacing for lists in HTML content */
+ul {
+  margin-left: 1.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+li {
+  margin-bottom: 0.5em;
+  list-style-type: disc;
+}
+
+/* Ensure line breaks work properly */
+br {
+  display: block;
+  margin: 0.5em 0;
+  content: "";
+}

@@ -1,94 +1,118 @@
 {
   "study": {
-    "title": "Research Study",
+    "title": "Interpreting Agent Behavior in a Treasure Game",
     "randomizeQuestions": true,
-    "questionsPerParticipant": 15,
+    "questionsPerParticipant": 16,
     "backend": {
       "enabled": true,
       "endpoint": "/api/submit"
     }
   },
   "consent": {
-    "title": "Welcome to our study",
+    "title": "Welcome to the Treasure Game Study",
     "content": [
-      "In this study, we are interested in studying people's uncertainty when observing and reason about other agents. You will read 15 scenarios and answer questions about the agents. The experiment should take 20 minutes in total.",
-      "You will be compensated for your time at the end of the study at 15 dollars / hour.",
-      "What should I know about a research study?",
-      "• Whether or not you take part is up to you.",
-      "• Your participation is completely voluntary.",
-      "• You can choose not to take part.",
-      "• You can agree to take part and later change your mind.",
-      "• Your decision will not be held against you.",
-      "• Your refusal to participate will not result in any consequences or any loss of benefits that you are otherwise entitled to receive.",
-      "• You can ask all the questions you want before you decide.",
-      "For any questions, please feel free to contact lanceying@mit.edu"
+      "We are conducting an experiment about how people interpret other agents' behavior in a game. Your answers will be used to inform computer science and cognitive science research.",
+      "This experiment should take about 15-18 minutes.",
+      "You will be compensated for your time at the end of the study.",
+      "Your participation is completely voluntary. You can agree to take part and later change your mind. Your decision will not be held against you."
     ],
-    "buttonText": "Continue"
+    "buttonText": "I agree, begin the study"
   },
   "tutorial": {
     "title": "How to Participate",
     "pages": [
       {
-        "title": "Understanding Probability Judgments",
+        "title": "Introduction",
         "content": [
           {
             "type": "text",
-            "value": "In this experiment, you will watch a video about an agent. Then you will answer questions about their belief. The tasks are intentionally designed to be somewhat ambiguous. For each scenario in this study, instead of multiple choice questions, we are interested in measuring how you evaluate the likelihood for the answer options."
-          },
-
-          {
-            "type": "text",
-            "value": "The tasks often require some thinking and reasoning. Please spend at least 45 seconds on each scenario. Your response will significantly affect the results of our study, so please think carefully before you answer."
-          },
-          {
-            "type": "text",
-            "value": "For each reasoning problem, you will use an interactive panel to distribute 10 points among the answer options. If you think one answer option is more likely, you can assign it a higher value. For example, if you think answer option B is the most likely, while A and C are still somewhat possible, you can answer like this."
-          },
-          {
-            "type": "image",
-            "src": "/tutorial/histogram-example.png",
-            "alt": "Example of histogram response interface",
-            "caption": "Interactive histogram for probability judgments"
-          },
-          {
-            "type": "text",
-            "value": "You will first go through a trial run. Then you will proceed to the main experiment."
+            "value": "Welcome! <br><br> In this experiment, you will watch 16 short animations of a player in a treasure game. Your task will be to infer the player's goals from their actions."
           }
         ]
       },
       {
-        "title": "Test Run",
+        "title": "Game Rules",
         "content": [
           {
             "type": "text",
-            "value": "Now, let's try a simple test scenario. This will help you get familiar with the interface before starting the actual study."
+            "value": "You're watching a player <img class='caption-image' src='/assets/segments/images/human.png'> in a treasure game.<br><br> The rules of the game are as follows: <br><ul><li> There are 4 kinds of gems on the map: <br> <img class='caption-image' src='/assets/segments/images/gem_a.png'> <img class='caption-image' src='/assets/segments/images/gem_b.png'> <img class='caption-image' src='/assets/segments/images/gem_c.png'> <img class='caption-image' src='/assets/segments/images/gem_d.png'> </li><li> The game is played on a grid of black and white squares.</li><li> The player can move only on the white squares.</li><li> The player has a full view of the map at all times.</li><li> The player's objective is to collect exactly one of the gems.</li><li> Keys are used to unlock doors of the same color (e.g. red keys <img class='caption-image' src='/assets/segments/images/key_red.png'> unlock red doors <img class='caption-image' src='/assets/segments/images/door_red.png'>).</li><li> Each key can only be used <strong>once</strong>. Keys disappear after use.</li></ul> Your task is to <strong>rate how likely each possible gem is to be the player's goal</strong> based on the actions you see them taking."
+          }
+        ]
+      },
+      {
+        "title": "Practice Round",
+        "content": [
+          {
+            "type": "text",
+            "value": "For each possible gem on the map, you will rate <i>how likely it is to be the player's goal</i> using a slider.<br><br><ul> <li> Slide to the right if you think the gem is very likely to be their goal </li> <li> Slide to the middle if you're unsure </li> <li> Slide to the left if you think the gem is unlikely to be their goal </li> </ul> Please move each slider to reflect your assessment. You must move all sliders to proceed."
           },
           {
             "type": "scenario",
             "config": {
               "task_name": "tutorial_test",
               "scenario_id": 0,
-              "input_type": "text",
-              "text_sections": [
-                {
-                  "title": "Background",
-                  "content": "In this simple scenario, you'll practice making a probability judgment.",
-                  "isCollapsible": true,
-                  "isInitiallyExpanded": true
-                }
-              ],
-              "commentary": "This is a practice scenario",
-              "question": "Alex is looking for a bag of rice among the 5 cabinets. Despite some searching, Alex still has not found the rice yet. After Alex searched through these cabinets, where do you think Alex now believe the bag of rice is located?",
-              "options": ["Cabinet 5", "Cabinet 4", "Cabinet 3", "Cabinet 2", "Cabinet 1"],
-              "input_method": "histogram",
-              "total_allocation": 10,
-              "randomize_order": false,
-              "discrete": false
+              "input_type": "img",
+              "source_link": "/assets/segments/t_single_2.gif",
+              "commentary": "This is a practice scenario. Watch the animation and then rate the player's goals.",
+              "question": "For each gem, use the slider to indicate how likely you think it is to be the player's goal.",
+              "options": ["Gem A", "Gem B", "Gem C"],
+              "input_method": "slider",
+              "slider_config": {
+                "min": 0,
+                "max": 100,
+                "default_value": 50,
+                "labels": [
+                  { "value": 0, "label": "Extremely unlikely" },
+                  { "value": 50, "label": "Neutral" },
+                  { "value": 100, "label": "Extremely likely" }
+                ],
+                "show_label_values": true,
+                "require_all": true
+              },
+              "randomize_order": false
             },
             "feedback": {
-              "title": "Important Feedback",
-              "content": "although many answers are possible here. One would expect Alex to not believe the rice is in cabinet 1 or 2, since she already searched those. Additionally, Alex walked towards cabinet 3, but it's possible that she's not sure. One reasonable answer could be [2,2,6,0,0]"
+              "title": "Feedback",
+              "content": "In this scenario, the player went for the red key to open the red door, making Gem A the likely goal. Gem C was also possible, as the player could have used the blue key. Gem B was unlikely because the player moved away from the yellow key needed to access it."
             }
+          }
+        ]
+      },
+      {
+        "title": "Comprehension Check",
+        "content": [
+          {
+            "type": "quiz",
+            "id": "quiz_1",
+            "question": "What is your task in this experiment?",
+            "options": [
+              "Rate how likely different gems are to be the player's goal using sliders.",
+              "Control the player to help them collect gems.",
+              "Type descriptions of what the player is thinking."
+            ],
+            "answer": 0
+          },
+          {
+            "type": "quiz",
+            "id": "quiz_2",
+            "question": "How do you indicate that a gem is very likely to be the player's goal?",
+            "options": [
+              "Move the slider toward the right (higher values).",
+              "Move the slider toward the left (lower values).",
+              "Leave the slider in the middle position."
+            ],
+            "answer": 0
+          },
+          {
+            "type": "quiz",
+            "id": "quiz_3",
+            "question": "What do the middle positions (50) on the sliders represent?",
+            "options": [
+              "You're certain the gem is the player's goal.",
+              "You're uncertain about whether the gem is the player's goal.",
+              "You're certain the gem is not the player's goal."
+            ],
+            "answer": 1
           }
         ]
       }
@@ -149,4 +173,4 @@
     ],
     "buttonText": "Complete Survey"
   }
-} 
+}
