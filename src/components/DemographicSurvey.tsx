@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { submitDemographicData } from '@/utils/api';
 
 interface DemographicSurveyProps {
   config: {
     title: string;
-    description: string;
+    description?: string;
     questions: Array<{
       id: string;
       type: string;
       label: string;
-      required: boolean;
+      required?: boolean;
       options?: string[];
       placeholder?: string;
     }>;
-    buttonText: string;
+    buttonText?: string;
   };
   onSubmit: (responses: Record<string, string>) => void;
+  studySlug?: string;
 }
 
 export default function DemographicSurvey({ config, onSubmit }: DemographicSurveyProps) {
@@ -45,7 +45,7 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate required fields
     const newErrors: Record<string, string> = {};
     config.questions.forEach(question => {
@@ -65,28 +65,11 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
 
     setIsSubmitting(true);
     try {
-      // Submit to API - this will automatically use the participant ID from localStorage
-      const result = await submitDemographicData({
-        age: responses.age || '',
-        gender: responses.gender || '',
-        education: responses.education || '',
-        experience: responses.experience || '',
-        ...responses,
-        timestamp: new Date().toISOString()
-      });
-      
-      if (result.success) {
-        // Proceed to next step
-        onSubmit(responses);
-      } else {
-        console.error('Error submitting demographic data:', result.message);
-        // Still call onSubmit to proceed if API fails
-        onSubmit(responses);
-      }
+      // Pass demographic data to parent component for submission
+      // Parent will handle API call with study-scoped endpoint
+      await onSubmit(responses);
     } catch (error) {
       console.error('Error submitting demographic data:', error);
-      // Proceed to next step even if API fails
-      onSubmit(responses);
     } finally {
       setIsSubmitting(false);
     }
@@ -95,7 +78,7 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">{config.title}</h1>
-      <p className="text-lg mb-8">{config.description}</p>
+      {config.description && <p className="text-lg mb-8">{config.description}</p>}
       
       <form onSubmit={handleSubmit} className="space-y-6">
         {config.questions.map(question => (
@@ -145,7 +128,7 @@ export default function DemographicSurvey({ config, onSubmit }: DemographicSurve
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : config.buttonText}
+          {isSubmitting ? "Submitting..." : (config.buttonText || "Submit")}
         </button>
       </form>
     </div>

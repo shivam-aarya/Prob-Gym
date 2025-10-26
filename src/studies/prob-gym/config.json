@@ -1,0 +1,176 @@
+{
+  "study": {
+    "title": "Interpreting Agent Behavior in a Treasure Game",
+    "randomizeQuestions": true,
+    "questionsPerParticipant": 16,
+    "backend": {
+      "enabled": true,
+      "endpoint": "/api/submit"
+    }
+  },
+  "consent": {
+    "title": "Welcome to the Treasure Game Study",
+    "content": [
+      "We are conducting an experiment about how people interpret other agents' behavior in a game. Your answers will be used to inform computer science and cognitive science research.",
+      "This experiment should take about 15-18 minutes.",
+      "You will be compensated for your time at the end of the study.",
+      "Your participation is completely voluntary. You can agree to take part and later change your mind. Your decision will not be held against you."
+    ],
+    "buttonText": "I agree, begin the study"
+  },
+  "tutorial": {
+    "title": "How to Participate",
+    "pages": [
+      {
+        "title": "Introduction",
+        "content": [
+          {
+            "type": "text",
+            "value": "Welcome! <br><br> In this experiment, you will watch 16 short animations of a player in a treasure game. Your task will be to infer the player's goals from their actions."
+          }
+        ]
+      },
+      {
+        "title": "Game Rules",
+        "content": [
+          {
+            "type": "text",
+            "value": "You're watching a player <img class='caption-image' src='/studies/prob-gym/assets/segments/images/human.png'> in a treasure game.<br><br> The rules of the game are as follows: <br><ul><li> There are 4 kinds of gems on the map: <br> <img class='caption-image' src='/studies/prob-gym/assets/segments/images/gem_a.png'> <img class='caption-image' src='/studies/prob-gym/assets/segments/images/gem_b.png'> <img class='caption-image' src='/studies/prob-gym/assets/segments/images/gem_c.png'> <img class='caption-image' src='/studies/prob-gym/assets/segments/images/gem_d.png'> </li><li> The game is played on a grid of black and white squares.</li><li> The player can move only on the white squares.</li><li> The player has a full view of the map at all times.</li><li> The player's objective is to collect exactly one of the gems.</li><li> Keys are used to unlock doors of the same color (e.g. red keys <img class='caption-image' src='/studies/prob-gym/assets/segments/images/key_red.png'> unlock red doors <img class='caption-image' src='/studies/prob-gym/assets/segments/images/door_red.png'>).</li><li> Each key can only be used <strong>once</strong>. Keys disappear after use.</li></ul> Your task is to <strong>rate how likely each possible gem is to be the player's goal</strong> based on the actions you see them taking."
+          }
+        ]
+      },
+      {
+        "title": "Practice Round",
+        "content": [
+          {
+            "type": "text",
+            "value": "For each possible gem on the map, you will rate <i>how likely it is to be the player's goal</i> using a slider.<br><br><ul> <li> Slide to the right if you think the gem is very likely to be their goal </li> <li> Slide to the middle if you're unsure </li> <li> Slide to the left if you think the gem is unlikely to be their goal </li> </ul> Please move each slider to reflect your assessment. You must move all sliders to proceed."
+          },
+          {
+            "type": "scenario",
+            "config": {
+              "task_name": "tutorial_test",
+              "scenario_id": 0,
+              "input_type": "img",
+              "source_link": "/studies/prob-gym/assets/segments/t_single_2.gif",
+              "commentary": "This is a practice scenario. Watch the animation and then rate the player's goals.",
+              "question": "For each gem, use the slider to indicate how likely you think it is to be the player's goal.",
+              "options": ["Gem A", "Gem B", "Gem C"],
+              "input_method": "slider",
+              "slider_config": {
+                "min": 0,
+                "max": 100,
+                "default_value": 50,
+                "labels": [
+                  { "value": 0, "label": "Extremely unlikely" },
+                  { "value": 50, "label": "Neutral" },
+                  { "value": 100, "label": "Extremely likely" }
+                ],
+                "show_label_values": true,
+                "require_all": true
+              },
+              "randomize_order": false
+            },
+            "feedback": {
+              "title": "Feedback",
+              "content": "In this scenario, the player went for the red key to open the red door, making Gem A the likely goal. Gem C was also possible, as the player could have used the blue key. Gem B was unlikely because the player moved away from the yellow key needed to access it."
+            }
+          }
+        ]
+      },
+      {
+        "title": "Comprehension Check",
+        "content": [
+          {
+            "type": "quiz",
+            "id": "quiz_1",
+            "question": "What is your task in this experiment?",
+            "options": [
+              "Rate how likely different gems are to be the player's goal using sliders.",
+              "Control the player to help them collect gems.",
+              "Type descriptions of what the player is thinking."
+            ],
+            "answer": 0
+          },
+          {
+            "type": "quiz",
+            "id": "quiz_2",
+            "question": "How do you indicate that a gem is very likely to be the player's goal?",
+            "options": [
+              "Move the slider toward the right (higher values).",
+              "Move the slider toward the left (lower values).",
+              "Leave the slider in the middle position."
+            ],
+            "answer": 0
+          },
+          {
+            "type": "quiz",
+            "id": "quiz_3",
+            "question": "What do the middle positions (50) on the sliders represent?",
+            "options": [
+              "You're certain the gem is the player's goal.",
+              "You're uncertain about whether the gem is the player's goal.",
+              "You're certain the gem is not the player's goal."
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    ],
+    "buttonText": "Start Study"
+  },
+  "demographic": {
+    "title": "Demographic Information",
+    "description": "Please help us by providing some demographic information. This will help us better understand our study results.",
+    "questions": [
+      {
+        "id": "prolific_id",
+        "type": "text",
+        "label": "Please enter your Prolific ID",
+        "required": true,
+        "placeholder": "Enter your Prolific ID"
+      },
+      {
+        "id": "age",
+        "type": "select",
+        "label": "What is your age?",
+        "required": true,
+        "options": [
+          "18-24",
+          "25-34",
+          "35-44",
+          "45-54",
+          "55-64",
+          "65+"
+        ]
+      },
+      {
+        "id": "gender",
+        "type": "select",
+        "label": "What is your gender?",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Non-binary",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "education",
+        "type": "select",
+        "label": "What is your highest level of education?",
+        "required": true,
+        "options": [
+          "High school or less",
+          "Some college",
+          "Bachelor's degree",
+          "Master's degree",
+          "Doctoral degree",
+          "Prefer not to say"
+        ]
+      }
+    ],
+    "buttonText": "Complete Survey"
+  }
+}
