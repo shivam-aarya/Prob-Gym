@@ -34,24 +34,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     const root = document.documentElement;
-    
+
     // Remove both classes and add the new one
     root.classList.remove('light', 'dark');
     root.classList.add(newTheme);
-    
+
     // Update state and localStorage
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
   };
 
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return null;
-  }
-
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      {mounted ? children : <div style={{ visibility: 'hidden' }}>{children}</div>}
     </ThemeContext.Provider>
   );
 } 

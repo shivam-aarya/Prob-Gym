@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { StudyConfig, TextSection } from '@/types/study';
-import ThemeToggle from './ThemeToggle';
 import { useTheme } from './ThemeProvider';
 import ReplayableGif from './ReplayableGif';
 import { useStudy } from '@/contexts/StudyContext';
@@ -75,7 +74,6 @@ export default function Layout({ children, config }: LayoutProps) {
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      <ThemeToggle />
       <div className="container mx-auto px-4 py-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100vh-8rem)]">
           {/* Left Column - Scenario Info and Content */}

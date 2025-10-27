@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Navbar } from "@/components/Navbar";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "User Study Platform",
-  description: "A platform for conducting user studies",
+  title: "CogGym - Cognitive Science Research Platform",
+  description: "A large-scale, collaborative platform where artificial intelligence meets cognitive science",
 };
 
 export default function RootLayout({
@@ -24,10 +25,10 @@ export default function RootLayout({
             try {
               const root = document.documentElement;
               const storedTheme = localStorage.getItem('theme');
-              
+
               // Remove any existing theme classes
               root.classList.remove('light', 'dark');
-              
+
               // Set theme based on stored preference or system preference
               if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 root.classList.add('dark');
@@ -41,8 +42,9 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${inter.className} transition-colors duration-200`}>
+      <body className={`${inter.className} bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-200`}>
         <ThemeProvider>
+          <Navbar />
           {children}
         </ThemeProvider>
       </body>
