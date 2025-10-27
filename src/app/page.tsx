@@ -277,7 +277,8 @@ export default function HomePage() {
           )}
         </div>
 
-        {/* API Documentation Section */}
+        {/* API Documentation Section - TEMPORARILY HIDDEN */}
+        {/*
         <div className="mt-24 mb-16" id="api-docs">
           <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 md:p-12 border border-blue-100 dark:border-gray-700">
             <div className="max-w-3xl mx-auto text-center">
@@ -310,8 +311,10 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        */}
 
-        {/* Contact Section */}
+        {/* Contact Section - TEMPORARILY HIDDEN */}
+        {/*
         <div className="mt-16 mb-12" id="contact">
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 md:p-12 border border-gray-200 dark:border-gray-700 shadow-sm">
             <div className="max-w-3xl mx-auto text-center">
@@ -368,6 +371,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        */}
       </div>
     </div>
   );
