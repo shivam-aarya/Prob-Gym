@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2. Config Schema (config.json)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        th, td { border: 1px solid #e2e8f0; padding: 0.75rem 1rem; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; font-weight: 600; }
+        pre { background-color: #f1f5f9; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-top: 1rem; margin-bottom: 1rem; }
+        code { font-family: 'Courier New', Courier, monospace; }
+        .prose h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .prose h2 { font-size: 1.875rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .prose h3 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
+        .prose h4 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .prose p, .prose ul { margin-bottom: 1.25rem; line-height: 1.75; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; }
+        .prose a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .prose a:hover { text-decoration: underline; }
+        .prose code { background-color: #f1f5f9; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        .sidebar { width: 250px; position: fixed; left: 0; top: 0; height: 100vh; overflow-y: auto; background-color: #1f2937; }
+        .content-wrapper { margin-left: 250px; }
+        .nav-link { display: block; padding: 0.75rem 1.5rem; color: #d1d5db; text-decoration: none; border-left: 3px solid transparent; }
+        .nav-link:hover { background-color: #374151; color: white; }
+        .nav-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; font-weight: 600; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .content-wrapper { margin-left: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <nav class="sidebar">
+        <div class="py-4">
+            <a href="overview.html" class="nav-link">1. Overview</a>
+            <a href="config_schema.html" class="nav-link active">2. Config Schema (config.json)</a>
+            <a href="trial_schema.html" class="nav-link">3. Trial Schema (stimuli.jsonl)</a>
+            <a href="instruction_schema.html" class="nav-link">4. Instruction Schema</a>
+            <a href="human_data_schema.html" class="nav-link">5. Human Data Schema</a>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+    <div class="container mx-auto max-w-4xl p-6 md:p-12 bg-white shadow-lg rounded-lg my-12 prose prose-lg">
+
+        <h1>2. File Specification: Config Schema (<code>config.json</code>)</h1>
+        <p>The <code>config.json</code> file provides high-level metadata about the experiment and defines the overall structure (or "flow") of the trials presented to the participant.</p>
+
+        <section>
+            <h2>2.1. Metadata</h2>
+            <p>These top-level keys describe the study and are used for dataset indexing and citation.</p>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>experimentName</code></td>
+                            <td>String</td>
+                            <td>The full title of the experiment or study.</td>
+                        </tr>
+                        <tr>
+                            <td><code>description</code></td>
+                            <td>String</td>
+                            <td>A brief paragraph describing the task.</td>
+                        </tr>
+                        <tr>
+                            <td><code>paperDOI</code></td>
+                            <td>String</td>
+                            <td>The DOI link to the original publication (e.g., "https://doi.org/...").</td>
+                        </tr>
+                        <tr>
+                            <td><code>taskType</code></td>
+                            <td>Array of Strings</td>
+                            <td>Keywords describing the cognitive task (e.g., "Social Cognition", "Decision Making").</td>
+                        </tr>
+                        <tr>
+                            <td><code>responseType</code></td>
+                            <td>Array of Strings</td>
+                            <td>All response types used, e.g., <code>["multi-choice", "slider", "free-text"]</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>contributors</code></td>
+                            <td>Array of Strings</td>
+                            <td>List of researcher names who prepared the data.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>2.2. Experiment Flow (<code>experimentFlow</code>)</h2>
+            <p>To control the order and grouping of multiple trials, a nested <code>experimentFlow</code> object is used. This defines the overall flow of the experiment.</p>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>blocks</code></td>
+                            <td>Array of Arrays of Strings</td>
+                            <td>A nested array. Each inner array is a "block" of trials. Each string is a <code>stimuli_id</code> from <code>stimuli.jsonl</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>block_randomization</code></td>
+                            <td>Boolean</td>
+                            <td>If <code>true</code>, the order of the "blocks" (the inner arrays) is randomized for each participant.</td>
+                        </tr>
+                        <tr>
+                            <td><code>stimuli_randomization</code></td>
+                            <td>Boolean</td>
+                            <td>If <code>true</code>, the order of the trial <code>stimuli_id</code>s <em>within</em> each block is randomized.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>2.2.1. Example <code>experimentFlow</code></h3>
+            <pre><code>"experimentFlow": {
+  "blocks": [
+    [ "trial_1_1", "trial_1_2", "trial_1_3" ],
+    [ "trial_2_1", "trial_2_2" ]
+  ],
+  "block_randomization": true,
+  "stimuli_randomization": false
+}</code></pre>
+            <p>In this example:</p>
+            <ul>
+                <li>There are two blocks of trials.</li>
+                <li>Because <code>block_randomization</code> is <code>true</code>, the experiment will randomly present either Block 1 (<code>["trial_1_1", ...]</code>) or Block 2 (<code>["trial_2_1", ...]</code>) first.</li>
+                <li>Because <code>stimuli_randomization</code> is <code>false</code>, the trials <em>within</em> each block will always appear in their specified order.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>2.3. Full <code>config.json</code> Example</h2>
+            <p>Here is what a complete <code>config.json</code> file looks like, combining the metadata and the experiment flow. The <code>stimuli_id</code> strings (e.g., <code>"trial_1_1"</code>) in the <code>blocks</code> array refer to the trial objects defined in your <a href="trial_schema.html">Trial Schema (<code>stimuli.jsonl</code>)</a> file.</p>
+            <pre><code>{
+  "experimentName": "Epistemic Language Understanding",
+  "description": "Participants observe short animations and answer questions about the agent's goals and beliefs.",
+  "paperDOI": "https://doi.org/10.1111/example.doi.12345",
+  "taskType": [
+    "Social Cognition", 
+    "Theory of Mind"
+  ],
+  "responseType": [
+    "multi-choice",
+    "single-slider"
+  ],
+  "contributors": [
+    "Jane Doe",
+    "John Smith"
+  ],
+  "experimentFlow": {
+    "blocks": [
+      [ "trial_1_1", "trial_1_2", "trial_1_3" ],
+      [ "trial_2_1", "trial_2_2", "trial_2_3", "trial_2_4" ]
+    ],
+    "block_randomization": true,
+    "stimuli_randomization": false
+  }
+}</code></pre>
+        </section>
+
+    </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Standardization Manual for CogGym</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        th { background-color: #f8fafc; font-weight: 600; }
+        pre {
+            background-color: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        code { font-family: 'Courier New', Courier, monospace; }
+        .prose h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .prose h2 { font-size: 1.875rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .prose h3 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
+        .prose h4 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .prose p, .prose ul { margin-bottom: 1.25rem; line-height: 1.75; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; }
+        .prose a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .prose a:hover { text-decoration: underline; }
+        .prose code {
+            background-color: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+        }
+        .sidebar { width: 250px; position: fixed; left: 0; top: 0; height: 100vh; overflow-y: auto; background-color: #1f2937; }
+        .content-wrapper { margin-left: 250px; }
+        .nav-link { display: block; padding: 0.75rem 1.5rem; color: #d1d5db; text-decoration: none; border-left: 3px solid transparent; }
+        .nav-link:hover { background-color: #374151; color: white; }
+        .nav-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; font-weight: 600; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .content-wrapper { margin-left: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <nav class="sidebar">
+        <div class="py-4">
+            <a href="overview.html" class="nav-link active">1. Overview</a>
+            <a href="config_schema.html" class="nav-link">2. Config Schema (config.json)</a>
+            <a href="trial_schema.html" class="nav-link">3. Trial Schema (stimuli.jsonl)</a>
+            <a href="instruction_schema.html" class="nav-link">4. Instruction Schema</a>
+            <a href="human_data_schema.html" class="nav-link">5. Human Data Schema</a>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+    <div class="container mx-auto max-w-4xl p-6 md:p-12 bg-white shadow-lg rounded-lg my-12 prose prose-lg">
+
+        <h1>1. Data Standardization Manual for CogGym</h1>
+        
+        <p>This document outlines the standardized file structure and JSON schemas required for submitting a dataset to the CogGym benchmark. The goal is to create a consistent, machine-readable format for diverse cognitive science experiments.</p>
+        
+        <p>This guide is structured to follow the logical components of an experiment:</p>
+        <ul>
+            <li><a href="config_schema.html"><strong>2. Config Schema (config.json)</strong></a>: How to define the experiment's metadata and the flow of trials.</li>
+            <li><a href="trial_schema.html"><strong>3. Trial Schema (stimuli.jsonl)</strong></a>: How to define what a participant sees (stimuli) and is asked (queries).</li>
+            <li><a href="instruction_schema.html"><strong>4. Instruction Schema (instruction.jsonl)</strong></a>: How to define the instructions and quizzes shown before the experiment.</li>
+            <li><a href="human_data_schema.html"><strong>5. Human Data Schema</strong></a>: How to format the anonymized participant responses.</li>
+        </ul>
+
+        <h2>1.2. Directory Structure</h2>
+        <p>Each dataset must be contained within a single directory, named according to the convention below. A study may have multiple experiments, each in its own subdirectory (exp1, exp2, etc.). If there is only one experiment, it should still be placed in an <code>exp1</code> subdirectory.</p>
+        <pre><code>[DatasetName]/
+├── exp1/  (or exp1, exp2, exp3, etc. if multiple experiments)
+│   ├── stimuli.jsonl
+│   ├── config.json
+│   ├── instruction.jsonl
+│   ├── human_data_ind.json
+│   ├── human_data_mean.json
+│   └── assets/
+│       ├── stimulus_image_01.png
+│       ├── stimulus_video_01.mp4
+│       └── ...
+├── exp2/  (optional, if study has multiple experiments)
+│   ├── stimuli.jsonl
+│   ├── config.json
+│   └── ...
+</code></pre>
+        
+        <h2>1.3. Naming Convention (Folder Name)</h2>
+        <p>The name of the root folder (<code>[DatasetName]</code>) should follow the following convention: <code>[AuthorLastName][Year][FirstNonArticleWordOfTitle]</code></p>
+        <ul>
+            <li><strong>[AuthorLastName]</strong>: The last name of the first author.</li>
+            <li><strong>[Year]</strong>: The four-digit publication year.</li>
+            <li><strong>[FirstNonArticleWordOfTitle]</strong>: The first word of the paper's title that is not an article (e.g., "A", "An", "The").</li>
+        </ul>
+        <p><strong>Examples:</strong></p>
+        <ul>
+            <li><strong>Paper:</strong> "Understanding Epistemic Language with a Language-augmented Bayesian Theory of Mind" (Ying et al., 2025)</li>
+            <li><strong>Folder Structure:</strong>
+                <pre><code>Ying2025Understanding/
+├── exp1/
+│   ├── stimuli.jsonl
+│   ├── config.json
+│   ├── instruction.jsonl
+│   └── ...
+└── exp2/
+    ├── stimuli.jsonl
+    ├── config.json
+    └── ...</code></pre>
+            </li>
+        </ul>
+        <ul>
+            <li><strong>Paper:</strong> "A Minimal Theory of Mind for Social Agents" (Rabinowitz et al., 2018)</li>
+            <li><strong>Folder Structure:</strong> <code>Rabinowitz2018Minimal/</code> with at minimum an <code>exp1/</code> subdirectory</li>
+        </ul>
+
+        <h2>1.4. File Summary</h2>
+        <p>Each experiment subdirectory (exp1, exp2, etc.) must contain the following files:</p>
+        <ul>
+            <li><a href="trial_schema.html"><code>stimuli.jsonl</code></a>: Definitions for all stimuli and experimental trials.</li>
+            <li><a href="config_schema.html"><code>config.json</code></a>: Core configuration, metadata, and experiment flow for the experiment.</li>
+            <li><a href="instruction_schema.html"><code>instruction.jsonl</code></a>: Defines the pre-experiment instruction and quiz steps.</li>
+            <li><a href="human_data_schema.html"><code>human_data_ind.json</code> / <code>human_data_mean.json</code></a>: Anonymized human subject data.</li>
+            <li><code>assets/</code> (Optional Folder): This folder is required if and only if the experiment uses non-textual stimuli (e.g., images, audio, video).</li>
+        </ul>
+
+        <h2>1.5. File Format Specifications</h2>
+        <p>The following sections detail the required structure for each file. Please refer to them to ensure your files are compliant.</p>
+        
+        <h3><a href="config_schema.html">1.5.1. Config Schema (config.json)</a></h3>
+        <p>Provides high-level metadata about the experiment (name, description, DOI) and controls the experiment flow (e.g., block order, randomization). See <a href="config_schema.html">Section 2</a> for the full specification.</p>
+
+        <h3><a href="trial_schema.html">1.5.2. Trial Schema (stimuli.jsonl)</a></h3>
+        <p>Defines individual experimental trials, including stimuli (images, videos) and the questions asked (sliders, multiple-choice, etc.). See <a href="trial_schema.html">Section 3</a> for the full specification.</p>
+
+        <h3><a href="instruction_schema.html">1.5.3. Instruction Schema (instruction.jsonl)</a></h3>
+        <p>Defines the sequence of instruction pages, practice trials, and comprehension quizzes presented to the participant before the main task. See <a href="instruction_schema.html">Section 4</a> for the full specification.</p>
+
+        <h3><a href="human_data_schema.html">1.5.4. Human Data Schema</a></h3>
+        <p>Specifies the format for both individual participant data (<code>human_data_ind.json</code>) and aggregated mean data (<code>human_data_mean.json</code>). See <a href="human_data_schema.html">Section 5</a> for the full specification.</p>
+        
+    </div>
+    </div>
+
+</body>
+</html>
