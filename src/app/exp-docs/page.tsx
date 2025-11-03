@@ -741,39 +741,6 @@ export default function ExperimentDocsPage() {
 // }`}</code>
                     </pre>
 
-                    <h5 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-2">Example with sampling_size:</h5>
-                    <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700 mb-3">
-                      <code className="text-xs text-gray-800 dark:text-gray-200">{`{
-  "prompt": "Please rate the following statements about the agent's initial beliefs:",
-  "type": "multi-slider",
-  "tag": "statement_rating",
-  "option": [
-    "The player initially believed that box 3 contained a blue key.",
-    "The player initially believed that box 1 and 2 contained no blue key.",
-    "The player initially believed that box 1 might have the blue key.",
-    "The player initially believed the blue key was not in box 2.",
-    "The player initially thought that there may have been a key in box 2."
-  ],
-  "slider_config": {
-    "min": 1,
-    "max": 7,
-    "default_value": 4,
-    "labels": [
-      { "value": 1, "label": "Extremely unlikely" },
-      { "value": 7, "label": "Extremely likely" }
-    ],
-    "show_label_values": true
-  },
-  "sampling_size": 2,
-  "randomize_order": true,
-  "required": true
-}
-// With sampling_size: 2, only 2 randomly selected statements will be shown to each participant
-// Data would be saved as: "statement_rating": {
-//   "The player initially believed that box 3 contained a blue key.": 5,
-//   "The player initially thought that there may have been a key in box 2.": 3
-// }`}</code>
-                    </pre>
                     <h5 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-2">Live Demo:</h5>
                     <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md mb-3 border border-gray-200 dark:border-gray-700">
                       <p className="font-medium mb-4 text-gray-900 dark:text-white">Please rate how likely each of the following statements is to be true<span className="text-red-500">*</span></p>

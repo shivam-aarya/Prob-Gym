@@ -29,8 +29,8 @@ export default function RootLayout({
               // Remove any existing theme classes
               root.classList.remove('light', 'dark');
 
-              // Set theme based on stored preference or system preference
-              if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+              // Set theme based on stored preference, default to light
+              if (storedTheme === 'dark') {
                 root.classList.add('dark');
               } else {
                 root.classList.add('light');
