@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import ThemeImage from '@/components/ThemeImage';
 
 export default function ExperimentDocsPage() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -465,9 +466,10 @@ export default function ExperimentDocsPage() {
                 </pre>
 
                 <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">Live Demo of Full Trial</h3>
-                <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-900/50 p-6 rounded-xl border border-gray-200 dark:border-gray-700 mb-8">
-                  <img
-                    src="https://placehold.co/600x400/e2e8f0/334155?text=Example+Stimulus+Image"
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-900/50 p-6 rounded-xl border border-gray-200 dark:border-blue-500/30 dark:shadow-[0_0_20px_rgba(59,130,246,0.1)] mb-8">
+                  <ThemeImage
+                    lightSrc="https://placehold.co/600x400/e2e8f0/334155?text=Example+Stimulus+Image"
+                    darkSrc="https://placehold.co/600x400/1e293b/e2e8f0?text=Example+Stimulus+Image"
                     alt="Example Stimulus"
                     className="w-full max-w-lg mx-auto rounded-lg shadow-md mb-4"
                   />
@@ -1111,14 +1113,15 @@ export default function ExperimentDocsPage() {
                   </div>
 
                   {/* Module 2: Instruction with Image */}
-                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 rounded-xl p-6 border border-purple-100 dark:border-purple-900/30">
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 rounded-xl p-6 border border-purple-100 dark:border-purple-500/30 dark:shadow-[0_0_20px_rgba(168,85,247,0.1)]">
                     <span className="inline-block px-3 py-1 bg-purple-600 dark:bg-purple-500 text-white text-xs font-semibold rounded-full mb-4">
                       Module 2 of 4: Instruction
                     </span>
                     <div className="text-base text-gray-700 dark:text-gray-300">
                       <p className="mb-4">You will see a scene like the one below. The blue circle is the agent. The red and blue boxes are potential goals. Your task is to judge which goal the agent wants after observing its movement.</p>
-                      <img
-                        src="https://placehold.co/600x400/e2e8f0/334155?text=Example+Scene"
+                      <ThemeImage
+                        lightSrc="https://placehold.co/600x400/e2e8f0/334155?text=Example+Scene"
+                        darkSrc="https://placehold.co/600x400/1e293b/e2e8f0?text=Example+Scene"
                         alt="Example Scene"
                         className="w-full max-w-lg mx-auto rounded-lg shadow-md my-4"
                       />
@@ -1126,13 +1129,14 @@ export default function ExperimentDocsPage() {
                   </div>
 
                   {/* Module 3: Practice Trial */}
-                  <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/10 dark:to-blue-900/10 rounded-xl p-6 border border-green-100 dark:border-green-900/30">
+                  <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/10 dark:to-blue-900/10 rounded-xl p-6 border border-green-100 dark:border-green-500/30 dark:shadow-[0_0_20px_rgba(34,197,94,0.1)]">
                     <span className="inline-block px-3 py-1 bg-green-600 dark:bg-green-500 text-white text-xs font-semibold rounded-full mb-4">
                       Module 3 of 4: Practice Trial
                     </span>
-                    <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg mb-4">
-                      <img
-                        src="https://placehold.co/600x400/e2e8f0/334155?text=Example+Stimulus+Image"
+                    <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg mb-4 dark:border dark:border-gray-700/50">
+                      <ThemeImage
+                        lightSrc="https://placehold.co/600x400/e2e8f0/334155?text=Example+Stimulus+Image"
+                        darkSrc="https://placehold.co/600x400/1e293b/e2e8f0?text=Example+Stimulus+Image"
                         alt="Example Stimulus"
                         className="w-full max-w-lg mx-auto rounded-lg shadow-md mb-4"
                       />
