@@ -1062,7 +1062,16 @@ export default function ExperimentDocsPage() {
 }
 {
   "type": "test_trial",
-  "stimuli_id": "trial_agent_01",
+  "image": "assets/stimuli/demo_1.gif",
+  "commentary": "Observe the agent's action in the image above.<br><br>If more than one gem seems likely, you can select all likely gems. Remember that some keys might be hidden among the boxes.",
+  "queries": [
+    {
+      "prompt": "What is the agent's primary goal?",
+      "type": "multi-choice",
+      "options": ["Reaching the red box", "Reaching the blue box", "Looking for a key"],
+      "required": true
+    }
+  ],
   "feedback": "In this example, the player is going for the red box!"
 }
 {
@@ -1398,23 +1407,16 @@ export default function ExperimentDocsPage() {
                 <pre className="bg-gray-100 dark:bg-gray-900 p-6 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700 mb-10">
                   <code className="text-sm text-gray-800 dark:text-gray-200">{`{
   "trial_1_1": {
-    "agent_goal": [
-      { "idx": 0, "option_text": "Reaching the red box" },
-      { "idx": 1, "option_text": "Reaching the blue box" }
-    ],
-    "goal_confidence": [
-      95,
-      88
-    ]
+    "agent_goal": {
+      "agent_goal_1": [1, 2]
+    },
+    "goal_confidence": 91.5
   },
   "trial_1_2": {
-    "statement_rating": [
-      { "Statement 1": [80, 70], "Statement 2": [25, 35] }
-    ],
-    "strategy_description": [
-      "The agent seemed to be looking for the red box.",
-      "Unsure, but it moved towards the blue box first."
-    ]
+    "statement_rating": {
+      "statement_rating_1": 75,
+      "statement_rating_2": 30
+    }
   }
 }`}</code>
                 </pre>
@@ -1444,17 +1446,23 @@ export default function ExperimentDocsPage() {
                 <pre className="bg-gray-100 dark:bg-gray-900 p-6 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700">
                   <code className="text-sm text-gray-800 dark:text-gray-200">{`{
   "trial_1_1": {
-    "agent_goal": {
-      "agent_goal_1": 1,
-      "agent_goal_2": 1
-    },
-    "goal_confidence": 91.5
+    "agent_goal": [
+      [1, 2],
+      [0, 1, 2]
+    ],
+    "goal_confidence": [
+      95,
+      88
+    ]
   },
   "trial_1_2": {
-    "statement_rating": {
-      "statement_rating_1": 75,
-      "statement_rating_2": 30
-    }
+    "statement_rating": [
+      { "statement_rating_1": [80, 70], "statement_rating_2": [25, 35] }
+    ],
+    "strategy_description": [
+      "The agent seemed to be looking for the red box.",
+      "Unsure, but it moved towards the blue box first."
+    ]
   }
 }`}</code>
                 </pre>

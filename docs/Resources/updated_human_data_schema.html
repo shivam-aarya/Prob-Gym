@@ -70,8 +70,7 @@
             
             <h3>5.1.3. Example: <code>human_data_ind.json</code></h3>
             <p>This example corresponds to the query tags defined in the <a href="trial_schema.html">Trial Schema</a> examples, assuming data from 2 participants. The keys <code>"trial_1_1"</code>, <code>"agent_goal"</code>, <code>"goal_confidence"</code>, <code>"statement_rating"</code>, and <code>"strategy_description"</code> are all defined in the <code>stimuli.jsonl</code> file.</p>
-            <pre><code>{
-  "trial_1_1": {
+            <pre><code>  {"trial_1_1": {
     "agent_goal": {
       "agent_goal_1": [1, 2]
     },
@@ -83,7 +82,8 @@
       "statement_rating_2": 30
     }
   }
-}</code></pre>
+}
+</code></pre>
         </section>
 
         <section>
@@ -114,7 +114,7 @@
   },
   "trial_1_2": {
     "statement_rating": [
-      { "statement_rating_1": [80, 70], "statement_rating_2": [25, 35] }
+      { "statement_rating_1": [80, 70], "statement_rating_2": [25, 35]}
     ],
     "strategy_description": [
       "The agent seemed to be looking for the red box.",
