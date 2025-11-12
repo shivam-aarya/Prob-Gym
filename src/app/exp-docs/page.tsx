@@ -8,11 +8,11 @@ export default function ExperimentDocsPage() {
   const [activeSection, setActiveSection] = useState('overview');
 
   const sections = [
-    { id: 'overview', title: '1. Overview' },
-    { id: 'config', title: '2. Config Schema' },
-    { id: 'trial', title: '3. Trial Schema' },
-    { id: 'instruction', title: '4. Instruction Schema' },
-    { id: 'human-data', title: '5. Human Data Schema' },
+    { id: 'overview', title: 'Overview' },
+    { id: 'config', title: 'Config Schema' },
+    { id: 'trial', title: 'Trial Schema' },
+    { id: 'instruction', title: 'Instruction Schema' },
+    { id: 'human-data', title: 'Human Data Schema' },
   ];
 
   return (
@@ -179,28 +179,28 @@ export default function ExperimentDocsPage() {
                   <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
                     <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">Config Schema (config.json)</h3>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Provides high-level metadata about the experiment (name, description, DOI) and controls the experiment flow (e.g., block order, randomization). See <button onClick={() => setActiveSection('config')} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Section 2</button> for the full specification.
+                      Provides high-level metadata about the experiment (name, description, DOI) and controls the experiment flow (e.g., block order, randomization). See <button onClick={() => setActiveSection('config')} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">the Config Schema</button> for the full specification.
                     </p>
                   </div>
 
                   <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
                     <h3 className="text-xl font-semibold text-purple-600 dark:text-purple-400 mb-2">Trial Schema (stimuli.jsonl)</h3>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Defines individual experimental trials, including stimuli (images, videos) and the questions asked (sliders, multiple-choice, etc.). See <button onClick={() => setActiveSection('trial')} className="text-purple-600 dark:text-purple-400 hover:underline font-medium">Section 3</button> for the full specification.
+                      Defines individual experimental trials, including stimuli (images, videos) and the questions asked (sliders, multiple-choice, etc.). See <button onClick={() => setActiveSection('trial')} className="text-purple-600 dark:text-purple-400 hover:underline font-medium">the Trial Schema</button> for the full specification.
                     </p>
                   </div>
 
                   <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
                     <h3 className="text-xl font-semibold text-green-600 dark:text-green-400 mb-2">Instruction Schema (instruction.jsonl)</h3>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Defines the sequence of instruction pages, practice trials, and comprehension quizzes presented to the participant before the main task. See <button onClick={() => setActiveSection('instruction')} className="text-green-600 dark:text-green-400 hover:underline font-medium">Section 4</button> for the full specification.
+                      Defines the sequence of instruction pages, practice trials, and comprehension quizzes presented to the participant before the main task. See <button onClick={() => setActiveSection('instruction')} className="text-green-600 dark:text-green-400 hover:underline font-medium">the Instruction Schema</button> for the full specification.
                     </p>
                   </div>
 
                   <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5">
                     <h3 className="text-xl font-semibold text-orange-600 dark:text-orange-400 mb-2">Human Data Schema</h3>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Specifies the format for both individual participant data (<code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">human_data_ind.json</code>) and aggregated mean data (<code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">human_data_mean.json</code>). See <button onClick={() => setActiveSection('human-data')} className="text-orange-600 dark:text-orange-400 hover:underline font-medium">Section 5</button> for the full specification.
+                      Specifies the format for both individual participant data (<code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">human_data_ind.json</code>) and aggregated mean data (<code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">human_data_mean.json</code>). See <button onClick={() => setActiveSection('human-data')} className="text-orange-600 dark:text-orange-400 hover:underline font-medium">the Human Data Schema</button> for the full specification.
                     </p>
                   </div>
                 </div>
@@ -408,7 +408,7 @@ export default function ExperimentDocsPage() {
                       <tr>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm"><code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">queries</code></td>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">Array of Objects</td>
-                        <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">This is the most important part. It's an array where each object represents a single question or prompt for the user. See <strong><a href="#queries" className="text-blue-600 dark:text-blue-400 hover:underline">Section 3.2</a></strong> below for details.</td>
+                        <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">This is the most important part. It's an array where each object represents a single question or prompt for the user. See <strong><a href="#queries" className="text-blue-600 dark:text-blue-400 hover:underline">the Queries section</a></strong> below for details.</td>
                       </tr>
                       <tr>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm"><code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">delay</code></td>
@@ -556,7 +556,7 @@ export default function ExperimentDocsPage() {
                       <tr>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm"><code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">type</code></td>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">String</td>
-                        <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">The type of response widget to display. See <strong><a href="#query-types" className="text-blue-600 dark:text-blue-400 hover:underline">Section 3.2.1</a></strong> for options.</td>
+                        <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">The type of response widget to display. See <strong><a href="#query-types" className="text-blue-600 dark:text-blue-400 hover:underline">the Query Types section</a></strong> for options.</td>
                       </tr>
                       <tr>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm"><code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">tag</code></td>
@@ -576,7 +576,7 @@ export default function ExperimentDocsPage() {
                       <tr>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm"><code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">slider_config</code></td>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">Object</td>
-                        <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">Required <em>only</em> if <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">type</code> is &quot;single-slider&quot; or &quot;multi-slider&quot;. See <strong><a href="#slider-config" className="text-blue-600 dark:text-blue-400 hover:underline">Section 3.2.2</a></strong>.</td>
+                        <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">Required <em>only</em> if <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">type</code> is &quot;single-slider&quot; or &quot;multi-slider&quot;. See <strong><a href="#slider-config" className="text-blue-600 dark:text-blue-400 hover:underline">the Slider Config section</a></strong>.</td>
                       </tr>
                       <tr>
                         <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm"><code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">sampling_size</code></td>
@@ -1035,12 +1035,12 @@ export default function ExperimentDocsPage() {
                           <tr>
                             <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm"><code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">queries</code></td>
                             <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">Array of Objects</td>
-                            <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">An array of <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Query Objects</button> (as defined in <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Section 3.2</button>). These are the quiz questions. See note below.</td>
+                            <td className="border border-gray-200 dark:border-gray-700 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">An array of <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Query Objects</button> (as defined in <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">the Queries section</button>). These are the quiz questions. See note below.</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                    <p className="text-gray-700 dark:text-gray-300 mt-4 leading-relaxed"><strong>Note on Quiz Queries:</strong> Queries within a <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">comprehension_quiz</code> (usually <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">multi-choice</code>) <strong>must</strong> include an <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">answer</code> field to provide real-time feedback to the user. The <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">answer</code> field is defined in the <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Trial Schema (Section 3.2)</button>.</p>
+                    <p className="text-gray-700 dark:text-gray-300 mt-4 leading-relaxed"><strong>Note on Quiz Queries:</strong> Queries within a <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">comprehension_quiz</code> (usually <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">multi-choice</code>) <strong>must</strong> include an <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">answer</code> field to provide real-time feedback to the user. The <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">answer</code> field is defined in the <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Trial Schema</button>.</p>
                   </div>
                 </div>
 
@@ -1336,7 +1336,7 @@ export default function ExperimentDocsPage() {
 
                 <h3 className="text-xl font-semibold mt-6 mb-3 text-gray-900 dark:text-white">Stimulus Data Object Structure</h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                  Each <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">stimuli_id</code> object contains keys that <strong>must match the <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">tag</code>s</strong> defined in the trial's queries (see <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Section 3.2</button>). The value for each tag is an array, where each item in the array is the response from a single participant.
+                  Each <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">stimuli_id</code> object contains keys that <strong>must match the <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">tag</code>s</strong> defined in the trial's queries (see <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">the Queries section</button>). The value for each tag is an array, where each item in the array is the response from a single participant.
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                   For example, if there were 4 participants, each response array will contain 4 elements.
@@ -1344,7 +1344,7 @@ export default function ExperimentDocsPage() {
 
                 <h3 className="text-xl font-semibold mt-6 mb-3 text-gray-900 dark:text-white">Data Type by Query Type</h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                  The data type inside each participant's response array depends on the query <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">type</code> defined in <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">stimuli.jsonl</code> (see <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Section 3.2</button>):
+                  The data type inside each participant's response array depends on the query <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">type</code> defined in <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">stimuli.jsonl</code> (see <button onClick={() => { setActiveSection('trial'); setTimeout(() => document.getElementById('queries')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-blue-600 dark:text-blue-400 hover:underline font-medium">the Queries section</button>):
                 </p>
                 <div className="space-y-4 mb-8">
                   <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10 rounded-xl p-5 border border-blue-100 dark:border-blue-900/30">
