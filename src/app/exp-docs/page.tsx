@@ -605,7 +605,7 @@ export default function ExperimentDocsPage() {
                 <div className="space-y-10 mb-8">
                   {/* multi-choice */}
                   <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-6 bg-gradient-to-br from-blue-50/30 to-purple-50/30 dark:from-blue-900/5 dark:to-purple-900/5">
-                    <h4 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3">3.2.1.1. multi-choice</h4>
+                    <h4 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3">multi-choice</h4>
                     <p className="text-gray-700 dark:text-gray-300 mb-4">Presents a list of radio buttons from the <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">option</code> array. The user can select only one.</p>
                     <h5 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-2">JSON Example:</h5>
                     <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700 mb-3">
@@ -645,7 +645,7 @@ export default function ExperimentDocsPage() {
 
                   {/* multi-select */}
                   <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-6 bg-gradient-to-br from-purple-50/30 to-pink-50/30 dark:from-purple-900/5 dark:to-pink-900/5">
-                    <h4 className="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">3.2.1.2. multi-select</h4>
+                    <h4 className="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">multi-select</h4>
                     <p className="text-gray-700 dark:text-gray-300 mb-4">Presents a list of checkboxes from the <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">option</code> array. The user can select one or more.</p>
                     <h5 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-2">JSON Example:</h5>
                     <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700 mb-3">
@@ -666,7 +666,7 @@ export default function ExperimentDocsPage() {
 
                   {/* single-slider */}
                   <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-6 bg-gradient-to-br from-green-50/30 to-blue-50/30 dark:from-green-900/5 dark:to-blue-900/5">
-                    <h4 className="text-xl font-bold text-green-600 dark:text-green-400 mb-3">3.2.1.3. single-slider</h4>
+                    <h4 className="text-xl font-bold text-green-600 dark:text-green-400 mb-3">single-slider</h4>
                     <p className="text-gray-700 dark:text-gray-300 mb-4">Presents a single slider. Requires <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">slider_config</code>. The <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">option</code> field is not used.</p>
                     <h5 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-2">JSON Example:</h5>
                     <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700 mb-3">
@@ -713,7 +713,7 @@ export default function ExperimentDocsPage() {
 
                   {/* multi-slider */}
                   <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-6 bg-gradient-to-br from-yellow-50/30 to-orange-50/30 dark:from-yellow-900/5 dark:to-orange-900/5">
-                    <h4 className="text-xl font-bold text-orange-600 dark:text-orange-400 mb-3">3.2.1.4. multi-slider</h4>
+                    <h4 className="text-xl font-bold text-orange-600 dark:text-orange-400 mb-3">multi-slider</h4>
                     <p className="text-gray-700 dark:text-gray-300 mb-4">Presents one slider for each item in the <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">option</code> array. Requires <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">slider_config</code>. Optionally, you can use <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">sampling_size</code> to show only a random subset of options to reduce cognitive load.</p>
                     <h5 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-2">JSON Example:</h5>
                     <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700 mb-4">
@@ -816,7 +816,7 @@ export default function ExperimentDocsPage() {
 
                   {/* textbox */}
                   <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-6 bg-gradient-to-br from-pink-50/30 to-red-50/30 dark:from-pink-900/5 dark:to-red-900/5">
-                    <h4 className="text-xl font-bold text-pink-600 dark:text-pink-400 mb-3">3.2.1.5. textbox</h4>
+                    <h4 className="text-xl font-bold text-pink-600 dark:text-pink-400 mb-3">textbox</h4>
                     <p className="text-gray-700 dark:text-gray-300 mb-4">Provides a free-response text area for the user to type in an answer. The <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs">option</code> field is not used.</p>
                     <h5 className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-2">JSON Example:</h5>
                     <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700 mb-3">
@@ -843,7 +843,7 @@ export default function ExperimentDocsPage() {
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white" id="slider-config">3.2.2. Slider Config (<code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">slider_config</code>)</h3>
+                <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white" id="slider-config">Slider Config (<code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">slider_config</code>)</h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
                   This object is required for <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">single-slider</code> and <code className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-sm">multi-slider</code> types.
                 </p>
