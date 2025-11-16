@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, ReactNode } from 'react';
 import { StudyMetadata, StudyConfig } from '@/studies/types';
-import { PluginInitializer } from '@/components/PluginInitializer';
 
 /**
  * Study context interface
@@ -64,7 +63,6 @@ export function StudyProvider({ metadata, config, children }: StudyProviderProps
 
   return (
     <StudyContext.Provider value={value}>
-      <PluginInitializer studySlug={metadata.slug} />
       {children}
     </StudyContext.Provider>
   );

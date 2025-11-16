@@ -1,14 +1,15 @@
-import { scenarios as probGymScenarios } from '@/studies/prob-gym/scenarios';
+import { loadStudyScenarios } from '@/studies/loader';
 import { scenarios as legacyScenarios } from '@/data/scenarios';
 
 /**
  * Selects a random subset of scenarios based on the config settings.
  * If a previous selection is found in localStorage, it returns that instead.
+ * Now supports both file-based studies and in-memory test studies.
  *
  * @param studySlug The study slug (optional for backward compatibility)
  * @param questionsPerParticipant Number of questions per participant
  */
-export function getSelectedScenarios(studySlug?: string, questionsPerParticipant?: number) {
+export async function getSelectedScenarios(studySlug?: string, questionsPerParticipant?: number) {
   // Use study-scoped localStorage key if studySlug is provided
   const storageKey = studySlug ? `${studySlug}_selectedScenarios` : 'selectedScenarios';
 
@@ -21,10 +22,11 @@ export function getSelectedScenarios(studySlug?: string, questionsPerParticipant
     return parsed;
   }
 
-  // Select the correct scenario set based on studySlug
+  // Load scenarios using dynamic loader (supports both regular and test studies)
   let scenarios;
-  if (studySlug === 'prob-gym') {
-    scenarios = probGymScenarios;
+  if (studySlug) {
+    const loadedScenarios = await loadStudyScenarios(studySlug);
+    scenarios = loadedScenarios || legacyScenarios; // Fallback to legacy
   } else {
     // Fallback to legacy scenarios for backward compatibility
     scenarios = legacyScenarios;

@@ -1,0 +1,173 @@
+{
+  "study": {
+    "title": "Ping Pong Strength Inference (Experiment 1)",
+    "randomizeQuestions": true,
+    "questionsPerParticipant": 30,
+    "backend": {
+      "enabled": true,
+      "endpoint": "/api/submit"
+    }
+  },
+  "consent": {
+    "title": "Welcome to Ping Pong Strength Inference (Experiment 1)",
+    "content": [
+      "Participants viewed simulated tug-of-war tournaments and judged the latent strength of a highlighted player based on the outcomes.",
+      "This experiment should take about 60 minutes.",
+      "Your participation is completely voluntary. You can agree to take part and later change your mind."
+    ],
+    "buttonText": "I agree, begin the study"
+  },
+  "tutorial": {
+    "title": "How to Participate",
+    "pages": [
+      {
+        "title": "Instructions 1",
+        "content": [
+          {
+            "type": "text",
+            "value": "In each trial you will see one or more tug-of-war games from a small tournament. Teams are defined by the players shown on either side, and the crown marks the winner of a game. The objective is to judge the latent strength of the highlighted player after reviewing every game in the tournament."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 2",
+        "content": [
+          {
+            "type": "text",
+            "value": "Player strength stays constant across games, but a player may occasionally be lazy and not pull with full strength. A team's pulling power is the sum of the strengths of its members. Use the response slider at the bottom of the screen to report how strong you believe the queried player is on a scale from very weak to very strong."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 3",
+        "content": [
+          {
+            "type": "text",
+            "value": "For example, in the tournament shown below, PW and MM competed against JP and AW in Game 1. The crown indicates which team won. Here, PW and MM won against JP and AW. In Game 2, PW lost the game against JP."
+          },
+          {
+            "type": "image",
+            "src": "/studies/gerstenberg2012ping-exp1/assets/exp1_instruction.png",
+            "alt": "Tutorial image"
+          }
+        ]
+      },
+      {
+        "title": "Instructions 4",
+        "content": [
+          {
+            "type": "text",
+            "value": "Note that a player's strength remains constant throughout a tournament. For example, PW was equally strong in Game 1 and in Game 2. A player neither gets stronger nor weaker between games.\n\nHowever, each player has a certain chance of being lazy in any given game. If a player decides to be lazy, then that player doesn't pull with all their strength. For example, it's possible that PW pulled with all his strength in Game 1 but decided to be lazy in Game 2.\n\nA team's strength is determined by the sum of the strengths of its players. The team with the greater overall strength wins the game.\n\nWe will ask you a few test questions to check that you've understood how everything works."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 5",
+        "content": [
+          {
+            "type": "text",
+            "value": "Practice scenario 1: Study the tournament shown here. The next question asks about this image."
+          },
+          {
+            "type": "image",
+            "src": "/studies/gerstenberg2012ping-exp1/assets/exp1_test1.png",
+            "alt": "Tutorial image"
+          }
+        ]
+      },
+      {
+        "title": "Comprehension Check",
+        "content": [
+          {
+            "type": "quiz",
+            "id": "quiz_1",
+            "question": "Who won the above game?",
+            "options": [
+              "AA",
+              "BB"
+            ],
+            "answer": 1
+          }
+        ]
+      },
+      {
+        "title": "Instructions 7",
+        "content": [
+          {
+            "type": "text",
+            "value": "Practice scenario 2: Review this tournament carefully. The next question asks which statement must be true."
+          },
+          {
+            "type": "image",
+            "src": "/studies/gerstenberg2012ping-exp1/assets/exp1_test2.png",
+            "alt": "Tutorial image"
+          }
+        ]
+      },
+      {
+        "title": "Comprehension Check",
+        "content": [
+          {
+            "type": "quiz",
+            "id": "quiz_2",
+            "question": "Which of the following scenarios is the only one possible?",
+            "options": [
+              "EE was stronger in Game 3 than in Game 2.",
+              "EE was lazy in Game 2 but not in Game 3.",
+              "DD is stronger than CC and was not lazy in Game 1."
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    ],
+    "buttonText": "Start Study"
+  },
+  "demographic": {
+    "title": "Demographic Information",
+    "description": "Please help us by providing some demographic information.",
+    "questions": [
+      {
+        "id": "age",
+        "type": "select",
+        "label": "What is your age?",
+        "required": true,
+        "options": [
+          "18-24",
+          "25-34",
+          "35-44",
+          "45-54",
+          "55-64",
+          "65+"
+        ]
+      },
+      {
+        "id": "gender",
+        "type": "select",
+        "label": "What is your gender?",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Non-binary",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "education",
+        "type": "select",
+        "label": "What is your highest level of education?",
+        "required": false,
+        "options": [
+          "High school or less",
+          "Some college",
+          "Bachelor's degree",
+          "Master's degree",
+          "Doctoral degree",
+          "Prefer not to say"
+        ]
+      }
+    ],
+    "buttonText": "Complete Survey"
+  }
+}

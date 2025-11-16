@@ -65,15 +65,22 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
 
 export default function Layout({ children, config }: LayoutProps) {
   const { theme } = useTheme();
-  const { getAssetUrl } = useStudy();
+  const { getAssetUrl, studySlug } = useStudy();
   const isDark = theme === 'dark';
   const isGif = config.source_link?.toLowerCase().endsWith('.gif');
+  const isTestStudy = studySlug.startsWith('TEST_');
 
   // Convert source_link to use study asset path
   const assetUrl = config.source_link ? getAssetUrl(config.source_link) : '';
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      {/* Test Study Banner */}
+      {isTestStudy && (
+        <div className="bg-yellow-500 text-gray-900 px-4 py-2 text-center font-medium">
+          ⚠️ TEST STUDY PREVIEW - Data will not be saved to production database
+        </div>
+      )}
       <div className="container mx-auto px-4 py-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100vh-8rem)]">
           {/* Left Column - Scenario Info and Content */}
@@ -136,6 +143,26 @@ export default function Layout({ children, config }: LayoutProps) {
             <div className={`border-t border-gray-200 dark:border-gray-700 pt-4`}>
               <div className={`flex items-center gap-2 mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+                <span className="text-sm font-medium uppercase tracking-wider">Commentary</span>
+              </div>
+              <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                <p className={`text-lg leading-relaxed select-none ${isDark ? 'text-gray-200' : 'text-gray-800'}`}
+                   onCopy={(e) => e.preventDefault()}
+                   onCut={(e) => e.preventDefault()}
+                   onContextMenu={(e) => e.preventDefault()}
+                   dangerouslySetInnerHTML={{ __html: config.commentary }}>
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Right Column - Response Area */}
+          <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto`}>
+            <div className={`pb-4 border-b border-gray-200 dark:border-gray-700 mb-6`}>
+              <div className={`flex items-center gap-2 mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span className="text-sm font-medium uppercase tracking-wider">Question</span>
@@ -149,11 +176,7 @@ export default function Layout({ children, config }: LayoutProps) {
                 </p>
               </div>
             </div>
-          </div>
-          
-          {/* Right Column - Response Area */}
-          <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto`}>
-              {children}
+            {children}
           </div>
         </div>
       </div>

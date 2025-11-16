@@ -1,0 +1,116 @@
+{
+  "study": {
+    "title": "Experiment 1 – Ordering choices by evidence strength",
+    "randomizeQuestions": false,
+    "questionsPerParticipant": 47,
+    "backend": {
+      "enabled": true,
+      "endpoint": "/api/submit"
+    }
+  },
+  "consent": {
+    "title": "Welcome to Experiment 1 – Ordering choices by evidence strength",
+    "content": [
+      "Participants inspected 47 cards showing another person's choice between bags (candies) or sets of shocks and ranked how strongly each choice implied a preference for attribute X.",
+      "This experiment should take about 50 minutes.",
+      "Your participation is completely voluntary. You can agree to take part and later change your mind."
+    ],
+    "buttonText": "I agree, begin the study"
+  },
+  "tutorial": {
+    "title": "How to Participate",
+    "pages": [
+      {
+        "title": "Instructions 1",
+        "content": [
+          {
+            "type": "text",
+            "value": "<p>You will work with 47 cards. Each card depicts a single choice that another participant made between several options shown as vertical columns. The images are scans of the original decks (`deck_ybrrbkbl.pdf`), so the colored rectangles and bold frame match exactly what participants saw. Letters label the item types, and X always denotes the focal attribute.</p><p>Your job is to judge how strongly that observed choice suggests a preference for X. Participants in the original study laid all cards out at once and ordered them from weakest to strongest evidence.</p>"
+          }
+        ]
+      },
+      {
+        "title": "Instructions 2",
+        "content": [
+          {
+            "type": "text",
+            "value": "<p><strong>Candy (positive utility) cover story.</strong> The columns represent bags of candy. The decision maker could take exactly one bag, and the rightmost column on every card shows the bag that was actually taken (outlined in the printed version). You should rank the cards by how strongly they suggest that the chooser likes candy X relative to the other candy types. Cards can share a ranking if you believe they provide equally strong evidence.</p>"
+          }
+        ]
+      },
+      {
+        "title": "Instructions 3",
+        "content": [
+          {
+            "type": "text",
+            "value": "<p><strong>Electric shock (negative utility) cover story.</strong> The columns represent sets of electric shocks at different body locations. The participant had to accept one set, and the rightmost column is the set they ended up receiving. Rank the cards by how strongly the choice indicates that the participant finds shocks at location X tolerable relative to the other locations.</p>"
+          }
+        ]
+      },
+      {
+        "title": "Comprehension Check",
+        "content": [
+          {
+            "type": "quiz",
+            "id": "quiz_1",
+            "question": "On each card, what does the final column represent?",
+            "options": [
+              "One of the rejected options",
+              "The option the observed person actually picked",
+              "A new option you should imagine"
+            ],
+            "answer": 1
+          }
+        ]
+      }
+    ],
+    "buttonText": "Start Study"
+  },
+  "demographic": {
+    "title": "Demographic Information",
+    "description": "Please help us by providing some demographic information.",
+    "questions": [
+      {
+        "id": "age",
+        "type": "select",
+        "label": "What is your age?",
+        "required": true,
+        "options": [
+          "18-24",
+          "25-34",
+          "35-44",
+          "45-54",
+          "55-64",
+          "65+"
+        ]
+      },
+      {
+        "id": "gender",
+        "type": "select",
+        "label": "What is your gender?",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Non-binary",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "education",
+        "type": "select",
+        "label": "What is your highest level of education?",
+        "required": false,
+        "options": [
+          "High school or less",
+          "Some college",
+          "Bachelor's degree",
+          "Master's degree",
+          "Doctoral degree",
+          "Prefer not to say"
+        ]
+      }
+    ],
+    "buttonText": "Complete Survey"
+  }
+}

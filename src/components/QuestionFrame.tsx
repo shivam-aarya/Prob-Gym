@@ -14,6 +14,9 @@ const INPUT_METHOD_TO_PLUGIN: Record<string, string> = {
   'number_line': 'number-line',
   'histogram': 'histogram',
   'slider': 'constrained-slider',
+  'multi-choice': 'multiple-choice',
+  'multi-select': 'multiple-select',
+  'textbox': 'textbox',
 };
 
 export default function QuestionFrame({ config, onSubmit, previousResponses = {} }: QuestionFrameProps) {

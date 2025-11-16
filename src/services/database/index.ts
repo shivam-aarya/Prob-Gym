@@ -1,6 +1,7 @@
 import { DatabaseService } from './types';
 import { SupabaseService } from './supabase';
 import { InMemoryDatabaseService } from './memory';
+import { testStudyRegistry } from '@/services/testStudyRegistry';
 
 // Database implementation type
 export type DatabaseImplementation = 'supabase' | 'memory';
@@ -67,6 +68,24 @@ export class DatabaseFactory {
 
 // Export a singleton instance for convenience
 export const db = DatabaseFactory.getService();
+
+/**
+ * Get the appropriate database service for a study
+ * Test studies (with TEST_ prefix) always use in-memory database
+ *
+ * @param studySlug The study slug
+ * @returns A database service instance
+ */
+export function getDatabaseForStudy(studySlug?: string): DatabaseService {
+  // If no slug provided or not a test study, use the default database
+  if (!studySlug || !testStudyRegistry.isTestStudy(studySlug)) {
+    return db;
+  }
+
+  // Test studies always use in-memory database
+  // Create a new instance to ensure isolation
+  return new InMemoryDatabaseService();
+}
 
 // Export types for usage throughout the application
 export * from './types'; 

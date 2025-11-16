@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:setup": "tsx scripts/setup-database.ts"
+    "db:setup": "tsx scripts/setup-database.ts",
+    "coggym:list": "tsx scripts/coggym-adapter/index.ts list",
+    "coggym:import": "tsx scripts/coggym-adapter/index.ts import"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",

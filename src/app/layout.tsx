@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
+import { GlobalPluginInitializer } from "@/components/GlobalPluginInitializer";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -43,6 +44,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={`${inter.className} bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-200`}>
+        <GlobalPluginInitializer />
         <ThemeProvider>
           <Navbar />
           {children}
