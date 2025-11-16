@@ -30,8 +30,11 @@ export default function Scenarios() {
     }
 
     // Get the selected scenarios for this participant
-    const scenarios = getSelectedScenarios(studySlug);
-    setSelectedScenarios(scenarios);
+    const loadScenarios = async () => {
+      const scenarios = await getSelectedScenarios(studySlug);
+      setSelectedScenarios(scenarios);
+    };
+    loadScenarios();
 
     // Load saved responses from localStorage
     const savedResponses = localStorage.getItem(`${studySlug}_userResponses`);

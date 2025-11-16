@@ -5,6 +5,12 @@
  */
 
 import { pluginRegistry } from '@/components/plugins';
+import { ConstrainedSliderPlugin } from '@/studies/prob-gym/plugins/ConstrainedSliderPlugin';
+import { NumberLinePlugin } from '@/studies/prob-gym/plugins/NumberLinePlugin';
+import { HistogramPlugin } from '@/studies/prob-gym/plugins/HistogramPlugin';
+import { MultipleChoicePlugin } from '@/components/plugins/MultipleChoicePlugin';
+import { MultipleSelectPlugin } from '@/components/plugins/MultipleSelectPlugin';
+import { TextboxPlugin } from '@/components/plugins/TextboxPlugin';
 
 // Track if plugins have been registered
 let pluginsRegistered = false;
@@ -21,12 +27,7 @@ export function registerAllPlugins() {
   console.log('[registerAllPlugins] Starting synchronous plugin registration...');
 
   try {
-    // Import and register Prob-Gym plugins synchronously
-    // Note: These must be synchronous imports to work
-    const { ConstrainedSliderPlugin } = require('@/studies/prob-gym/plugins/ConstrainedSliderPlugin');
-    const { NumberLinePlugin } = require('@/studies/prob-gym/plugins/NumberLinePlugin');
-    const { HistogramPlugin } = require('@/studies/prob-gym/plugins/HistogramPlugin');
-
+    // Register Prob-Gym plugins
     const probGymPlugins = [ConstrainedSliderPlugin, NumberLinePlugin, HistogramPlugin];
 
     probGymPlugins.forEach((plugin) => {
@@ -40,11 +41,7 @@ export function registerAllPlugins() {
       }
     });
 
-    // Import and register CogGym input plugins
-    const { MultipleChoicePlugin } = require('@/components/plugins/MultipleChoicePlugin');
-    const { MultipleSelectPlugin } = require('@/components/plugins/MultipleSelectPlugin');
-    const { TextboxPlugin } = require('@/components/plugins/TextboxPlugin');
-
+    // Register CogGym input plugins
     const cogGymPlugins = [MultipleChoicePlugin, MultipleSelectPlugin, TextboxPlugin];
 
     cogGymPlugins.forEach((plugin) => {

@@ -13,7 +13,7 @@ import { testStudyRegistry } from '@/services/testStudyRegistry';
  * Triggers cleanup of expired test studies
  * Can be called manually or via cron
  */
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     const deletedCount = testStudyRegistry.cleanup();
 
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
  *
  * Get cleanup stats without running cleanup
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const stats = testStudyRegistry.getStats();
 

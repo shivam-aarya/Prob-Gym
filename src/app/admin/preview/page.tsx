@@ -294,7 +294,7 @@ export default function AdminPreviewPage() {
               <span className="sr-only">Choose experiment folder</span>
               <input
                 type="file"
-                /* @ts-ignore - webkitdirectory is not in TypeScript types */
+                /* @ts-expect-error - webkitdirectory is not in TypeScript types */
                 webkitdirectory=""
                 directory=""
                 multiple

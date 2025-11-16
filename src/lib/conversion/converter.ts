@@ -12,8 +12,8 @@ import { StudyConfig } from '@/types/study';
 export type {
   CogGymConfig,
   CogGymStimulus,
-  CogGymInstruction,
-  CogGymQuery,
+  InstructionContent,
+  Query as CogGymQuery,
 } from '../../../scripts/coggym-adapter/types';
 
 // Import conversion and parsing functions
@@ -24,11 +24,7 @@ import { validateExperiment } from '../../../scripts/coggym-adapter/utils/valida
 import { convertToMetadata } from '../../../scripts/coggym-adapter/converters/metadata';
 import { convertToScenarios } from '../../../scripts/coggym-adapter/converters/scenarios';
 import { updateAssetPaths } from '../../../scripts/coggym-adapter/generators/assets';
-import type {
-  CogGymConfig,
-  CogGymStimulus,
-  CogGymInstruction,
-} from '../../../scripts/coggym-adapter/types';
+import type { InstructionContent } from '../../../scripts/coggym-adapter/types';
 
 export interface UploadedFile {
   name: string;
@@ -47,7 +43,7 @@ export interface ConversionResult {
   studySlug: string;
   metadata?: StudyMetadata;
   scenarios?: StudyConfig[];
-  assets?: Map<string, { data: string; mimeType: string }>; // Base64-encoded assets
+  assets?: Map<string, { path: string; data: string; mimeType: string }>; // Base64-encoded assets
   logs: ConversionLogs;
 }
 
@@ -90,7 +86,7 @@ export async function convertUploadedStudy(
     logs.info.push(`   ✓ Stimuli: ${stimuli.length} trials`);
 
     // Parse instructions (optional)
-    let instructions: CogGymInstruction[] = [];
+    let instructions: InstructionContent[] = [];
     if (instructionFile) {
       instructions = parseInstructionsFromString(instructionFile.content as string);
       logs.info.push(`   ✓ Instructions: ${instructions.length} modules`);
@@ -132,7 +128,7 @@ export async function convertUploadedStudy(
     logs.info.push('');
     logs.info.push('📦 Processing assets...');
 
-    const assets = new Map<string, { data: string; mimeType: string }>();
+    const assets = new Map<string, { path: string; data: string; mimeType: string }>();
     // Find assets - they can be in 'assets/', './assets/', or 'folder/assets/'
     const assetFiles = files.filter(f =>
       f.path.includes('/assets/') || f.path.startsWith('assets/')
@@ -152,7 +148,7 @@ export async function convertUploadedStudy(
           ? pathParts.slice(assetsIndex).join('/')
           : assetFile.path;
 
-        assets.set(assetPath, { data: base64, mimeType });
+        assets.set(assetPath, { path: assetPath, data: base64, mimeType });
       } else {
         logs.warnings.push(`Asset ${assetFile.name} is not binary data, skipping`);
       }

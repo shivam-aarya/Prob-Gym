@@ -33,7 +33,7 @@ export async function copyAssets(
 
   // Also collect media URLs from instructions
   for (const instruction of instructions) {
-    if (instruction.media_url) {
+    if (instruction.type === 'instruction' && instruction.media_url) {
       for (const url of instruction.media_url) {
         mediaUrls.add(url);
       }

@@ -37,8 +37,8 @@ export default function ScenarioNavigation({
       
       if (savedResponsesJson) {
         const savedResponses: Record<number, number[]> = JSON.parse(savedResponsesJson);
-        const selectedScenarios = getSelectedScenarios();
-        
+        const selectedScenarios = await getSelectedScenarios();
+
         // Submit each saved response to the API
         for (const scenarioId of Object.keys(savedResponses).map(Number)) {
           const scenarioData = selectedScenarios.find((s: StudyConfig) => s.scenario_id === scenarioId);
