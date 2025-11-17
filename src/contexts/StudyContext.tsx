@@ -52,10 +52,19 @@ export function StudyProvider({ metadata, config, children }: StudyProviderProps
       if (path.startsWith(metadata.assetPath)) {
         return path;
       }
-      // If path is already absolute (starts with /), return as-is
+
+      // For absolute paths that reference assets, extract the filename
+      // This handles paths like /studies/TEST_.../assets/file.png or /assets/file.png
       if (path.startsWith('/')) {
+        // Extract filename from paths like /studies/.../assets/file.png
+        const assetsMatch = path.match(/\/assets\/(.+)$/);
+        if (assetsMatch) {
+          return `${metadata.assetPath}/${assetsMatch[1]}`;
+        }
+        // If it's an absolute path but not an asset, return as-is
         return path;
       }
+
       // Otherwise, treat as relative and prepend assetPath
       return `${metadata.assetPath}/${path}`;
     },

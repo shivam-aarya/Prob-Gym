@@ -45,6 +45,8 @@ const ContentRenderer: React.FC<{
   quizAnswers?: Record<string, number>;
   setQuizAnswers?: (answers: Record<string, number>) => void;
 }> = ({ content, onTestSubmit, showConfirmation, quizAnswers, setQuizAnswers }) => {
+  const { getAssetUrl } = useStudy();
+
   switch (content.type) {
     case 'text':
       return <div className="text-lg mb-4" dangerouslySetInnerHTML={{ __html: content.value || '' }} />;
@@ -82,9 +84,9 @@ const ContentRenderer: React.FC<{
     case 'image':
       return (
         <div className="mb-4">
-          <Image 
-            src={content.src || ''} 
-            alt={content.alt || ''} 
+          <Image
+            src={getAssetUrl(content.src || '')}
+            alt={content.alt || ''}
             width={600}
             height={450}
             className="w-full max-w-[600px] mx-auto rounded-lg shadow-md"
@@ -100,9 +102,9 @@ const ContentRenderer: React.FC<{
     case 'video':
       return (
         <div className="mb-4">
-          <video 
-            src={content.src} 
-            controls 
+          <video
+            src={getAssetUrl(content.src || '')}
+            controls
             className="w-full rounded-lg shadow-md"
           />
           {content.caption && (
@@ -117,7 +119,7 @@ const ContentRenderer: React.FC<{
         <div className="mb-4">
           <div className="relative w-full h-[400px] rounded-lg shadow-md">
             <ReplayableGif
-              src={content.src || ''}
+              src={getAssetUrl(content.src || '')}
               alt={content.alt || ''}
               className="group"
             />

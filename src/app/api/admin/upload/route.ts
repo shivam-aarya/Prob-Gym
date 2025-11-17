@@ -6,11 +6,47 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { testStudyRegistry, TestStudy } from '@/services/testStudyRegistry';
+import { testStudyRegistry, TestStudy, OriginalFile } from '@/services/testStudyRegistry';
 import {
   convertUploadedStudy,
   type UploadedFile,
 } from '@/lib/conversion/converter';
+
+/**
+ * Temporary storage for pending uploads awaiting user confirmation
+ * Maps tempId -> { study, originalFiles }
+ */
+interface PendingUpload {
+  study: TestStudy;
+  originalFiles: Map<string, OriginalFile>;
+  experimentName: string;
+  timestamp: number;
+}
+
+// Global map for pending uploads
+declare global {
+  // eslint-disable-next-line no-var
+  var pendingUploads: Map<string, PendingUpload> | undefined;
+}
+
+const pendingUploads = global.pendingUploads ?? new Map<string, PendingUpload>();
+global.pendingUploads = pendingUploads;
+
+// Export for use in confirm endpoint
+export { pendingUploads };
+export type { PendingUpload };
+
+// Clean up old pending uploads (older than 10 minutes)
+setInterval(() => {
+  const now = Date.now();
+  const TEN_MINUTES = 10 * 60 * 1000;
+  for (const [tempId, pending] of pendingUploads.entries()) {
+    if (now - pending.timestamp > TEN_MINUTES) {
+      pendingUploads.delete(tempId);
+      console.log(`[Admin Upload] Cleaned up expired pending upload: ${tempId}`);
+    }
+  }
+}, 60 * 1000); // Run every minute
 
 /**
  * Validate admin password
@@ -59,6 +95,7 @@ export async function POST(request: NextRequest) {
 
     // Extract uploaded files
     const files: UploadedFile[] = [];
+    const originalFiles: Map<string, OriginalFile> = new Map();
     let totalSize = 0;
     const MAX_TOTAL_SIZE = 50 * 1024 * 1024; // 50MB limit
 
@@ -125,7 +162,7 @@ export async function POST(request: NextRequest) {
 
         // Read file content
         let content: string | ArrayBuffer;
-        if (ext === '.json' || ext === '.jsonl') {
+        if (ext === '.json' || ext === '.jsonl' || ext === '.txt' || ext === '.md' || ext === '.csv') {
           // Text files
           content = await file.text();
         } else {
@@ -133,10 +170,23 @@ export async function POST(request: NextRequest) {
           content = await file.arrayBuffer();
         }
 
+        // Store for conversion
         files.push({
           name: file.name,
           content,
           path: key, // FormData key contains the relative path
+        });
+
+        // Store original file for download feature
+        const base64Data = content instanceof ArrayBuffer
+          ? Buffer.from(content).toString('base64')
+          : Buffer.from(content).toString('base64');
+
+        originalFiles.set(file.name, {
+          name: file.name,
+          data: base64Data,
+          type: file.type || 'application/octet-stream',
+          size: file.size,
         });
       }
     }
@@ -181,10 +231,57 @@ export async function POST(request: NextRequest) {
       ],
     };
 
-    testStudyRegistry.addStudy(testStudy);
+    // Extract experiment name from metadata for duplicate detection
+    const experimentName = result.metadata!.title || result.metadata!.slug;
+
+    // Check for duplicates
+    const existingGroup = testStudyRegistry.detectDuplicate(experimentName);
+
+    if (existingGroup) {
+      // Duplicate detected - store in pending uploads
+      const tempId = crypto.randomUUID();
+
+      pendingUploads.set(tempId, {
+        study: testStudy,
+        originalFiles,
+        experimentName,
+        timestamp: Date.now(),
+      });
+
+      // Get the latest version info
+      const latestVersion = existingGroup.versions.find(
+        v => v.id === existingGroup.latestVersionId
+      );
+
+      return NextResponse.json({
+        success: true,
+        isDuplicate: true,
+        tempId,
+        experimentName,
+        existingStudy: {
+          experimentName: existingGroup.experimentName,
+          versionCount: existingGroup.versions.length,
+          latestVersion: latestVersion ? {
+            versionNumber: latestVersion.versionNumber,
+            slug: latestVersion.slug,
+            uploadedAt: latestVersion.createdAt,
+            note: latestVersion.versionNote,
+          } : null,
+        },
+        newStudy: {
+          studySlug: result.studySlug,
+          scenarioCount: result.scenarios!.length,
+        },
+        logs: result.logs,
+      });
+    }
+
+    // No duplicate - add directly to registry
+    testStudyRegistry.addVersion(experimentName, testStudy, undefined, originalFiles);
 
     return NextResponse.json({
       success: true,
+      isDuplicate: false,
       studyId: testStudyId,
       studySlug: result.studySlug,
       scenarioCount: result.scenarios!.length,

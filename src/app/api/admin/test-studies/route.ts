@@ -23,6 +23,11 @@ export async function GET(request: NextRequest) {
       ? testStudyRegistry.getStudiesBySession(sessionId)
       : testStudyRegistry.getAllStudies();
 
+    // Get version groups (optionally filtered by session)
+    const versionGroups = sessionId
+      ? testStudyRegistry.getVersionGroupsBySession(sessionId)
+      : testStudyRegistry.getAllVersionGroups();
+
     // Get registry stats
     const stats = testStudyRegistry.getStats();
 
@@ -40,9 +45,30 @@ export async function GET(request: NextRequest) {
       previewUrl: `/studies/${study.slug}/consent`,
     }));
 
+    // Map version groups to response format
+    const versionGroupList = versionGroups.map(group => ({
+      experimentName: group.experimentName,
+      latestVersionId: group.latestVersionId,
+      versionCount: group.versions.length,
+      versions: group.versions.map(v => ({
+        id: v.id,
+        slug: v.slug,
+        versionNumber: v.versionNumber,
+        versionNote: v.versionNote,
+        scenarioCount: v.scenarios.length,
+        createdAt: v.createdAt,
+        lastAccessedAt: v.lastAccessedAt,
+        sessionId: v.sessionId,
+        hasOriginalFiles: v.originalFiles.size > 0,
+      })),
+      createdAt: group.createdAt,
+      lastAccessedAt: group.lastAccessedAt,
+    }));
+
     return NextResponse.json({
       success: true,
       studies: studyList,
+      versionGroups: versionGroupList,
       stats,
     });
   } catch (error) {

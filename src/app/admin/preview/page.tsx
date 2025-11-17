@@ -9,24 +9,53 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { VersionConfirmationModal } from '@/components/admin/VersionConfirmationModal';
+import { VersionAccordion } from '@/components/admin/VersionAccordion';
 
-interface TestStudy {
+interface Version {
   id: string;
   slug: string;
-  title: string;
+  versionNumber: number;
+  versionNote?: string;
   scenarioCount: number;
-  assetCount: number;
-  createdAt: string;
-  lastAccessedAt: string;
-  timeUntilExpiration: number | null;
+  createdAt: Date;
+  lastAccessedAt: Date;
   sessionId: string;
-  previewUrl: string;
+  hasOriginalFiles: boolean;
+}
+
+interface VersionGroup {
+  experimentName: string;
+  latestVersionId: string;
+  versionCount: number;
+  versions: Version[];
+  createdAt: Date;
+  lastAccessedAt: Date;
 }
 
 interface ConversionLogs {
   info: string[];
   warnings: string[];
   errors: string[];
+}
+
+interface DuplicateInfo {
+  tempId: string;
+  experimentName: string;
+  existingStudy: {
+    experimentName: string;
+    versionCount: number;
+    latestVersion: {
+      versionNumber: number;
+      slug: string;
+      uploadedAt: Date;
+      note?: string;
+    } | null;
+  };
+  newStudy: {
+    studySlug: string;
+    scenarioCount: number;
+  };
 }
 
 export default function AdminPreviewPage() {
@@ -51,10 +80,14 @@ export default function AdminPreviewPage() {
   const [conversionLogs, setConversionLogs] = useState<ConversionLogs | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<{ slug: string; previewUrl: string } | null>(null);
 
-  const [testStudies, setTestStudies] = useState<TestStudy[]>([]);
+  const [versionGroups, setVersionGroups] = useState<VersionGroup[]>([]);
   const [loadingStudies, setLoadingStudies] = useState(false);
 
-  // Fetch test studies
+  // Duplicate detection state
+  const [duplicateInfo, setDuplicateInfo] = useState<DuplicateInfo | null>(null);
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
+
+  // Fetch version groups
   const fetchTestStudies = useCallback(async () => {
     if (!isAuthenticated) return;
 
@@ -64,10 +97,13 @@ export default function AdminPreviewPage() {
       const data = await res.json();
 
       if (data.success) {
-        setTestStudies(data.studies);
+        // Fetch version groups
+        if (data.versionGroups) {
+          setVersionGroups(data.versionGroups);
+        }
       }
     } catch (error) {
-      console.error('Failed to fetch test studies:', error);
+      console.error('Failed to fetch version groups:', error);
     } finally {
       setLoadingStudies(false);
     }
@@ -163,12 +199,26 @@ export default function AdminPreviewPage() {
 
       if (data.success) {
         setConversionLogs(data.logs);
-        setUploadSuccess({
-          slug: data.studySlug,
-          previewUrl: data.previewUrl,
-        });
-        // Refresh test studies list
-        fetchTestStudies();
+
+        // Check if duplicate detected
+        if (data.isDuplicate) {
+          // Show confirmation modal
+          setDuplicateInfo({
+            tempId: data.tempId,
+            experimentName: data.experimentName,
+            existingStudy: data.existingStudy,
+            newStudy: data.newStudy,
+          });
+          setShowDuplicateModal(true);
+        } else {
+          // No duplicate - show success
+          setUploadSuccess({
+            slug: data.studySlug,
+            previewUrl: data.previewUrl,
+          });
+          // Refresh test studies list
+          fetchTestStudies();
+        }
       } else {
         setConversionLogs(data.logs);
       }
@@ -186,37 +236,121 @@ export default function AdminPreviewPage() {
     }
   };
 
-  // Handle delete study
-  const handleDeleteStudy = async (studyId: string) => {
-    if (!confirm('Are you sure you want to delete this test study?')) return;
+  // Handle duplicate confirmation
+  const handleDuplicateConfirm = async (action: 'new-version' | 'replace', versionNote?: string) => {
+    if (!duplicateInfo) return;
+
+    setShowDuplicateModal(false);
+    setUploadProgress('Creating version...');
+    setUploading(true);
 
     try {
-      const res = await fetch(`/api/admin/test-studies/${studyId}`, {
-        method: 'DELETE',
+      const res = await fetch('/api/admin/upload/confirm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tempId: duplicateInfo.tempId,
+          action,
+          versionNote,
+        }),
       });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setUploadSuccess({
+          slug: data.studySlug,
+          previewUrl: data.previewUrl,
+        });
+        fetchTestStudies();
+      } else {
+        alert(data.error || 'Failed to create version');
+      }
+    } catch (error) {
+      console.error('Version confirmation failed:', error);
+      alert('Failed to create version');
+    } finally {
+      setUploading(false);
+      setUploadProgress('');
+      setDuplicateInfo(null);
+    }
+  };
+
+  const handleDuplicateCancel = () => {
+    setShowDuplicateModal(false);
+    setDuplicateInfo(null);
+  };
+
+  // Version management handlers
+  const handleDeleteVersion = async (experimentName: string, versionId: string) => {
+    try {
+      const res = await fetch(
+        `/api/admin/test-studies/versions/${encodeURIComponent(experimentName)}/${versionId}`,
+        { method: 'DELETE' }
+      );
 
       if (res.ok) {
         fetchTestStudies();
       } else {
-        alert('Failed to delete study');
+        alert('Failed to delete version');
       }
     } catch (error) {
-      console.error('Delete failed:', error);
-      alert('Failed to delete study');
+      console.error('Delete version failed:', error);
+      alert('Failed to delete version');
     }
   };
 
-  // Format time remaining
-  const formatTimeRemaining = (ms: number | null) => {
-    if (ms === null || ms <= 0) return 'Expiring soon';
+  const handleDownloadVersion = async (experimentName: string, versionId: string) => {
+    try {
+      const res = await fetch(
+        `/api/admin/test-studies/versions/${encodeURIComponent(experimentName)}/${versionId}/download`
+      );
 
-    const minutes = Math.floor(ms / 60000);
-    const hours = Math.floor(minutes / 60);
+      if (!res.ok) {
+        alert('Failed to download files');
+        return;
+      }
 
-    if (hours > 0) {
-      return `${hours}h ${minutes % 60}m`;
+      // Download the ZIP file
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${experimentName}_${versionId.slice(0, 8)}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Failed to download files');
     }
-    return `${minutes}m`;
+  };
+
+  const handleUpdateVersionNote = async (experimentName: string, versionId: string, note: string) => {
+    try {
+      const res = await fetch(
+        `/api/admin/test-studies/versions/${encodeURIComponent(experimentName)}/${versionId}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ versionNote: note }),
+        }
+      );
+
+      if (res.ok) {
+        fetchTestStudies();
+      } else {
+        alert('Failed to update version note');
+      }
+    } catch (error) {
+      console.error('Update note failed:', error);
+      alert('Failed to update version note');
+    }
+  };
+
+  const handlePreviewVersion = (slug: string) => {
+    window.open(`/studies/${slug}/consent`, '_blank');
   };
 
   // Login screen
@@ -386,51 +520,56 @@ export default function AdminPreviewPage() {
             </button>
           </div>
 
-          {testStudies.length === 0 ? (
+          {versionGroups.length === 0 ? (
             <p className="text-gray-500 dark:text-gray-400 text-center py-8">
               No active test studies. Upload an experiment folder to get started.
             </p>
           ) : (
-            <div className="space-y-4">
-              {testStudies.map((study) => (
+            <div className="space-y-6">
+              {/* Version Groups */}
+              {versionGroups.map((group) => (
                 <div
-                  key={study.id}
-                  className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                  key={group.experimentName}
+                  className="border border-gray-200 dark:border-gray-700 rounded-lg p-4"
                 >
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-                        {study.title}
-                      </h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        {study.scenarioCount} scenarios • {study.assetCount} assets
-                      </p>
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                        Expires in: {formatTimeRemaining(study.timeUntilExpiration)}
-                      </p>
-                    </div>
-
-                    <div className="flex gap-2 ml-4">
-                      <Link
-                        href={study.previewUrl}
-                        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-md transition-colors"
-                      >
-                        Preview
-                      </Link>
-                      <button
-                        onClick={() => handleDeleteStudy(study.id)}
-                        className="bg-red-600 hover:bg-red-700 text-white text-sm font-medium py-2 px-4 rounded-md transition-colors"
-                      >
-                        Delete
-                      </button>
-                    </div>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                      {group.experimentName}
+                    </h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                      {group.versionCount} version{group.versionCount !== 1 ? 's' : ''}
+                    </p>
                   </div>
+
+                  <VersionAccordion
+                    experimentName={group.experimentName}
+                    versions={group.versions}
+                    latestVersionId={group.latestVersionId}
+                    onDelete={(versionId) => handleDeleteVersion(group.experimentName, versionId)}
+                    onDownload={(versionId) => handleDownloadVersion(group.experimentName, versionId)}
+                    onPreview={handlePreviewVersion}
+                    onUpdateNote={(versionId, note) =>
+                      handleUpdateVersionNote(group.experimentName, versionId, note)
+                    }
+                  />
                 </div>
               ))}
             </div>
           )}
         </div>
       </div>
+
+      {/* Duplicate Confirmation Modal */}
+      {duplicateInfo && (
+        <VersionConfirmationModal
+          isOpen={showDuplicateModal}
+          experimentName={duplicateInfo.experimentName}
+          existingStudy={duplicateInfo.existingStudy}
+          newStudy={duplicateInfo.newStudy}
+          onConfirm={handleDuplicateConfirm}
+          onCancel={handleDuplicateCancel}
+        />
+      )}
     </div>
   );
 }

@@ -65,22 +65,15 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
 
 export default function Layout({ children, config }: LayoutProps) {
   const { theme } = useTheme();
-  const { getAssetUrl, studySlug } = useStudy();
+  const { getAssetUrl } = useStudy();
   const isDark = theme === 'dark';
   const isGif = config.source_link?.toLowerCase().endsWith('.gif');
-  const isTestStudy = studySlug.startsWith('TEST_');
 
   // Convert source_link to use study asset path
   const assetUrl = config.source_link ? getAssetUrl(config.source_link) : '';
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      {/* Test Study Banner */}
-      {isTestStudy && (
-        <div className="bg-yellow-500 text-gray-900 px-4 py-2 text-center font-medium">
-          ⚠️ TEST STUDY PREVIEW - Data will not be saved to production database
-        </div>
-      )}
       <div className="container mx-auto px-4 py-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100vh-8rem)]">
           {/* Left Column - Scenario Info and Content */}

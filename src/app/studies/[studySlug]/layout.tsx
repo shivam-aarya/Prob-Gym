@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import { loadStudyConfig } from '@/studies/loader';
 import { StudyProvider } from '@/contexts/StudyContext';
+import { TestStudyBanner } from '@/components/admin/TestStudyBanner';
 
 // Enable dynamic rendering for test studies in production
 export const dynamic = 'force-dynamic';
@@ -74,9 +75,14 @@ export default async function StudyLayout({
     };
   }
 
+  // Check if this is a test study
+  const isTestStudy = studySlug.startsWith('TEST_');
+
   return (
     <StudyProvider metadata={metadata} config={config}>
       <div className="min-h-screen bg-white dark:bg-gray-900">
+        {/* Test Study Preview Banner */}
+        {isTestStudy && <TestStudyBanner />}
         {children}
       </div>
     </StudyProvider>
