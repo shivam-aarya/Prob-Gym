@@ -3,6 +3,10 @@ import { notFound } from 'next/navigation';
 import { loadStudyMetadata, loadStudyConfig } from '@/studies/loader';
 import { StudyProvider } from '@/contexts/StudyContext';
 
+// Enable dynamic rendering for test studies in production
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 /**
  * Study layout
  * Loads study metadata and configuration, provides StudyContext
