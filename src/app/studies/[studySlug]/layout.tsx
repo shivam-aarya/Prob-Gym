@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
-import { loadStudyMetadata, loadStudyConfig } from '@/studies/loader';
+import { headers } from 'next/headers';
+import { loadStudyConfig } from '@/studies/loader';
 import { StudyProvider } from '@/contexts/StudyContext';
 
 // Enable dynamic rendering for test studies in production
@@ -21,12 +22,33 @@ export default async function StudyLayout({
 }) {
   const { studySlug } = await params;
 
-  // Get study metadata using dynamic loader (supports test studies)
-  const metadata = await loadStudyMetadata(studySlug);
+  // Get study metadata via API route (ensures we access the same registry instance)
+  // This is critical for test studies in production serverless environments
+  const headersList = await headers();
+  const host = headersList.get('host') || 'localhost:3000';
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  const baseUrl = `${protocol}://${host}`;
 
-  if (!metadata) {
+  console.log(`[StudyLayout] Fetching metadata for ${studySlug} from ${baseUrl}`);
+
+  const metadataResponse = await fetch(`${baseUrl}/api/studies/${studySlug}/metadata`, {
+    cache: 'no-store', // Don't cache test studies
+  });
+
+  if (!metadataResponse.ok) {
+    console.error(`[StudyLayout] Failed to fetch metadata: ${metadataResponse.status}`);
     notFound();
   }
+
+  const metadataResult = await metadataResponse.json();
+
+  if (!metadataResult.success || !metadataResult.metadata) {
+    console.error(`[StudyLayout] No metadata in response`);
+    notFound();
+  }
+
+  const metadata = metadataResult.metadata;
+  console.log(`[StudyLayout] Successfully loaded metadata for: ${metadata.title}`);
 
   // Load study configuration (test studies don't have config files)
   let config;
