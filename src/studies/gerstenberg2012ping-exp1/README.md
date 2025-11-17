@@ -5,7 +5,7 @@ Auto-generated study from CogGym format.
 ## Import Information
 
 - **Source**: gerstenberg2012ping/exp1
-- **Import Date**: 2025-11-16T19:21:26.630Z
+- **Import Date**: 2025-11-17T02:19:10.697Z
 - **Scenario Count**: 30
 - **Paper**: https://web.stanford.edu/~ngoodman/papers/GerstenbergGoodman2012.pdf
 

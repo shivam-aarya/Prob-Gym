@@ -123,9 +123,50 @@ Custom input components are treated as plugins:
 
 ### Study Scoping
 When adding study-scoped features:
-- Use `studySlug` in localStorage keys: `${studySlug}_${key}`
+- **CRITICAL**: Always use study-scoped localStorage utilities from `@/utils/studyStorage`
+- Never use raw `localStorage.getItem/setItem` - this causes cross-study contamination
 - Always pass `study_id` to database operations
 - Reference assets via `{study.assetPath}/{filename}` in metadata
+
+### localStorage Best Practices
+
+**IMPORTANT**: To prevent cross-study data contamination, always use the study-scoped localStorage utilities:
+
+```typescript
+import { getStudyItem, setStudyItem, removeStudyItem } from '@/utils/studyStorage';
+
+// ✅ CORRECT - Study-scoped
+const value = getStudyItem(studySlug, 'myKey');
+setStudyItem(studySlug, 'myKey', 'myValue');
+removeStudyItem(studySlug, 'myKey');
+
+// ❌ WRONG - Will contaminate across studies
+localStorage.getItem('myKey');
+localStorage.setItem('myKey', 'myValue');
+
+// ❌ WRONG - Manual scoping is error-prone
+localStorage.getItem(`${studySlug}_myKey`);
+```
+
+**Available Utilities**:
+- `getStudyItem(studySlug, key)` - Get study-scoped item
+- `setStudyItem(studySlug, key, value)` - Set study-scoped item
+- `removeStudyItem(studySlug, key)` - Remove study-scoped item
+- `clearStudyStorage(studySlug)` - Clear all items for a study
+- `getParticipantId(studySlug)` - Get study-scoped participant ID
+- `setParticipantId(studySlug, id)` - Set study-scoped participant ID
+
+**Getting studySlug in Components**:
+```typescript
+import { useStudy } from '@/contexts/StudyContext';
+
+function MyComponent() {
+  const { studySlug } = useStudy();
+  // Now use studySlug with storage utilities
+}
+```
+
+**Exceptions**: Only the theme preference (`theme` key) is intentionally global across all studies.
 
 ### Plugin Development
 To create a new input plugin:
@@ -167,7 +208,8 @@ See `src/studies/prob-gym/metadata.ts` for reference implementation.
 
 The codebase was recently restructured from a single-study app to multi-study platform:
 - Legacy code may reference `/data/` (now `/studies/prob-gym/`)
-- Some backward compatibility maintained via fallbacks in `scenarioSelection.ts`
+- **All localStorage access is now study-scoped** to prevent cross-contamination
+- Legacy components (NumberLineInput, SliderInput, HistogramInput) are deprecated - use plugins instead
 - Database schema supports multi-tenancy with study-scoped data
 
 See `INTEGRATION_PLAN.md` for detailed migration history and future extensibility plans.

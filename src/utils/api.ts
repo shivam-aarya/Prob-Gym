@@ -1,5 +1,6 @@
 import { UserResponse } from '@/types/study';
 import { DemographicData } from '@/services/database/types';
+import { getParticipantId, setParticipantId } from '@/utils/studyStorage';
 
 /**
  * Generate a unique participant ID
@@ -11,29 +12,35 @@ export function generateParticipantId(): string {
 }
 
 /**
- * Get the current participant ID from localStorage or create a new one
+ * Get the current participant ID from study-scoped localStorage or create a new one
+ * @param studySlug - The study identifier
  * @returns The participant ID
  */
-export function getOrCreateParticipantId(): string {
-  const existingId = localStorage.getItem('participantId');
+export function getOrCreateParticipantId(studySlug: string): string {
+  if (!studySlug) {
+    throw new Error('studySlug is required for getOrCreateParticipantId');
+  }
+
+  const existingId = getParticipantId(studySlug);
   if (existingId) {
     return existingId;
   }
-  
+
   const newId = generateParticipantId();
-  localStorage.setItem('participantId', newId);
+  setParticipantId(studySlug, newId);
   return newId;
 }
 
 /**
  * Submit a user response to the API
+ * @param studySlug - The study identifier
  * @param response The user response to submit
  * @returns A promise with the submission result
  */
-export async function submitResponse(response: UserResponse) {
+export async function submitResponse(studySlug: string, response: UserResponse) {
   try {
-    const participantId = getOrCreateParticipantId();
-    
+    const participantId = getOrCreateParticipantId(studySlug);
+
     const res = await fetch('/api/submit', {
       method: 'POST',
       headers: {
@@ -41,7 +48,7 @@ export async function submitResponse(response: UserResponse) {
       },
       body: JSON.stringify({ participantId, response }),
     });
-    
+
     return await res.json();
   } catch (error) {
     console.error('Error submitting response:', error);
@@ -51,13 +58,14 @@ export async function submitResponse(response: UserResponse) {
 
 /**
  * Submit demographic survey data
+ * @param studySlug - The study identifier
  * @param data The demographic data to submit
  * @returns A promise with the submission result
  */
-export async function submitDemographicData(data: DemographicData) {
+export async function submitDemographicData(studySlug: string, data: DemographicData) {
   try {
-    const participantId = getOrCreateParticipantId();
-    
+    const participantId = getOrCreateParticipantId(studySlug);
+
     const res = await fetch('/api/demographic', {
       method: 'POST',
       headers: {
@@ -65,7 +73,7 @@ export async function submitDemographicData(data: DemographicData) {
       },
       body: JSON.stringify({ participantId, demographicData: data }),
     });
-    
+
     return await res.json();
   } catch (error) {
     console.error('Error submitting demographic data:', error);
@@ -75,12 +83,13 @@ export async function submitDemographicData(data: DemographicData) {
 
 /**
  * Get participant data from the API
+ * @param studySlug - The study identifier
  * @returns A promise with the participant data
  */
-export async function getParticipantData() {
+export async function getParticipantData(studySlug: string) {
   try {
-    const participantId = getOrCreateParticipantId();
-    
+    const participantId = getOrCreateParticipantId(studySlug);
+
     const res = await fetch(`/api/participant/${participantId}`);
     return await res.json();
   } catch (error) {

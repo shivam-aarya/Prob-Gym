@@ -6,7 +6,7 @@
 import { StudyMetadata } from '@/studies/types';
 
 export const metadata: StudyMetadata = {
-  "id": "17bcd86b-7fdb-4dde-ad30-0e8dfdb6ceb0",
+  "id": "71b3b5c2-e9dc-45d1-93e0-ec79914874b9",
   "slug": "gerstenberg2012ping-exp1",
   "version": "1.0.0",
   "title": "Ping Pong Strength Inference (Experiment 1)",
@@ -23,7 +23,6 @@ export const metadata: StudyMetadata = {
       "Causal Inference"
     ],
     "modality": [
-      "visual",
       "interactive"
     ],
     "studyLength": "medium",

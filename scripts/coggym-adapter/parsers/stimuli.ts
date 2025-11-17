@@ -62,7 +62,7 @@ export function parseStimuliFromString(content: string): CogGymStimulus[] {
  * Validate that stimulus has all required fields
  */
 function validateStimulus(stimulus: any, lineNumber: number): asserts stimulus is CogGymStimulus {
-  const requiredFields = ['stimuli_id', 'input_type', 'media_url', 'queries'];
+  const requiredFields = ['stimuli_id', 'stimuli', 'queries'];
 
   for (const field of requiredFields) {
     if (!(field in stimulus)) {
@@ -70,18 +70,34 @@ function validateStimulus(stimulus: any, lineNumber: number): asserts stimulus i
     }
   }
 
-  if (!Array.isArray(stimulus.media_url)) {
-    throw new Error(`Line ${lineNumber}: media_url must be an array`);
+  if (!Array.isArray(stimulus.stimuli) || stimulus.stimuli.length === 0) {
+    throw new Error(`Line ${lineNumber}: stimuli must be a non-empty array`);
   }
 
   if (!Array.isArray(stimulus.queries) || stimulus.queries.length === 0) {
     throw new Error(`Line ${lineNumber}: queries must be a non-empty array`);
   }
 
-  // Validate input type
+  // Validate each stimulus item in the stimuli array
   const validInputTypes = ['img', 'video', 'text'];
-  if (!validInputTypes.includes(stimulus.input_type)) {
-    throw new Error(`Line ${lineNumber}: input_type must be one of: ${validInputTypes.join(', ')}`);
+  for (let i = 0; i < stimulus.stimuli.length; i++) {
+    const stimulusItem = stimulus.stimuli[i];
+
+    if (!('input_type' in stimulusItem)) {
+      throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: Missing required field: input_type`);
+    }
+
+    if (!('media_url' in stimulusItem)) {
+      throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: Missing required field: media_url`);
+    }
+
+    if (!Array.isArray(stimulusItem.media_url)) {
+      throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: media_url must be an array`);
+    }
+
+    if (!validInputTypes.includes(stimulusItem.input_type)) {
+      throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: input_type must be one of: ${validInputTypes.join(', ')}`);
+    }
   }
 
   // Validate each query
@@ -110,6 +126,7 @@ function validateQuery(query: any, lineNumber: number, queryIndex: number): void
     'single-slider',
     'multi-slider',
     'textbox',
+    'text-instruction',
   ];
 
   if (!validQueryTypes.includes(query.type)) {

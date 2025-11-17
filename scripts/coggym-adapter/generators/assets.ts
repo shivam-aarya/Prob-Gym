@@ -21,21 +21,37 @@ export async function copyAssets(
   const errors: string[] = [];
   let copiedCount = 0;
 
-  // Collect all unique media URLs from stimuli
+  // Collect all unique media URLs from stimuli (CogGym v2 schema)
   const mediaUrls = new Set<string>();
   for (const stimulus of stimuli) {
-    if (stimulus.media_url) {
-      for (const url of stimulus.media_url) {
-        mediaUrls.add(url);
+    // Extract from stimuli array
+    if (stimulus.stimuli) {
+      for (const stimulusItem of stimulus.stimuli) {
+        if (stimulusItem.media_url) {
+          for (const url of stimulusItem.media_url) {
+            mediaUrls.add(url);
+          }
+        }
       }
     }
   }
 
   // Also collect media URLs from instructions
   for (const instruction of instructions) {
+    // Handle legacy media_url format (instruction pages)
     if (instruction.type === 'instruction' && instruction.media_url) {
       for (const url of instruction.media_url) {
         mediaUrls.add(url);
+      }
+    }
+    // Handle new stimuli format (comprehension quizzes)
+    if (instruction.type === 'comprehension_quiz' && instruction.stimuli) {
+      for (const stimulusItem of instruction.stimuli) {
+        if (stimulusItem.media_url) {
+          for (const url of stimulusItem.media_url) {
+            mediaUrls.add(url);
+          }
+        }
       }
     }
   }
@@ -79,19 +95,14 @@ export async function copyAssets(
 
 /**
  * Update media URLs in scenarios to point to new asset location
- * Converts: "assets/cards/image.png" → "/studies/[slug]/assets/cards/image.png"
- * Preserves subdirectory structure from original path
+ * Note: source_link is now handled by converter (strips "assets/" prefix)
+ * and Layout component uses getAssetUrl() to prepend study path, so we
+ * don't need to modify it here anymore.
  */
 export function updateAssetPaths(scenarios: any[], assetPath: string): any[] {
-  return scenarios.map(scenario => {
-    if (scenario.source_link) {
-      // Preserve relative path structure from "assets/" onwards
-      // Example: "assets/cards/card_00.png" → "cards/card_00.png"
-      const relativePath = scenario.source_link.replace(/^assets\//, '');
-      scenario.source_link = `${assetPath}/${relativePath}`;
-    }
-    return scenario;
-  });
+  // This function is kept for backward compatibility but no longer modifies scenarios
+  // since the converter now strips "assets/" prefix and Layout uses getAssetUrl()
+  return scenarios;
 }
 
 /**
@@ -101,8 +112,13 @@ export function getReferencedMedia(stimuli: CogGymStimulus[]): string[] {
   const media: string[] = [];
 
   for (const stimulus of stimuli) {
-    if (stimulus.media_url) {
-      media.push(...stimulus.media_url);
+    // Extract from stimuli array (CogGym v2 schema)
+    if (stimulus.stimuli) {
+      for (const stimulusItem of stimulus.stimuli) {
+        if (stimulusItem.media_url) {
+          media.push(...stimulusItem.media_url);
+        }
+      }
     }
   }
 

@@ -63,8 +63,15 @@ export async function loadStudyScenarios(slug: string): Promise<any[] | null> {
 
 /**
  * Dynamically import study config
+ * Test studies don't have config files, so return null for them
  */
 export async function loadStudyConfig(slug: string): Promise<any | null> {
+  // Test studies don't have config files
+  if (testStudyRegistry.isTestStudy(slug)) {
+    return null;
+  }
+
+  // Load from file system for regular studies
   try {
     const config = await import(`@/studies/${slug}/config.json`);
     return config.default || config;

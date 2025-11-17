@@ -52,22 +52,31 @@ function convertQueryToScenario(
     options = ['Response']; // Placeholder option for single slider
   }
 
+  // Extract input_type from first stimulus (CogGym v2 schema)
+  const primaryStimulus = stimulus.stimuli[0];
+
   const scenario: any = {
     task_name: stimulus.stimuli_id,
     scenario_id: scenarioId,
     // Don't set original_scenario_id - it's for numeric IDs, we use task_name for the original stimuli_id
-    input_type: stimulus.input_type,
+    input_type: primaryStimulus.input_type,
     commentary: stimulus.commentary || '',
     question: query.prompt,
     options: options,
     randomize_order: query.randomize_order || false,
   };
 
-  // Handle media URLs
-  if (stimulus.media_url && stimulus.media_url.length > 0) {
-    // For now, use first media URL as source_link
-    // TODO: Handle multiple media files per scenario
-    scenario.source_link = stimulus.media_url[0];
+  // Convert stimuli array to platform format
+  // Strip "assets/" prefix from media URLs since platform prepends asset path
+  scenario.stimuli = stimulus.stimuli.map(s => ({
+    input_type: s.input_type,
+    media_url: s.media_url.map(url => url.replace(/^assets\//, '')),
+  }));
+
+  // Handle media URLs - use first media from first stimulus as primary source_link for backward compatibility
+  // Strip "assets/" prefix since it will be prepended by platform
+  if (primaryStimulus.media_url && primaryStimulus.media_url.length > 0) {
+    scenario.source_link = primaryStimulus.media_url[0].replace(/^assets\//, '');
   }
 
   // Set input method (already converted above)

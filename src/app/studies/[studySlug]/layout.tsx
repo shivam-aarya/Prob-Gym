@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
-import { getStudy } from '@/studies/registry';
+import { loadStudyMetadata, loadStudyConfig } from '@/studies/loader';
 import { StudyProvider } from '@/contexts/StudyContext';
 
 /**
  * Study layout
  * Loads study metadata and configuration, provides StudyContext
+ * Supports both regular studies and in-memory test studies
  */
 export default async function StudyLayout({
   children,
@@ -16,40 +17,34 @@ export default async function StudyLayout({
 }) {
   const { studySlug } = await params;
 
-  // Get study metadata from registry
-  const metadata = getStudy(studySlug);
+  // Get study metadata using dynamic loader (supports test studies)
+  const metadata = await loadStudyMetadata(studySlug);
 
   if (!metadata) {
     notFound();
   }
 
-  // Load study configuration
-  // For Prob-Gym, we'll load the config from the JSON file
+  // Load study configuration (test studies don't have config files)
   let config;
   try {
-    if (studySlug === 'prob-gym') {
-      config = await import(`@/studies/prob-gym/config.json`).then((m) => m.default);
-
-      // Register Prob-Gym plugins
-      if (typeof window !== 'undefined') {
-        // Client-side plugin registration happens in the client component
-      } else {
-        // Server-side: just log
-        console.log('[StudyLayout] Loading study:', studySlug);
-      }
-    } else {
-      // For other studies, load their config similarly
-      config = await import(`@/studies/${studySlug}/config.json`).then((m) => m.default);
-    }
+    config = await loadStudyConfig(studySlug);
   } catch (error) {
     console.error(`Failed to load config for study ${studySlug}:`, error);
-    // Provide minimal config as fallback
+  }
+
+  // Use fallback config if not found (normal for test studies)
+  if (!config) {
+    // For test studies, build config from metadata
     config = {
       study: {
         title: metadata.title,
-        randomizeQuestions: false,
-        questionsPerParticipant: 10,
+        randomizeQuestions: metadata.settings.randomizeQuestions ?? false,
+        questionsPerParticipant: metadata.settings.questionsPerParticipant ?? 10,
       },
+      // Include consent if present in metadata
+      consent: (metadata as any).consent || undefined,
+      // Include tutorial if present in metadata
+      tutorial: (metadata as any).tutorial || undefined,
     };
   }
 

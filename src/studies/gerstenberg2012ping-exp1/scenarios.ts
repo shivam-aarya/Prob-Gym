@@ -16,7 +16,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_1.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_1.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_1.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -47,7 +55,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_2.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_2.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_2.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -78,7 +94,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_3.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_3.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_3.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -109,7 +133,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_4.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_4.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_4.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -140,7 +172,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_5.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_5.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_5.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -171,7 +211,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_6.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_6.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_6.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -202,7 +250,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_7.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_7.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_7.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -233,7 +289,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_8.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_8.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_8.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -264,7 +328,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_9.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_9.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_9.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -295,7 +367,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_10.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_10.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_10.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -326,7 +406,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_11.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_11.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_11.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -357,7 +445,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_12.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_12.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_12.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -388,7 +484,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_13.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_13.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_13.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -419,7 +523,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_14.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_14.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_14.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -450,7 +562,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_15.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_15.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_15.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -481,7 +601,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_16.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_16.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_16.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -512,7 +640,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_17.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_17.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_17.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -543,7 +679,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_18.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_18.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_18.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -574,7 +718,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_19.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_19.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_19.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -605,7 +757,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_20.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_20.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_20.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -636,7 +796,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_21.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_21.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_21.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -667,7 +835,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_22.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_22.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_22.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -698,7 +874,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_23.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_23.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_23.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -729,7 +913,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_24.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_24.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_24.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -760,7 +952,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_25.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_25.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_25.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -791,7 +991,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_26.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_26.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_26.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -822,7 +1030,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_27.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_27.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_27.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -853,7 +1069,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_28.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_28.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_28.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -884,7 +1108,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_29.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_29.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_29.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,
@@ -915,7 +1147,15 @@ export const scenarios: StudyConfig[] = [
       "Response"
     ],
     "randomize_order": false,
-    "source_link": "/studies/gerstenberg2012ping-exp1/assets/exp1_30.png",
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "exp1_30.png"
+        ]
+      }
+    ],
+    "source_link": "exp1_30.png",
     "input_method": "slider",
     "slider_config": {
       "min": 0,

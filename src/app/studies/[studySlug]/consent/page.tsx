@@ -3,6 +3,7 @@
 import { useStudy } from '@/contexts/StudyContext';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
 
 /**
  * Consent page
@@ -13,30 +14,29 @@ export default function ConsentPage() {
   const router = useRouter();
   const [agreed, setAgreed] = useState(false);
 
-  // Check if already consented
+  const consent = config.consent;
+
+  // Check if already consented OR if no consent required
   useEffect(() => {
-    const hasConsented = localStorage.getItem(`${studySlug}_consented`);
-    if (hasConsented === 'true') {
+    const hasConsented = getStudyItem(studySlug, 'consented');
+    if (hasConsented === 'true' || !consent) {
       router.push(`/studies/${studySlug}/tutorial`);
     }
-  }, [studySlug, router]);
+  }, [studySlug, router, consent]);
 
   const handleConsent = () => {
     if (agreed) {
       // Store consent in localStorage
-      localStorage.setItem(`${studySlug}_consented`, 'true');
-      localStorage.setItem(`${studySlug}_consent_timestamp`, new Date().toISOString());
+      setStudyItem(studySlug, 'consented', 'true');
+      setStudyItem(studySlug, 'consent_timestamp', new Date().toISOString());
 
       // Navigate to tutorial
       router.push(`/studies/${studySlug}/tutorial`);
     }
   };
 
-  const consent = config.consent;
-
+  // Show nothing while redirecting
   if (!consent) {
-    // If no consent configured, skip to tutorial
-    router.push(`/studies/${studySlug}/tutorial`);
     return null;
   }
 

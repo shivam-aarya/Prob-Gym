@@ -48,12 +48,20 @@ export type QueryType =
   | 'multi-select'
   | 'single-slider'
   | 'multi-slider'
-  | 'textbox';
+  | 'textbox'
+  | 'text-instruction';
+
+/**
+ * Individual stimulus item (CogGym v2 schema)
+ */
+export interface StimulusItem {
+  input_type: InputType;
+  media_url: string[];
+}
 
 export interface CogGymStimulus {
   stimuli_id: string;
-  input_type: InputType;
-  media_url: string[];
+  stimuli: StimulusItem[];
   commentary?: string;
   queries: Query[];
   delay?: number;
@@ -109,6 +117,7 @@ export interface TestTrial extends InstructionModule {
 export interface ComprehensionQuiz extends InstructionModule {
   type: 'comprehension_quiz';
   text?: string;
+  stimuli?: StimulusItem[];
   queries: Query[];
 }
 

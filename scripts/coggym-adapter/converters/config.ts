@@ -104,20 +104,56 @@ function generateTutorialConfig(
         };
       }
 
-      case 'comprehension_quiz':
-        return {
-          title: 'Comprehension Check',
-          content: instruction.queries.map((query) => {
+      case 'comprehension_quiz': {
+        const content: any[] = [];
+
+        // Add stimuli images if present (CogGym v2 schema)
+        if (instruction.stimuli && instruction.stimuli.length > 0) {
+          instruction.stimuli.forEach((stimulus) => {
+            if (stimulus.input_type === 'img' && stimulus.media_url.length > 0) {
+              stimulus.media_url.forEach((url) => {
+                const relativePath = url.replace(/^assets\//, '');
+                const absoluteUrl = `/studies/${studySlug}/assets/${relativePath}`;
+                content.push({
+                  type: 'image',
+                  src: absoluteUrl,
+                  alt: 'Quiz stimulus',
+                });
+              });
+            } else if (stimulus.input_type === 'text' && stimulus.media_url.length > 0) {
+              // For text stimuli, media_url might contain text content paths
+              // For now, we'll skip text stimuli in tutorial images
+              // TODO: Handle text stimulus rendering if needed
+            }
+          });
+        }
+
+        // Add quiz questions
+        instruction.queries.forEach((query) => {
+          if (query.type === 'text-instruction') {
+            // Text instruction - show as plain text without answer required
+            content.push({
+              type: 'text',
+              value: query.prompt,
+            });
+          } else {
+            // Regular quiz question with answer
             quizCounter++;
-            return {
+            content.push({
               type: 'quiz',
               id: `quiz_${quizCounter}`,
               question: query.prompt,
               options: query.option || [],
               answer: query.answer || 0,
-            };
-          }),
+            });
+          }
+        });
+
+        return {
+          title: 'Comprehension Check',
+          content,
         };
+      }
 
       case 'test_trial':
         // Test trials would need the actual scenario data

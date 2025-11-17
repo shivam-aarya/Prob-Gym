@@ -98,7 +98,63 @@ export default function Layout({ children, config }: LayoutProps) {
             </div>
             
             <div className="mb-4">
-              {config.input_type === 'img' ? (
+              {config.stimuli && config.stimuli.length > 0 ? (
+                // New multi-stimuli format (CogGym v2)
+                <div className="space-y-4">
+                  {config.stimuli.map((stimulus, index) => {
+                    const stimulusAssetUrl = stimulus.media_url.length > 0
+                      ? getAssetUrl(stimulus.media_url[0])
+                      : '';
+                    const stimulusIsGif = stimulusAssetUrl.toLowerCase().endsWith('.gif');
+
+                    if (stimulus.input_type === 'img') {
+                      return (
+                        <div key={index} className="relative h-[45vh] min-h-[300px] max-h-[500px]">
+                          {stimulusIsGif ? (
+                            <ReplayableGif
+                              src={stimulusAssetUrl}
+                              alt={`Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
+                              className="absolute inset-0"
+                            />
+                          ) : (
+                            <Image
+                              src={stimulusAssetUrl}
+                              alt={`Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
+                              fill
+                              className="object-contain"
+                              priority={index === 0}
+                            />
+                          )}
+                        </div>
+                      );
+                    } else if (stimulus.input_type === 'video') {
+                      return (
+                        <div key={index} className="relative h-[40vh] min-h-[300px] max-h-[500px]">
+                          <video
+                            src={stimulusAssetUrl}
+                            controls
+                            className="w-full h-full object-contain"
+                            playsInline
+                          >
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                      );
+                    } else if (stimulus.input_type === 'text') {
+                      return (
+                        <div key={index} className={`p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                          <p className={`text-base leading-relaxed ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                            {/* Text stimulus content would be loaded from media_url if needed */}
+                            Text stimulus {index + 1}
+                          </p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              ) : config.input_type === 'img' ? (
+                // Legacy single-stimulus format (backward compatibility)
                 <div className="relative h-[45vh] min-h-[300px] max-h-[500px]">
                   {isGif ? (
                     <ReplayableGif
@@ -140,22 +196,24 @@ export default function Layout({ children, config }: LayoutProps) {
               )}
             </div>
 
-            <div className={`border-t border-gray-200 dark:border-gray-700 pt-4`}>
-              <div className={`flex items-center gap-2 mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                </svg>
-                <span className="text-sm font-medium uppercase tracking-wider">Commentary</span>
+            {config.commentary && config.commentary.trim() !== '' && (
+              <div className={`border-t border-gray-200 dark:border-gray-700 pt-4`}>
+                <div className={`flex items-center gap-2 mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                  </svg>
+                  <span className="text-sm font-medium uppercase tracking-wider">Commentary</span>
+                </div>
+                <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                  <p className={`text-lg leading-relaxed select-none ${isDark ? 'text-gray-200' : 'text-gray-800'}`}
+                     onCopy={(e) => e.preventDefault()}
+                     onCut={(e) => e.preventDefault()}
+                     onContextMenu={(e) => e.preventDefault()}
+                     dangerouslySetInnerHTML={{ __html: config.commentary }}>
+                  </p>
+                </div>
               </div>
-              <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                <p className={`text-lg leading-relaxed select-none ${isDark ? 'text-gray-200' : 'text-gray-800'}`}
-                   onCopy={(e) => e.preventDefault()}
-                   onCut={(e) => e.preventDefault()}
-                   onContextMenu={(e) => e.preventDefault()}
-                   dangerouslySetInnerHTML={{ __html: config.commentary }}>
-                </p>
-              </div>
-            </div>
+            )}
           </div>
           
           {/* Right Column - Response Area */}

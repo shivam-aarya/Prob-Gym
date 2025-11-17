@@ -8,6 +8,7 @@ import { UserResponse, StudyConfig } from '@/types/study';
 import { useRouter } from 'next/navigation';
 import { useStudy } from '@/contexts/StudyContext';
 import { getSelectedScenarios } from '@/utils/scenarioSelection';
+import { getStudyItem } from '@/utils/studyStorage';
 
 export default function Scenarios() {
   const { config, studySlug } = useStudy();
@@ -19,14 +20,22 @@ export default function Scenarios() {
   const [selectedScenarios, setSelectedScenarios] = useState<StudyConfig[]>([]);
 
   useEffect(() => {
-    // Check if user has completed consent and tutorial
-    const hasConsent = localStorage.getItem(`${studySlug}_consented`);
-    const hasTutorial = localStorage.getItem(`${studySlug}_tutorialComplete`);
+    // Only check for consent if consent is required
+    if (config.consent) {
+      const hasConsent = getStudyItem(studySlug, 'consented');
+      if (!hasConsent) {
+        router.push(`/studies/${studySlug}/consent`);
+        return;
+      }
+    }
 
-    if (!hasConsent) {
-      router.push(`/studies/${studySlug}/consent`);
-    } else if (!hasTutorial) {
-      router.push(`/studies/${studySlug}/tutorial`);
+    // Only check for tutorial if tutorial is required
+    if (config.tutorial) {
+      const hasTutorial = getStudyItem(studySlug, 'tutorialComplete');
+      if (!hasTutorial) {
+        router.push(`/studies/${studySlug}/tutorial`);
+        return;
+      }
     }
 
     // Get the selected scenarios for this participant
@@ -37,17 +46,17 @@ export default function Scenarios() {
     loadScenarios();
 
     // Load saved responses from localStorage
-    const savedResponses = localStorage.getItem(`${studySlug}_userResponses`);
+    const savedResponses = getStudyItem(studySlug, 'userResponses');
     if (savedResponses) {
       setResponses(JSON.parse(savedResponses));
     }
 
     // Load completed scenarios from localStorage
-    const savedCompletedScenarios = localStorage.getItem(`${studySlug}_completedScenarios`);
+    const savedCompletedScenarios = getStudyItem(studySlug, 'completedScenarios');
     if (savedCompletedScenarios) {
       setCompletedScenarios(new Set(JSON.parse(savedCompletedScenarios)));
     }
-  }, [studySlug, router]);
+  }, [studySlug, router, config.consent, config.tutorial]);
 
   const handleSubmit = async (response: UserResponse) => {
     setSubmitStatus('idle');
@@ -65,10 +74,10 @@ export default function Scenarios() {
       const apiResponse = { ...response, scenario_id: submissionScenarioId };
 
       if (config.study.backend?.enabled) {
-        // Get participant ID
-        const participantId = localStorage.getItem('participantId') || `participant_${Date.now()}`;
-        if (!localStorage.getItem('participantId')) {
-          localStorage.setItem('participantId', participantId);
+        // Get participant ID (study-scoped)
+        const participantId = localStorage.getItem(`${studySlug}_participantId`) || `participant_${Date.now()}`;
+        if (!localStorage.getItem(`${studySlug}_participantId`)) {
+          localStorage.setItem(`${studySlug}_participantId`, participantId);
         }
 
         // Submit to study-scoped API

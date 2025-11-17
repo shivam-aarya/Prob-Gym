@@ -4,6 +4,8 @@ import QuestionFrame from './QuestionFrame';
 import { StudyConfig, UserResponse } from '@/types/study';
 import Image from 'next/image';
 import ReplayableGif from './ReplayableGif';
+import { useStudy } from '@/contexts/StudyContext';
+import { getStudyItem, setStudyItem, removeStudyItem } from '@/utils/studyStorage';
 
 interface TutorialContent {
   type: 'text' | 'image' | 'video' | 'gif' | 'blockquote' | 'scenario' | 'quiz';
@@ -172,15 +174,16 @@ const ContentRenderer: React.FC<{
 };
 
 export default function TutorialPage({ config, onComplete }: TutorialPageProps) {
+  const { studySlug } = useStudy();
   const [currentPage, setCurrentPage] = useState(0);
   const [testScenarioCompleted, setTestScenarioCompleted] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
 
-  // Use localStorage to restore state on page refresh
+  // Use study-scoped localStorage to restore state on page refresh
   useEffect(() => {
     try {
-      const completed = localStorage.getItem('testScenarioCompleted') === 'true';
+      const completed = getStudyItem(studySlug, 'testScenarioCompleted') === 'true';
       if (completed) {
         setTestScenarioCompleted(true);
         setShowConfirmation(true);
@@ -188,7 +191,7 @@ export default function TutorialPage({ config, onComplete }: TutorialPageProps) 
     } catch (err) {
       console.error("Error restoring state:", err);
     }
-  }, []);
+  }, [studySlug]);
 
   // Fallback if config is invalid
   if (!config || !config.pages || !Array.isArray(config.pages) || config.pages.length === 0) {
@@ -213,16 +216,16 @@ export default function TutorialPage({ config, onComplete }: TutorialPageProps) 
       setQuizAnswers({});
     } else {
       try {
-        // Mark tutorial as complete
-        localStorage.setItem('tutorialComplete', 'true');
-        localStorage.removeItem('testScenarioCompleted');
-        
+        // Mark tutorial as complete (study-scoped)
+        setStudyItem(studySlug, 'tutorialComplete', 'true');
+        removeStudyItem(studySlug, 'testScenarioCompleted');
+
         // Navigate to scenarios using the parent handler
         onComplete();
       } catch (error) {
         console.error('Navigation error:', error);
         // Fallback direct navigation if parent handler fails
-        window.location.href = '/scenarios';
+        window.location.href = `/studies/${studySlug}/scenarios`;
       }
     }
   };
@@ -240,9 +243,9 @@ export default function TutorialPage({ config, onComplete }: TutorialPageProps) 
 
   const handleTestScenarioSubmit = () => {
     try {
-      // Store a simplified mock response
-      localStorage.setItem('testScenarioCompleted', 'true');
-      
+      // Store a simplified mock response (study-scoped)
+      setStudyItem(studySlug, 'testScenarioCompleted', 'true');
+
       // Mark scenario as completed
       setTestScenarioCompleted(true);
       setShowConfirmation(true);

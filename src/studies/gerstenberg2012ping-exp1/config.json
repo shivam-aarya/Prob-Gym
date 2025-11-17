@@ -62,22 +62,27 @@
         ]
       },
       {
-        "title": "Instructions 5",
+        "title": "Comprehension Check",
         "content": [
-          {
-            "type": "text",
-            "value": "Practice scenario 1: Study the tournament shown here. The next question asks about this image."
-          },
           {
             "type": "image",
             "src": "/studies/gerstenberg2012ping-exp1/assets/exp1_test1.png",
-            "alt": "Tutorial image"
+            "alt": "Quiz stimulus"
+          },
+          {
+            "type": "text",
+            "value": "Practice scenario 1: Study the tournament shown here. The next question asks about this image."
           }
         ]
       },
       {
         "title": "Comprehension Check",
         "content": [
+          {
+            "type": "image",
+            "src": "/studies/gerstenberg2012ping-exp1/assets/exp1_test1.png",
+            "alt": "Quiz stimulus"
+          },
           {
             "type": "quiz",
             "id": "quiz_1",
@@ -91,22 +96,27 @@
         ]
       },
       {
-        "title": "Instructions 7",
+        "title": "Comprehension Check",
         "content": [
-          {
-            "type": "text",
-            "value": "Practice scenario 2: Review this tournament carefully. The next question asks which statement must be true."
-          },
           {
             "type": "image",
             "src": "/studies/gerstenberg2012ping-exp1/assets/exp1_test2.png",
-            "alt": "Tutorial image"
+            "alt": "Quiz stimulus"
+          },
+          {
+            "type": "text",
+            "value": "Practice scenario 2: Review this tournament carefully. The next question asks which statement must be true."
           }
         ]
       },
       {
         "title": "Comprehension Check",
         "content": [
+          {
+            "type": "image",
+            "src": "/studies/gerstenberg2012ping-exp1/assets/exp1_test2.png",
+            "alt": "Quiz stimulus"
+          },
           {
             "type": "quiz",
             "id": "quiz_2",

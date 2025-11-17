@@ -7,12 +7,21 @@ export interface TextSection {
   isInitiallyExpanded?: boolean;
 }
 
+/**
+ * Individual stimulus item for multi-stimuli support
+ */
+export interface StimulusItem {
+  input_type: 'img' | 'text' | 'video';
+  media_url: string[];
+}
+
 export interface StudyConfig {
   task_name: string;
   scenario_id: number;
   original_scenario_id?: number; // Added for reference to original ID during random selection
   input_type: 'img' | 'text' | 'video';
   source_link?: string;
+  stimuli?: StimulusItem[]; // Multi-stimuli support (CogGym v2 schema)
   text_content?: string;
   text_sections?: TextSection[];
   commentary: string;

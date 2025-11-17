@@ -32,12 +32,23 @@ export function Navbar() {
             >
               Experiments
             </Link>
+            {/* TEMPORARY: External documentation link */}
+            <a
+              href="https://coggym-docs-8022f.web.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200"
+            >
+              Documentation
+            </a>
+            {/* Original code - uncomment to revert
             <Link
               href="/exp-docs"
               className="px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200"
             >
               Documentation
             </Link>
+            */}
             {/* <Link
               href="/#api-docs"
               className="px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200"

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import TutorialPage from '@/components/TutorialPage';
 import { useRouter } from 'next/navigation';
 import { useStudy } from '@/contexts/StudyContext';
+import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
 
 export default function Tutorial() {
   const { config, studySlug } = useStudy();
@@ -11,18 +12,27 @@ export default function Tutorial() {
   const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
-    // Check if user has given consent
-    const hasConsent = localStorage.getItem(`${studySlug}_consented`);
-    if (!hasConsent) {
-      router.push(`/studies/${studySlug}/consent`);
+    // Only check for consent if consent is actually required
+    if (config.consent) {
+      const hasConsent = getStudyItem(studySlug, 'consented');
+      if (!hasConsent) {
+        router.push(`/studies/${studySlug}/consent`);
+        return;
+      }
     }
 
     // Check if they've already completed the tutorial
-    const hasTutorial = localStorage.getItem(`${studySlug}_tutorialComplete`);
+    const hasTutorial = getStudyItem(studySlug, 'tutorialComplete');
     if (hasTutorial) {
       router.push(`/studies/${studySlug}/scenarios`);
+      return;
     }
-  }, [studySlug, router]);
+
+    // If no tutorial configured, skip to scenarios
+    if (!config.tutorial) {
+      router.push(`/studies/${studySlug}/scenarios`);
+    }
+  }, [studySlug, router, config.tutorial, config.consent]);
 
   const handleComplete = () => {
     if (isNavigating) return; // Prevent multiple navigations
@@ -30,7 +40,7 @@ export default function Tutorial() {
     setIsNavigating(true);
     try {
       // Store tutorial completion
-      localStorage.setItem(`${studySlug}_tutorialComplete`, 'true');
+      setStudyItem(studySlug, 'tutorialComplete', 'true');
 
       // Navigate to scenarios
       router.push(`/studies/${studySlug}/scenarios`);
@@ -41,9 +51,8 @@ export default function Tutorial() {
     }
   };
 
+  // Show nothing while redirecting
   if (!config.tutorial) {
-    // If no tutorial configured, skip to scenarios
-    router.push(`/studies/${studySlug}/scenarios`);
     return null;
   }
 

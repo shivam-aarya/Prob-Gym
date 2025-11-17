@@ -23,6 +23,7 @@ import { parseInstructionsFromString } from '../../../scripts/coggym-adapter/par
 import { validateExperiment } from '../../../scripts/coggym-adapter/utils/validation';
 import { convertToMetadata } from '../../../scripts/coggym-adapter/converters/metadata';
 import { convertToScenarios } from '../../../scripts/coggym-adapter/converters/scenarios';
+import { convertToConfig } from '../../../scripts/coggym-adapter/converters/config';
 import { updateAssetPaths } from '../../../scripts/coggym-adapter/generators/assets';
 import type { InstructionContent } from '../../../scripts/coggym-adapter/types';
 
@@ -61,52 +62,84 @@ export async function convertUploadedStudy(
 
   try {
     // Find required files (check if path ends with filename to handle nested folders)
+    logs.info.push('STEP 0: Validating uploaded files');
+    logs.info.push(`  - Total files uploaded: ${files.length}`);
+
     const configFile = files.find(f => f.path.endsWith('config.json') || f.name === 'config.json');
     const stimuliFile = files.find(f => f.path.endsWith('stimuli.jsonl') || f.name === 'stimuli.jsonl');
     const instructionFile = files.find(f => f.path.endsWith('instruction.jsonl') || f.name === 'instruction.jsonl');
 
     if (!configFile) {
-      logs.errors.push('Missing required file: config.json');
+      logs.errors.push('VALIDATION FAILED: Missing required file');
+      logs.errors.push('  - Required file not found: config.json');
+      logs.errors.push('  - This file contains experiment configuration and metadata');
+      logs.errors.push('  - Please ensure config.json is included in your upload');
+      logs.errors.push('');
+      logs.errors.push('Files received:');
+      files.forEach(f => logs.errors.push(`  - ${f.path}`));
       return { success: false, studySlug: '', logs };
     }
 
     if (!stimuliFile) {
-      logs.errors.push('Missing required file: stimuli.jsonl');
+      logs.errors.push('VALIDATION FAILED: Missing required file');
+      logs.errors.push('  - Required file not found: stimuli.jsonl');
+      logs.errors.push('  - This file contains trial/scenario definitions');
+      logs.errors.push('  - Please ensure stimuli.jsonl is included in your upload');
+      logs.errors.push('');
+      logs.errors.push('Files received:');
+      files.forEach(f => logs.errors.push(`  - ${f.path}`));
       return { success: false, studySlug: '', logs };
     }
 
-    logs.info.push('📖 Parsing experiment files...');
+    logs.info.push(`  - Found config.json at: ${configFile.path}`);
+    logs.info.push(`  - Found stimuli.jsonl at: ${stimuliFile.path}`);
+    if (instructionFile) {
+      logs.info.push(`  - Found instruction.jsonl at: ${instructionFile.path}`);
+    }
+    logs.info.push('');
+
+    logs.info.push('STEP 1: Parsing experiment files');
 
     // Parse config
     const config = parseConfigFromString(configFile.content as string);
-    logs.info.push(`   ✓ Config: ${config.experimentName}`);
+    logs.info.push(`  - Parsed config.json successfully`);
+    logs.info.push(`  - Experiment name: ${config.experimentName}`);
+    logs.info.push(`  - Participant count: ${config.participant_count || 'not specified'}`);
+    logs.info.push(`  - Judgment types: ${config.judgment_count} configured`);
 
     // Parse stimuli
     const stimuli = parseStimuliFromString(stimuliFile.content as string);
-    logs.info.push(`   ✓ Stimuli: ${stimuli.length} trials`);
+    logs.info.push(`  - Parsed stimuli.jsonl successfully`);
+    logs.info.push(`  - Total trials: ${stimuli.length}`);
+    logs.info.push(`  - Unique stimulus IDs: ${new Set(stimuli.map(s => s.stimulus_id)).size}`);
 
     // Parse instructions (optional)
     let instructions: InstructionContent[] = [];
     if (instructionFile) {
       instructions = parseInstructionsFromString(instructionFile.content as string);
-      logs.info.push(`   ✓ Instructions: ${instructions.length} modules`);
+      logs.info.push(`  - Parsed instruction.jsonl successfully`);
+      logs.info.push(`  - Instruction modules: ${instructions.length}`);
+    } else {
+      logs.info.push(`  - No instruction.jsonl file found (optional)`);
     }
 
     // Validate experiment
     logs.info.push('');
-    logs.info.push('🔍 Validating experiment...');
+    logs.info.push('STEP 2: Validating experiment structure and data integrity');
     const validation = validateExperiment(config, stimuli, instructions);
 
     if (validation.warnings.length > 0) {
+      logs.info.push(`  - Validation warnings detected: ${validation.warnings.length}`);
       logs.warnings.push(...validation.warnings);
     }
 
     if (!validation.valid) {
+      logs.info.push(`  - Validation failed with ${validation.errors.length} error(s)`);
       logs.errors.push(...validation.errors);
       return { success: false, studySlug: '', logs };
     }
 
-    logs.info.push('   ✓ Validation passed');
+    logs.info.push('  - Validation passed: all required fields present and properly formatted');
 
     // Generate study slug from experiment name
     const studySlug = `TEST_${Date.now()}_${config.experimentName
@@ -116,17 +149,30 @@ export async function convertUploadedStudy(
 
     // Convert to Prob-Gym format
     logs.info.push('');
-    logs.info.push('🔧 Converting to Prob-Gym format...');
+    logs.info.push('STEP 3: Converting to Prob-Gym format');
+    logs.info.push(`  - Generated study slug: ${studySlug}`);
 
     const metadata = convertToMetadata(config, stimuli, instructions, studySlug);
-    const { scenarios } = convertToScenarios(stimuli);
+    logs.info.push(`  - Created study metadata with title: "${metadata.title}"`);
+    logs.info.push(`  - Study ID: ${metadata.id}`);
+    logs.info.push(`  - Version: ${metadata.version}`);
 
-    logs.info.push('   ✓ Metadata generated');
-    logs.info.push(`   ✓ Scenarios: ${scenarios.length} (split from ${stimuli.length} trials)`);
+    const { scenarios } = convertToScenarios(stimuli);
+    logs.info.push(`  - Converted ${stimuli.length} trials into ${scenarios.length} scenarios`);
+    logs.info.push(`  - Each scenario contains ${scenarios[0]?.questions?.length || 0} question(s)`);
+
+    const probGymConfig = convertToConfig(config, instructions, studySlug);
+
+    // Add consent and tutorial to metadata from config
+    (metadata as any).consent = probGymConfig.consent;
+    (metadata as any).tutorial = probGymConfig.tutorial;
+    (metadata as any).demographic = probGymConfig.demographic;
+
+    logs.info.push(`  - Study flow: consent=${!!probGymConfig.consent}, tutorial=${!!probGymConfig.tutorial}, demographic=${!!probGymConfig.demographic}`);
 
     // Process assets
     logs.info.push('');
-    logs.info.push('📦 Processing assets...');
+    logs.info.push('STEP 4: Processing media assets');
 
     const assets = new Map<string, { path: string; data: string; mimeType: string }>();
     // Find assets - they can be in 'assets/', './assets/', or 'folder/assets/'
@@ -134,6 +180,9 @@ export async function convertUploadedStudy(
       f.path.includes('/assets/') || f.path.startsWith('assets/')
     );
 
+    logs.info.push(`  - Found ${assetFiles.length} file(s) in assets directory`);
+
+    const assetsByType: Record<string, number> = {};
     for (const assetFile of assetFiles) {
       if (assetFile.content instanceof ArrayBuffer) {
         // Convert ArrayBuffer to base64
@@ -149,23 +198,35 @@ export async function convertUploadedStudy(
           : assetFile.path;
 
         assets.set(assetPath, { path: assetPath, data: base64, mimeType });
+
+        // Track asset types for summary
+        const ext = assetFile.name.split('.').pop()?.toLowerCase() || 'unknown';
+        assetsByType[ext] = (assetsByType[ext] || 0) + 1;
       } else {
-        logs.warnings.push(`Asset ${assetFile.name} is not binary data, skipping`);
+        logs.warnings.push(`Asset file "${assetFile.name}" is not binary data, skipping (expected ArrayBuffer, got ${typeof assetFile.content})`);
       }
     }
 
-    logs.info.push(`   ✓ Processed ${assets.size} assets`);
+    logs.info.push(`  - Successfully processed ${assets.size} asset(s)`);
+    if (Object.keys(assetsByType).length > 0) {
+      const typeBreakdown = Object.entries(assetsByType)
+        .map(([ext, count]) => `${count} ${ext}`)
+        .join(', ');
+      logs.info.push(`  - Asset breakdown by type: ${typeBreakdown}`);
+    }
 
     // Update asset paths in scenarios to use test study slug
     // The actual URLs will be served by the API route
     const assetPath = `/api/admin/assets/${studySlug}`;
     const scenariosWithAssets = updateAssetPaths(scenarios, assetPath);
+    logs.info.push(`  - Updated ${scenarios.length} scenario(s) with asset path: ${assetPath}`);
 
     // Update metadata asset path
     metadata.assetPath = assetPath;
 
     logs.info.push('');
-    logs.info.push('✅ Conversion complete!');
+    logs.info.push('CONVERSION COMPLETE');
+    logs.info.push(`  - Study ready for preview with slug: ${studySlug}`);
 
     return {
       success: true,
@@ -176,7 +237,26 @@ export async function convertUploadedStudy(
       logs,
     };
   } catch (error) {
-    logs.errors.push(error instanceof Error ? error.message : String(error));
+    // Provide detailed error information for debugging
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+
+    logs.errors.push('CONVERSION FAILED');
+    logs.errors.push(`Error: ${errorMessage}`);
+
+    if (errorStack) {
+      logs.errors.push('Stack trace:');
+      logs.errors.push(errorStack);
+    }
+
+    // Provide helpful troubleshooting hints
+    logs.errors.push('');
+    logs.errors.push('Troubleshooting tips:');
+    logs.errors.push('  - Verify all required files are present: config.json, stimuli.jsonl');
+    logs.errors.push('  - Check that JSON/JSONL files are properly formatted');
+    logs.errors.push('  - Ensure asset files are in an "assets/" directory');
+    logs.errors.push('  - Review the CogGym format specification for required fields');
+
     return { success: false, studySlug: '', logs };
   }
 }

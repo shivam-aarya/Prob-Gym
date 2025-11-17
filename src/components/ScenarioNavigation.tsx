@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { UserResponse, StudyConfig } from '@/types/study';
 import { submitResponse } from '@/utils/api';
 import { getSelectedScenarios } from '@/utils/scenarioSelection';
+import { useStudy } from '@/contexts/StudyContext';
+import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
 
 interface ScenarioNavigationProps {
   currentScenario: number;
@@ -23,6 +25,7 @@ export default function ScenarioNavigation({
 }: Omit<ScenarioNavigationProps, 'responses'>) {
   const { theme } = useTheme();
   const router = useRouter();
+  const { studySlug } = useStudy();
   const isDark = theme === 'dark';
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,25 +33,25 @@ export default function ScenarioNavigation({
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    
+
     try {
-      // First, get all saved responses from localStorage
-      const savedResponsesJson = localStorage.getItem('userResponses');
-      
+      // First, get all saved responses from study-scoped localStorage
+      const savedResponsesJson = getStudyItem(studySlug, 'userResponses');
+
       if (savedResponsesJson) {
         const savedResponses: Record<number, number[]> = JSON.parse(savedResponsesJson);
-        const selectedScenarios = await getSelectedScenarios();
+        const selectedScenarios = await getSelectedScenarios(studySlug);
 
         // Submit each saved response to the API
         for (const scenarioId of Object.keys(savedResponses).map(Number)) {
           const scenarioData = selectedScenarios.find((s: StudyConfig) => s.scenario_id === scenarioId);
-          
+
           if (scenarioData) {
             let response: UserResponse;
-            
+
             // Use the original scenario ID for API submission if available
             const submissionScenarioId = scenarioData.original_scenario_id || scenarioData.scenario_id;
-            
+
             if (scenarioData.input_method === 'histogram') {
               response = {
                 task_name: scenarioData.task_name,
@@ -59,10 +62,10 @@ export default function ScenarioNavigation({
                 }
               };
             } else {
-              // Handle number_line input type
-              const pointPositionsJson = localStorage.getItem(`pointPositions_${scenarioId}`);
+              // Handle number_line input type - use study-scoped key
+              const pointPositionsJson = getStudyItem(studySlug, `pointPositions_${scenarioId}`);
               const points = pointPositionsJson ? JSON.parse(pointPositionsJson) : null;
-              
+
               response = {
                 task_name: scenarioData.task_name,
                 scenario_id: submissionScenarioId,
@@ -71,27 +74,27 @@ export default function ScenarioNavigation({
                   options: scenarioData.options
                 }
               };
-              
+
               // Add points data if available
               if (points && points.length > 0) {
                 response.response_data.points = points;
               }
             }
-            
-            // Submit to the API - this will automatically use the participant ID from localStorage
-            await submitResponse(response);
+
+            // Submit to the API with studySlug
+            await submitResponse(studySlug, response);
           }
         }
       }
-      
-      // Mark study as complete and redirect to demographic page
-      localStorage.setItem('scenariosComplete', 'true');
-      router.push('/demographic');
+
+      // Mark study as complete and redirect to study-scoped demographic page
+      setStudyItem(studySlug, 'scenariosComplete', 'true');
+      router.push(`/studies/${studySlug}/demographic`);
     } catch (error) {
       console.error('Error submitting responses:', error);
       // Even if there's an error, we still want to proceed to the next step
-      localStorage.setItem('scenariosComplete', 'true');
-      router.push('/demographic');
+      setStudyItem(studySlug, 'scenariosComplete', 'true');
+      router.push(`/studies/${studySlug}/demographic`);
     } finally {
       setIsSubmitting(false);
     }

@@ -1,20 +1,22 @@
 import { loadStudyScenarios } from '@/studies/loader';
-import { scenarios as legacyScenarios } from '@/data/scenarios';
+import { scenarios as gerstenberg2012pingexp1Scenarios } from '@/studies/gerstenberg2012ping-exp1/scenarios';
+import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
 
 /**
  * Selects a random subset of scenarios based on the config settings.
  * If a previous selection is found in localStorage, it returns that instead.
  * Now supports both file-based studies and in-memory test studies.
  *
- * @param studySlug The study slug (optional for backward compatibility)
+ * @param studySlug The study slug (required for proper study isolation)
  * @param questionsPerParticipant Number of questions per participant
  */
-export async function getSelectedScenarios(studySlug?: string, questionsPerParticipant?: number) {
-  // Use study-scoped localStorage key if studySlug is provided
-  const storageKey = studySlug ? `${studySlug}_selectedScenarios` : 'selectedScenarios';
+export async function getSelectedScenarios(studySlug: string, questionsPerParticipant?: number) {
+  if (!studySlug) {
+    throw new Error('studySlug is required for getSelectedScenarios to prevent cross-study contamination');
+  }
 
-  // Check if we already have a selection in localStorage
-  const existingSelection = localStorage.getItem(storageKey);
+  // Check if we already have a selection in study-scoped localStorage
+  const existingSelection = getStudyItem(studySlug, 'selectedScenarios');
 
   if (existingSelection) {
     const parsed = JSON.parse(existingSelection);
@@ -22,14 +24,30 @@ export async function getSelectedScenarios(studySlug?: string, questionsPerParti
     return parsed;
   }
 
-  // Load scenarios using dynamic loader (supports both regular and test studies)
+  // Load scenarios - use API if client-side, loader if server-side
   let scenarios;
-  if (studySlug) {
-    const loadedScenarios = await loadStudyScenarios(studySlug);
-    scenarios = loadedScenarios || legacyScenarios; // Fallback to legacy
+
+  if (typeof window !== 'undefined') {
+    // Client-side: fetch from API (works for both regular and test studies)
+    try {
+      const res = await fetch(`/api/studies/${studySlug}/data`);
+      const data = await res.json();
+
+      if (!data.success || !data.scenarios) {
+        throw new Error(`Failed to load scenarios: ${data.error || 'Unknown error'}`);
+      }
+
+      scenarios = data.scenarios;
+    } catch (error) {
+      throw new Error(`No scenarios found for study: ${studySlug}`);
+    }
   } else {
-    // Fallback to legacy scenarios for backward compatibility
-    scenarios = legacyScenarios;
+    // Server-side: use loader directly
+    scenarios = await loadStudyScenarios(studySlug);
+  }
+
+  if (!scenarios || scenarios.length === 0) {
+    throw new Error(`No scenarios found for study: ${studySlug}`);
   }
 
   // Get the number of questions per participant
@@ -63,8 +81,8 @@ export async function getSelectedScenarios(studySlug?: string, questionsPerParti
 
   console.log("Selected and remapped scenarios:", selectedScenarios);
 
-  // Save the selection to localStorage
-  localStorage.setItem(storageKey, JSON.stringify(selectedScenarios));
+  // Save the selection to study-scoped localStorage
+  setStudyItem(studySlug, 'selectedScenarios', JSON.stringify(selectedScenarios));
 
   return selectedScenarios;
 }
