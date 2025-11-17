@@ -26,8 +26,19 @@ export type StudySlug = typeof AVAILABLE_STUDIES[number];
 export async function loadStudyMetadata(slug: string): Promise<StudyMetadata | null> {
   // Check if this is a test study
   if (testStudyRegistry.isTestStudy(slug)) {
+    console.log(`[loadStudyMetadata] Detected test study: ${slug}`);
     const testStudy = testStudyRegistry.getStudyBySlug(slug);
-    return testStudy ? testStudy.metadata : null;
+
+    if (testStudy) {
+      console.log(`[loadStudyMetadata] Found test study in registry: ${testStudy.metadata.title}`);
+      return testStudy.metadata;
+    } else {
+      console.error(`[loadStudyMetadata] Test study not found in registry: ${slug}`);
+      // Try to get all studies to debug
+      const allStudies = testStudyRegistry.getAllStudies();
+      console.log(`[loadStudyMetadata] Registry has ${allStudies.length} studies:`, allStudies.map(s => s.slug));
+      return null;
+    }
   }
 
   // Load from file system for regular studies

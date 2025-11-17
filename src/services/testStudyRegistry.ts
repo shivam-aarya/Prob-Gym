@@ -209,7 +209,4 @@ declare global {
 }
 
 export const testStudyRegistry = global.testStudyRegistry ?? new TestStudyRegistry();
-
-if (process.env.NODE_ENV !== 'production') {
-  global.testStudyRegistry = testStudyRegistry;
-}
+global.testStudyRegistry = testStudyRegistry;
