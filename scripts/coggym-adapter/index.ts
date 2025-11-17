@@ -96,7 +96,7 @@ async function listExperiments() {
           try {
             const config = await parseConfig(expPath);
             console.log(`  ${expDir}: ${config.experimentName}`);
-            console.log(`    Stimuli: ${config.stimuli_count}, Judgments: ${config.judgment_count}`);
+            console.log(`    Trials: ${config.stimuli_count}, Judgments: ${config.judgment_count}`);
           } catch (error) {
             console.log(`  ${expDir}: [Unable to parse config]`);
           }
@@ -142,7 +142,7 @@ async function importExperiment(
     const instructions = await parseInstructions(fullPath);
 
     console.log(`   ✓ Config: ${config.experimentName}`);
-    console.log(`   ✓ Stimuli: ${stimuli.length} trials`);
+    console.log(`   ✓ Trials: ${stimuli.length} trials`);
     console.log(`   ✓ Instructions: ${instructions.length} modules`);
 
     // Validate experiment

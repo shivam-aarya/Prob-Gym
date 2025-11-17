@@ -66,7 +66,7 @@ export async function convertUploadedStudy(
     logs.info.push(`  - Total files uploaded: ${files.length}`);
 
     const configFile = files.find(f => f.path.endsWith('config.json') || f.name === 'config.json');
-    const stimuliFile = files.find(f => f.path.endsWith('stimuli.jsonl') || f.name === 'stimuli.jsonl');
+    const trialFile = files.find(f => f.path.endsWith('trial.jsonl') || f.name === 'trial.jsonl');
     const instructionFile = files.find(f => f.path.endsWith('instruction.jsonl') || f.name === 'instruction.jsonl');
 
     if (!configFile) {
@@ -80,11 +80,11 @@ export async function convertUploadedStudy(
       return { success: false, studySlug: '', logs };
     }
 
-    if (!stimuliFile) {
+    if (!trialFile) {
       logs.errors.push('VALIDATION FAILED: Missing required file');
-      logs.errors.push('  - Required file not found: stimuli.jsonl');
+      logs.errors.push('  - Required file not found: trial.jsonl');
       logs.errors.push('  - This file contains trial/scenario definitions');
-      logs.errors.push('  - Please ensure stimuli.jsonl is included in your upload');
+      logs.errors.push('  - Please ensure trial.jsonl is included in your upload');
       logs.errors.push('');
       logs.errors.push('Files received:');
       files.forEach(f => logs.errors.push(`  - ${f.path}`));
@@ -92,7 +92,7 @@ export async function convertUploadedStudy(
     }
 
     logs.info.push(`  - Found config.json at: ${configFile.path}`);
-    logs.info.push(`  - Found stimuli.jsonl at: ${stimuliFile.path}`);
+    logs.info.push(`  - Found trial.jsonl at: ${trialFile.path}`);
     if (instructionFile) {
       logs.info.push(`  - Found instruction.jsonl at: ${instructionFile.path}`);
     }
@@ -107,11 +107,11 @@ export async function convertUploadedStudy(
     logs.info.push(`  - Participant count: ${config.participants_info.count || 'not specified'}`);
     logs.info.push(`  - Judgment types: ${config.judgment_count} configured`);
 
-    // Parse stimuli
-    const stimuli = parseStimuliFromString(stimuliFile.content as string);
-    logs.info.push(`  - Parsed stimuli.jsonl successfully`);
+    // Parse trials
+    const stimuli = parseStimuliFromString(trialFile.content as string);
+    logs.info.push(`  - Parsed trial.jsonl successfully`);
     logs.info.push(`  - Total trials: ${stimuli.length}`);
-    logs.info.push(`  - Unique stimulus IDs: ${new Set(stimuli.map(s => s.stimuli_id)).size}`);
+    logs.info.push(`  - Unique trial IDs: ${new Set(stimuli.map(s => s.stimuli_id)).size}`);
 
     // Parse instructions (optional)
     let instructions: InstructionContent[] = [];
@@ -252,7 +252,7 @@ export async function convertUploadedStudy(
     // Provide helpful troubleshooting hints
     logs.errors.push('');
     logs.errors.push('Troubleshooting tips:');
-    logs.errors.push('  - Verify all required files are present: config.json, stimuli.jsonl');
+    logs.errors.push('  - Verify all required files are present: config.json, trial.jsonl');
     logs.errors.push('  - Check that JSON/JSONL files are properly formatted');
     logs.errors.push('  - Ensure asset files are in an "assets/" directory');
     logs.errors.push('  - Review the CogGym format specification for required fields');

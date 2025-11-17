@@ -38,14 +38,14 @@ export async function copyAssets(
 
   // Also collect media URLs from instructions
   for (const instruction of instructions) {
-    // Handle legacy media_url format (instruction pages)
+    // Handle instruction pages with media_url
     if (instruction.type === 'instruction' && instruction.media_url) {
       for (const url of instruction.media_url) {
         mediaUrls.add(url);
       }
     }
-    // Handle new stimuli format (comprehension quizzes)
-    if (instruction.type === 'comprehension_quiz' && instruction.stimuli) {
+    // Handle test_trial with embedded stimuli
+    if (instruction.type === 'test_trial' && instruction.stimuli) {
       for (const stimulusItem of instruction.stimuli) {
         if (stimulusItem.media_url) {
           for (const url of stimulusItem.media_url) {

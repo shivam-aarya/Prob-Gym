@@ -34,29 +34,18 @@ export function validateStimuliReferences(
 }
 
 /**
- * Validate that test trial references in instructions exist
+ * Validate instruction references
+ * Note: test_trial types now have embedded stimuli arrays, so no validation needed
  */
 export function validateInstructionReferences(
   instructions: InstructionContent[],
   stimuli: CogGymStimulus[]
 ): { valid: boolean; errors: string[]; warnings: string[] } {
-  const errors: string[] = [];
-  const stimuliIds = new Set(stimuli.map(s => s.stimuli_id));
-
-  for (let i = 0; i < instructions.length; i++) {
-    const instruction = instructions[i];
-    if (instruction.type === 'test_trial') {
-      if (!stimuliIds.has(instruction.stimuli_id)) {
-        errors.push(
-          `Instruction ${i + 1}: test_trial references stimulus "${instruction.stimuli_id}" which doesn't exist`
-        );
-      }
-    }
-  }
-
+  // No validation needed - test_trial types have embedded stimuli
+  // instead of references to external stimuli
   return {
-    valid: errors.length === 0,
-    errors,
+    valid: true,
+    errors: [],
     warnings: [],
   };
 }

@@ -86,7 +86,7 @@ function validateInstruction(
     throw new Error(`Line ${lineNumber}: Missing required field: type`);
   }
 
-  const validTypes = ['instruction', 'test_trial', 'comprehension_quiz'];
+  const validTypes = ['instruction', 'test_trial'];
   if (!validTypes.includes(instruction.type)) {
     throw new Error(`Line ${lineNumber}: type must be one of: ${validTypes.join(', ')}`);
   }
@@ -100,17 +100,11 @@ function validateInstruction(
       break;
 
     case 'test_trial':
-      if (!instruction.stimuli_id) {
-        throw new Error(`Line ${lineNumber}: test_trial type requires stimuli_id field`);
-      }
-      break;
-
-    case 'comprehension_quiz':
       if (!instruction.queries || !Array.isArray(instruction.queries)) {
-        throw new Error(`Line ${lineNumber}: comprehension_quiz type requires queries array`);
+        throw new Error(`Line ${lineNumber}: test_trial type requires queries array`);
       }
       if (instruction.queries.length === 0) {
-        throw new Error(`Line ${lineNumber}: comprehension_quiz queries cannot be empty`);
+        throw new Error(`Line ${lineNumber}: test_trial queries cannot be empty`);
       }
 
       // Validate stimuli if present
@@ -146,7 +140,7 @@ function validateInstruction(
         const query = instruction.queries[i];
         if (query.type !== 'text-instruction' && !('answer' in query)) {
           throw new Error(
-            `Line ${lineNumber}, Query ${i + 1}: comprehension_quiz questions must have answer field (except text-instruction type)`
+            `Line ${lineNumber}, Query ${i + 1}: test_trial questions must have answer field (except text-instruction type)`
           );
         }
       }

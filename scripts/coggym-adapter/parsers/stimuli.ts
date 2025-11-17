@@ -1,5 +1,5 @@
 /**
- * Parser for CogGym stimuli.jsonl files
+ * Parser for CogGym trial.jsonl files
  */
 
 import { readFile } from 'fs/promises';
@@ -7,25 +7,25 @@ import { join } from 'path';
 import { CogGymStimulus } from '../types';
 
 /**
- * Parse a stimuli.jsonl file from a CogGym experiment
+ * Parse a trial.jsonl file from a CogGym experiment
  * JSONL format: one JSON object per line
  */
 export async function parseStimuli(experimentPath: string): Promise<CogGymStimulus[]> {
-  const stimuliPath = join(experimentPath, 'stimuli.jsonl');
+  const trialPath = join(experimentPath, 'trial.jsonl');
 
   try {
-    const content = await readFile(stimuliPath, 'utf-8');
+    const content = await readFile(trialPath, 'utf-8');
     return parseStimuliFromString(content);
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(`Failed to parse stimuli.jsonl: ${error.message}`);
+      throw new Error(`Failed to parse trial.jsonl: ${error.message}`);
     }
     throw error;
   }
 }
 
 /**
- * Parse stimuli from a string (for in-memory processing)
+ * Parse trials from a string (for in-memory processing)
  */
 export function parseStimuliFromString(content: string): CogGymStimulus[] {
   try {
@@ -52,7 +52,7 @@ export function parseStimuliFromString(content: string): CogGymStimulus[] {
     return stimuli;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(`Failed to parse stimuli: ${error.message}`);
+      throw new Error(`Failed to parse trials: ${error.message}`);
     }
     throw error;
   }

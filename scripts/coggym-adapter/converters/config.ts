@@ -104,10 +104,10 @@ function generateTutorialConfig(
         };
       }
 
-      case 'comprehension_quiz': {
+      case 'test_trial': {
         const content: any[] = [];
 
-        // Add stimuli images if present (CogGym v2 schema)
+        // Add stimuli images if present
         if (instruction.stimuli && instruction.stimuli.length > 0) {
           instruction.stimuli.forEach((stimulus) => {
             if (stimulus.input_type === 'img' && stimulus.media_url.length > 0) {
@@ -117,7 +117,7 @@ function generateTutorialConfig(
                 content.push({
                   type: 'image',
                   src: absoluteUrl,
-                  alt: 'Quiz stimulus',
+                  alt: 'Practice stimulus',
                 });
               });
             } else if (stimulus.input_type === 'text' && stimulus.media_url.length > 0) {
@@ -128,7 +128,7 @@ function generateTutorialConfig(
           });
         }
 
-        // Add quiz questions
+        // Add practice questions
         instruction.queries.forEach((query) => {
           if (query.type === 'text-instruction') {
             // Text instruction - show as plain text without answer required
@@ -137,7 +137,7 @@ function generateTutorialConfig(
               value: query.prompt,
             });
           } else {
-            // Regular quiz question with answer
+            // Regular practice question with answer
             quizCounter++;
             content.push({
               type: 'quiz',
@@ -150,22 +150,10 @@ function generateTutorialConfig(
         });
 
         return {
-          title: 'Comprehension Check',
+          title: 'Practice Trial',
           content,
         };
       }
-
-      case 'test_trial':
-        // Test trials would need the actual scenario data
-        return {
-          title: 'Practice',
-          content: [
-            {
-              type: 'text',
-              value: `Practice trial: ${instruction.stimuli_id}${instruction.feedback ? `\n\nFeedback: ${instruction.feedback}` : ''}`,
-            },
-          ],
-        };
 
       default:
         return {
