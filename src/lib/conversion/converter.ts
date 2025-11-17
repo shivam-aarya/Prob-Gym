@@ -49,7 +49,7 @@ export interface ConversionResult {
 }
 
 /**
- * Convert uploaded CogGym files to Prob-Gym format
+ * Convert uploaded CogGym files to Cog-Gym format
  */
 export async function convertUploadedStudy(
   files: UploadedFile[]
@@ -147,9 +147,9 @@ export async function convertUploadedStudy(
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '')}`;
 
-    // Convert to Prob-Gym format
+    // Convert to Cog-Gym format
     logs.info.push('');
-    logs.info.push('STEP 3: Converting to Prob-Gym format');
+    logs.info.push('STEP 3: Converting to Cog-Gym format');
     logs.info.push(`  - Generated study slug: ${studySlug}`);
 
     const metadata = convertToMetadata(config, stimuli, instructions, studySlug);
