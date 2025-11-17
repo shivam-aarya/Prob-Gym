@@ -1,5 +1,4 @@
 import { loadStudyScenarios } from '@/studies/loader';
-import { scenarios as gerstenberg2012pingexp1Scenarios } from '@/studies/gerstenberg2012ping-exp1/scenarios';
 import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
 
 /**
@@ -38,7 +37,7 @@ export async function getSelectedScenarios(studySlug: string, questionsPerPartic
       }
 
       scenarios = data.scenarios;
-    } catch (error) {
+    } catch {
       throw new Error(`No scenarios found for study: ${studySlug}`);
     }
   } else {

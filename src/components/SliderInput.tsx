@@ -104,7 +104,7 @@ export default function SliderInput({
     if (!initialValues) {
       setSliders(options.map(() => ({ value: default_value, touched: false })));
     }
-  }, [options.length, default_value, initialValues]);
+  }, [options, default_value, initialValues]);
 
   const handleSliderChange = (index: number, newValue: number) => {
     if (disabled) return;

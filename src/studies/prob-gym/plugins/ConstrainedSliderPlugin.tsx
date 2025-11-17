@@ -108,7 +108,7 @@ function ConstrainedSlider({
     if (!value) {
       setSliders(options.map(() => ({ value: default_value, touched: false })));
     }
-  }, [options.length, default_value, value]);
+  }, [options, default_value, value]);
 
   const handleSliderChange = (index: number, newValue: number) => {
     if (disabled) return;

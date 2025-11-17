@@ -76,9 +76,9 @@ function inferModality(responseTypes: string[], stimuli: CogGymStimulus[]): stri
   const modalities = new Set<string>();
 
   // Check input types (media)
-  const hasImages = stimuli.some(s => s.input_type === 'img');
-  const hasVideos = stimuli.some(s => s.input_type === 'video');
-  const hasText = stimuli.some(s => s.input_type === 'text');
+  const hasImages = stimuli.some(s => s.stimuli.some(item => item.input_type === 'img'));
+  const hasVideos = stimuli.some(s => s.stimuli.some(item => item.input_type === 'video'));
+  const hasText = stimuli.some(s => s.stimuli.some(item => item.input_type === 'text'));
 
   if (hasImages) modalities.add('visual');
   if (hasVideos) modalities.add('video');

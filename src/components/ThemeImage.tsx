@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useTheme } from '@/components/ThemeProvider';
 
 interface ThemeImageProps {
@@ -23,10 +24,13 @@ export default function ThemeImage({ lightSrc, darkSrc, alt, className = '' }: T
 
   return (
     <div className="relative inline-block w-full">
-      <img
+      <Image
         src={theme === 'dark' ? darkSrc : lightSrc}
         alt={alt}
-        className={`${className} ${
+        width={0}
+        height={0}
+        sizes="100vw"
+        className={`${className} w-full h-auto ${
           theme === 'dark'
             ? 'ring-2 ring-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.15)] border-2 border-blue-400/20'
             : ''

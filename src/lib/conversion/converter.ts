@@ -104,14 +104,14 @@ export async function convertUploadedStudy(
     const config = parseConfigFromString(configFile.content as string);
     logs.info.push(`  - Parsed config.json successfully`);
     logs.info.push(`  - Experiment name: ${config.experimentName}`);
-    logs.info.push(`  - Participant count: ${config.participant_count || 'not specified'}`);
+    logs.info.push(`  - Participant count: ${config.participants_info.count || 'not specified'}`);
     logs.info.push(`  - Judgment types: ${config.judgment_count} configured`);
 
     // Parse stimuli
     const stimuli = parseStimuliFromString(stimuliFile.content as string);
     logs.info.push(`  - Parsed stimuli.jsonl successfully`);
     logs.info.push(`  - Total trials: ${stimuli.length}`);
-    logs.info.push(`  - Unique stimulus IDs: ${new Set(stimuli.map(s => s.stimulus_id)).size}`);
+    logs.info.push(`  - Unique stimulus IDs: ${new Set(stimuli.map(s => s.stimuli_id)).size}`);
 
     // Parse instructions (optional)
     let instructions: InstructionContent[] = [];
