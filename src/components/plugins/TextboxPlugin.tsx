@@ -48,6 +48,9 @@ function Textbox({
       const savedValue = localStorage.getItem(`${studySlug}_textbox_${scenarioId}`);
       if (savedValue) {
         setText(savedValue);
+      } else {
+        // Reset to empty string if no saved value for this scenario
+        setText('');
       }
     }
   }, [scenarioId, studySlug]);

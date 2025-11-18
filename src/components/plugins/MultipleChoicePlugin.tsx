@@ -70,6 +70,9 @@ function MultipleChoice({
         if (!isNaN(parsed)) {
           setSelectedIndex(parsed);
         }
+      } else {
+        // Reset to null if no saved value for this scenario
+        setSelectedIndex(null);
       }
     }
   }, [scenarioId, studySlug]);
@@ -87,8 +90,8 @@ function MultipleChoice({
       );
     }
 
-    // Notify parent
-    onChange(originalIndex);
+    // Notify parent - pass as array to match expected format
+    onChange([originalIndex]);
   };
 
   return (

@@ -81,6 +81,9 @@ function MultipleSelect({
         } catch (err) {
           console.error('Error parsing saved multi-select values:', err);
         }
+      } else {
+        // Reset to empty array if no saved value for this scenario
+        setSelectedIndices([]);
       }
     }
   }, [scenarioId, studySlug]);

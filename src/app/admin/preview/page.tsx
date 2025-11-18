@@ -75,6 +75,17 @@ export default function AdminPreviewPage() {
     return '';
   });
 
+  // Initialize authentication state from session storage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedPassword = sessionStorage.getItem('admin_password');
+      if (storedPassword) {
+        setPassword(storedPassword);
+        setIsAuthenticated(true);
+      }
+    }
+  }, []);
+
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState('');
   const [conversionLogs, setConversionLogs] = useState<ConversionLogs | null>(null);
@@ -136,18 +147,39 @@ export default function AdminPreviewPage() {
   }, [isAuthenticated, fetchTestStudies]);
 
   // Handle password submission
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
 
-    // We'll validate the password when uploading files
-    // For now, just check it's not empty
     if (!password.trim()) {
       setAuthError('Please enter a password');
       return;
     }
 
-    setIsAuthenticated(true);
+    try {
+      // Validate password with server
+      const res = await fetch('/api/admin/validate-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+
+      if (!res.ok) {
+        if (res.status === 401) {
+          setAuthError('Invalid password');
+        } else {
+          setAuthError('Authentication failed. Please try again.');
+        }
+        return;
+      }
+
+      // Password is valid - store it and authenticate
+      sessionStorage.setItem('admin_password', password);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error('Login failed:', error);
+      setAuthError('Authentication failed. Please try again.');
+    }
   };
 
   // Handle file upload
@@ -186,6 +218,8 @@ export default function AdminPreviewPage() {
         if (res.status === 401) {
           setAuthError('Invalid password');
           setIsAuthenticated(false);
+          setPassword('');
+          sessionStorage.removeItem('admin_password');
           setConversionLogs(data.logs || null);
         } else {
           setConversionLogs(data.logs || {
@@ -409,7 +443,11 @@ export default function AdminPreviewPage() {
               </p>
             </div>
             <button
-              onClick={() => setIsAuthenticated(false)}
+              onClick={() => {
+                setIsAuthenticated(false);
+                setPassword('');
+                sessionStorage.removeItem('admin_password');
+              }}
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
             >
               Logout
