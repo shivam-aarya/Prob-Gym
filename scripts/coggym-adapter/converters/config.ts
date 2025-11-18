@@ -10,7 +10,8 @@ import { CogGymConfig, InstructionContent } from '../types';
 export function convertToConfig(
   cogGymConfig: CogGymConfig,
   instructions: InstructionContent[],
-  studySlug: string
+  studySlug: string,
+  totalQueries: number
 ): any {
   return {
     study: {
@@ -24,7 +25,7 @@ export function convertToConfig(
         endpoint: '/api/submit',
       },
     },
-    consent: generateConsentConfig(cogGymConfig),
+    consent: generateConsentConfig(cogGymConfig, totalQueries),
     tutorial: generateTutorialConfig(instructions, cogGymConfig, studySlug),
     demographic: generateDemographicConfig(),
   };
@@ -33,12 +34,12 @@ export function convertToConfig(
 /**
  * Generate consent configuration
  */
-function generateConsentConfig(config: CogGymConfig): any {
+function generateConsentConfig(config: CogGymConfig, totalQueries: number): any {
   return {
     title: `Welcome to ${config.experimentName}`,
     content: [
       config.description,
-      `This experiment should take about ${estimateDuration(config.stimuli_count, config.judgment_count)} minutes.`,
+      `This experiment should take about ${estimateDuration(totalQueries)} minutes.`,
       'Your participation is completely voluntary. You can agree to take part and later change your mind.',
     ],
     buttonText: 'I agree, begin the study',
@@ -120,10 +121,12 @@ function generateTutorialConfig(
                   alt: 'Practice stimulus',
                 });
               });
-            } else if (stimulus.input_type === 'text' && stimulus.media_url.length > 0) {
-              // For text stimuli, media_url might contain text content paths
-              // For now, we'll skip text stimuli in tutorial images
-              // TODO: Handle text stimulus rendering if needed
+            } else if (stimulus.input_type === 'text') {
+              // For text stimuli, render the text content
+              content.push({
+                type: 'text',
+                value: stimulus.text,
+              });
             }
           });
         }
@@ -214,8 +217,8 @@ function generateDemographicConfig(): any {
 /**
  * Estimate study duration in minutes
  */
-function estimateDuration(stimuliCount: number, judgmentCount: number): number {
+function estimateDuration(totalQueries: number): number {
   // Rough estimate: 30 seconds per judgment
-  const minutes = Math.ceil((judgmentCount * 0.5) / 5) * 5; // Round to nearest 5
+  const minutes = Math.ceil((totalQueries * 0.5) / 5) * 5; // Round to nearest 5
   return Math.max(5, Math.min(60, minutes)); // Clamp between 5-60 minutes
 }

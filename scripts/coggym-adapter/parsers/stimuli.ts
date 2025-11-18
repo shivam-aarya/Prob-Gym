@@ -87,16 +87,30 @@ function validateStimulus(stimulus: any, lineNumber: number): asserts stimulus i
       throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: Missing required field: input_type`);
     }
 
-    if (!('media_url' in stimulusItem)) {
-      throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: Missing required field: media_url`);
-    }
-
-    if (!Array.isArray(stimulusItem.media_url)) {
-      throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: media_url must be an array`);
-    }
-
     if (!validInputTypes.includes(stimulusItem.input_type)) {
       throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: input_type must be one of: ${validInputTypes.join(', ')}`);
+    }
+
+    // Validate based on input_type
+    if (stimulusItem.input_type === 'img' || stimulusItem.input_type === 'video') {
+      // Media stimulus - requires media_url array
+      if (!('media_url' in stimulusItem)) {
+        throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: ${stimulusItem.input_type} input_type requires media_url field`);
+      }
+      if (!Array.isArray(stimulusItem.media_url)) {
+        throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: media_url must be an array`);
+      }
+      if (stimulusItem.media_url.length === 0) {
+        throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: media_url array cannot be empty`);
+      }
+    } else if (stimulusItem.input_type === 'text') {
+      // Text stimulus - requires text field
+      if (!('text' in stimulusItem)) {
+        throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: text input_type requires text field`);
+      }
+      if (typeof stimulusItem.text !== 'string') {
+        throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: text field must be a string`);
+      }
     }
   }
 

@@ -96,7 +96,7 @@ async function listExperiments() {
           try {
             const config = await parseConfig(expPath);
             console.log(`  ${expDir}: ${config.experimentName}`);
-            console.log(`    Trials: ${config.stimuli_count}, Judgments: ${config.judgment_count}`);
+            console.log(`    Trials: ${config.stimuli_count}`);
           } catch (error) {
             console.log(`  ${expDir}: [Unable to parse config]`);
           }
@@ -178,7 +178,9 @@ async function importExperiment(
     console.log('\n🔧 Converting to Prob-Gym format...');
     const metadata = convertToMetadata(config, stimuli, instructions, studySlug);
     const { scenarios } = convertToScenarios(stimuli);
-    const probGymConfig = convertToConfig(config, instructions, studySlug);
+    // Calculate total queries from stimuli
+    const totalQueries = stimuli.reduce((sum, s) => sum + s.queries.length, 0);
+    const probGymConfig = convertToConfig(config, instructions, studySlug, totalQueries);
 
     console.log(`   ✓ Metadata generated`);
     console.log(`   ✓ Scenarios: ${scenarios.length} (split from ${stimuli.length} trials)`);

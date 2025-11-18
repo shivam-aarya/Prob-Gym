@@ -52,7 +52,6 @@ function validateConfig(config: any): asserts config is CogGymConfig {
     'taskType',
     'responseType',
     'stimuli_count',
-    'judgment_count',
     'experimentFlow',
   ];
 

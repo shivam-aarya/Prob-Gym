@@ -27,7 +27,8 @@ export async function copyAssets(
     // Extract from stimuli array
     if (stimulus.stimuli) {
       for (const stimulusItem of stimulus.stimuli) {
-        if (stimulusItem.media_url) {
+        // Only process media stimuli (img/video), skip text stimuli
+        if (stimulusItem.input_type !== 'text' && stimulusItem.media_url) {
           for (const url of stimulusItem.media_url) {
             mediaUrls.add(url);
           }
@@ -47,7 +48,8 @@ export async function copyAssets(
     // Handle test_trial with embedded stimuli
     if (instruction.type === 'test_trial' && instruction.stimuli) {
       for (const stimulusItem of instruction.stimuli) {
-        if (stimulusItem.media_url) {
+        // Only process media stimuli (img/video), skip text stimuli
+        if (stimulusItem.input_type !== 'text' && stimulusItem.media_url) {
           for (const url of stimulusItem.media_url) {
             mediaUrls.add(url);
           }
@@ -115,7 +117,8 @@ export function getReferencedMedia(stimuli: CogGymStimulus[]): string[] {
     // Extract from stimuli array (CogGym v2 schema)
     if (stimulus.stimuli) {
       for (const stimulusItem of stimulus.stimuli) {
-        if (stimulusItem.media_url) {
+        // Only process media stimuli (img/video), skip text stimuli
+        if (stimulusItem.input_type !== 'text' && stimulusItem.media_url) {
           media.push(...stimulusItem.media_url);
         }
       }

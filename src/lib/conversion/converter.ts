@@ -104,8 +104,6 @@ export async function convertUploadedStudy(
     const config = parseConfigFromString(configFile.content as string);
     logs.info.push(`  - Parsed config.json successfully`);
     logs.info.push(`  - Experiment name: ${config.experimentName}`);
-    logs.info.push(`  - Participant count: ${config.participants_info.count || 'not specified'}`);
-    logs.info.push(`  - Judgment types: ${config.judgment_count} configured`);
 
     // Parse trials
     const stimuli = parseStimuliFromString(trialFile.content as string);
@@ -161,7 +159,9 @@ export async function convertUploadedStudy(
     logs.info.push(`  - Converted ${stimuli.length} trials into ${scenarios.length} scenarios`);
     logs.info.push(`  - Each scenario contains ${scenarios[0]?.questions?.length || 0} question(s)`);
 
-    const probGymConfig = convertToConfig(config, instructions, studySlug);
+    // Calculate total queries from stimuli
+    const totalQueries = stimuli.reduce((sum, s) => sum + s.queries.length, 0);
+    const probGymConfig = convertToConfig(config, instructions, studySlug, totalQueries);
 
     // Add consent and tutorial to metadata from config
     (metadata as any).consent = probGymConfig.consent;

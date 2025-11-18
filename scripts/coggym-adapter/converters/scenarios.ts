@@ -68,14 +68,33 @@ function convertQueryToScenario(
 
   // Convert stimuli array to platform format
   // Strip "assets/" prefix from media URLs since platform prepends asset path
-  scenario.stimuli = stimulus.stimuli.map(s => ({
-    input_type: s.input_type,
-    media_url: s.media_url.map(url => url.replace(/^assets\//, '')),
-  }));
+  scenario.stimuli = stimulus.stimuli.map(s => {
+    if (s.input_type === 'text') {
+      // Text stimulus - include text content and optional fields
+      const textStimulus: any = {
+        input_type: s.input_type,
+        text: s.text,
+      };
+      if (s.title) textStimulus.title = s.title;
+      if (s.fontsize) textStimulus.fontsize = s.fontsize;
+      return textStimulus;
+    } else {
+      // Media stimulus (img/video) - include media_url and optional fields
+      const mediaStimulus: any = {
+        input_type: s.input_type,
+        media_url: s.media_url.map(url => url.replace(/^assets\//, '')),
+      };
+      if (s.title) mediaStimulus.title = s.title;
+      if (s.width) mediaStimulus.width = s.width;
+      if (s.height) mediaStimulus.height = s.height;
+      if (s.dimension) mediaStimulus.dimension = s.dimension;
+      return mediaStimulus;
+    }
+  });
 
   // Handle media URLs - use first media from first stimulus as primary source_link for backward compatibility
   // Strip "assets/" prefix since it will be prepended by platform
-  if (primaryStimulus.media_url && primaryStimulus.media_url.length > 0) {
+  if (primaryStimulus.input_type !== 'text' && primaryStimulus.media_url && primaryStimulus.media_url.length > 0) {
     scenario.source_link = primaryStimulus.media_url[0].replace(/^assets\//, '');
   }
 

@@ -67,14 +67,6 @@ export function validateCounts(
     );
   }
 
-  // Check judgment count
-  const totalQueries = stimuli.reduce((sum, s) => sum + s.queries.length, 0);
-  if (config.judgment_count !== totalQueries) {
-    warnings.push(
-      `Config specifies ${config.judgment_count} judgments but found ${totalQueries} total queries`
-    );
-  }
-
   return {
     valid: warnings.length === 0,
     errors: [],

@@ -9,11 +9,29 @@ export interface TextSection {
 
 /**
  * Individual stimulus item for multi-stimuli support
+ * Discriminated union based on input_type
  */
-export interface StimulusItem {
+export interface BaseStimulusItem {
   input_type: 'img' | 'text' | 'video';
+  // Optional fields (Appendix A.3)
+  title?: string;
+  fontsize?: number;
+  width?: number;
+  height?: number;
+  dimension?: Array<{ width: number; height: number }>;
+}
+
+export interface MediaStimulusItem extends BaseStimulusItem {
+  input_type: 'img' | 'video';
   media_url: string[];
 }
+
+export interface TextStimulusItem extends BaseStimulusItem {
+  input_type: 'text';
+  text: string;
+}
+
+export type StimulusItem = MediaStimulusItem | TextStimulusItem;
 
 export interface StudyConfig {
   task_name: string;

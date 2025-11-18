@@ -95,51 +95,96 @@ export default function Layout({ children, config }: LayoutProps) {
                 // New multi-stimuli format (CogGym v2)
                 <div className="space-y-4">
                   {config.stimuli.map((stimulus, index) => {
-                    const stimulusAssetUrl = stimulus.media_url.length > 0
-                      ? getAssetUrl(stimulus.media_url[0])
-                      : '';
-                    const stimulusIsGif = stimulusAssetUrl.toLowerCase().endsWith('.gif');
+                    // Render title if present
+                    const renderTitle = () => {
+                      if (!stimulus.title) return null;
+                      const titleStyle = stimulus.fontsize ? { fontSize: `${stimulus.fontsize}px` } : {};
+                      return (
+                        <h3
+                          className={`font-semibold mb-2 ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
+                          style={titleStyle}
+                        >
+                          {stimulus.title}
+                        </h3>
+                      );
+                    };
 
                     if (stimulus.input_type === 'img') {
+                      const stimulusAssetUrl = stimulus.media_url.length > 0
+                        ? getAssetUrl(stimulus.media_url[0])
+                        : '';
+                      const stimulusIsGif = stimulusAssetUrl.toLowerCase().endsWith('.gif');
+
+                      // Handle dimension/width/height
+                      const containerStyle: React.CSSProperties = {};
+                      if (stimulus.height) {
+                        containerStyle.height = `${stimulus.height}px`;
+                      }
+
                       return (
-                        <div key={index} className="relative h-[45vh] min-h-[300px] max-h-[500px]">
-                          {stimulusIsGif ? (
-                            <ReplayableGif
-                              src={stimulusAssetUrl}
-                              alt={`Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
-                              className="absolute inset-0"
-                            />
-                          ) : (
-                            <Image
-                              src={stimulusAssetUrl}
-                              alt={`Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
-                              fill
-                              className="object-contain"
-                              priority={index === 0}
-                            />
-                          )}
+                        <div key={index}>
+                          {renderTitle()}
+                          <div
+                            className="relative min-h-[300px]"
+                            style={containerStyle.height ? containerStyle : { height: '45vh', maxHeight: '500px' }}
+                          >
+                            {stimulusIsGif ? (
+                              <ReplayableGif
+                                src={stimulusAssetUrl}
+                                alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
+                                className="absolute inset-0"
+                              />
+                            ) : (
+                              <Image
+                                src={stimulusAssetUrl}
+                                alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
+                                fill
+                                className="object-contain"
+                                priority={index === 0}
+                              />
+                            )}
+                          </div>
                         </div>
                       );
                     } else if (stimulus.input_type === 'video') {
+                      const stimulusAssetUrl = stimulus.media_url.length > 0
+                        ? getAssetUrl(stimulus.media_url[0])
+                        : '';
+
+                      const containerStyle: React.CSSProperties = {};
+                      if (stimulus.width) containerStyle.width = `${stimulus.width}px`;
+                      if (stimulus.height) containerStyle.height = `${stimulus.height}px`;
+
                       return (
-                        <div key={index} className="relative h-[40vh] min-h-[300px] max-h-[500px]">
-                          <video
-                            src={stimulusAssetUrl}
-                            controls
-                            className="w-full h-full object-contain"
-                            playsInline
+                        <div key={index}>
+                          {renderTitle()}
+                          <div
+                            className="relative min-h-[300px]"
+                            style={Object.keys(containerStyle).length > 0 ? containerStyle : { height: '40vh', maxHeight: '500px' }}
                           >
-                            Your browser does not support the video tag.
-                          </video>
+                            <video
+                              src={stimulusAssetUrl}
+                              controls
+                              className="w-full h-full object-contain"
+                              playsInline
+                            >
+                              Your browser does not support the video tag.
+                            </video>
+                          </div>
                         </div>
                       );
                     } else if (stimulus.input_type === 'text') {
+                      const textStyle: React.CSSProperties = {};
+                      if (stimulus.fontsize) textStyle.fontSize = `${stimulus.fontsize}px`;
+
                       return (
                         <div key={index} className={`p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                          <p className={`text-base leading-relaxed ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-                            {/* Text stimulus content would be loaded from media_url if needed */}
-                            Text stimulus {index + 1}
-                          </p>
+                          {renderTitle()}
+                          <div
+                            className={`text-base leading-relaxed ${isDark ? 'text-gray-200' : 'text-gray-800'}`}
+                            style={textStyle}
+                            dangerouslySetInnerHTML={{ __html: stimulus.text }}
+                          />
                         </div>
                       );
                     }

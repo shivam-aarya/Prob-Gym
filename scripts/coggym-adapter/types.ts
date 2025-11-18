@@ -15,19 +15,7 @@ export interface CogGymConfig {
   responseType: string[];
   contributors: string[];
   stimuli_count: number;
-  judgment_count: number;
-  participants_info: ParticipantsInfo;
   experimentFlow: ExperimentFlow[];
-}
-
-export interface ParticipantsInfo {
-  count: number;
-  age: number | null;
-  gender: {
-    male: number;
-    female: number;
-    other: number;
-  };
 }
 
 export interface ExperimentFlow {
@@ -53,11 +41,29 @@ export type QueryType =
 
 /**
  * Individual stimulus item (CogGym v2 schema)
+ * Discriminated union based on input_type
  */
-export interface StimulusItem {
+export interface BaseStimulusItem {
   input_type: InputType;
+  // Optional fields (see Appendix A.3)
+  title?: string;
+  fontsize?: number;
+  width?: number;
+  height?: number;
+  dimension?: Array<{ width: number; height: number }>;
+}
+
+export interface MediaStimulusItem extends BaseStimulusItem {
+  input_type: 'img' | 'video';
   media_url: string[];
 }
+
+export interface TextStimulusItem extends BaseStimulusItem {
+  input_type: 'text';
+  text: string;
+}
+
+export type StimulusItem = MediaStimulusItem | TextStimulusItem;
 
 export interface CogGymStimulus {
   stimuli_id: string;

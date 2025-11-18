@@ -97,7 +97,10 @@ export async function POST(request: NextRequest) {
     const files: UploadedFile[] = [];
     const originalFiles: Map<string, OriginalFile> = new Map();
     let totalSize = 0;
-    const MAX_TOTAL_SIZE = 50 * 1024 * 1024; // 50MB limit
+    // Configurable upload limit (default 200MB for experiments with audio/video)
+    const MAX_TOTAL_SIZE = (process.env.MAX_UPLOAD_SIZE_MB
+      ? parseInt(process.env.MAX_UPLOAD_SIZE_MB)
+      : 200) * 1024 * 1024;
 
     for (const [key, value] of formData.entries()) {
       if (key === 'password' || key === 'sessionId') continue;
@@ -131,6 +134,12 @@ export async function POST(request: NextRequest) {
           '.webm',
           '.mov',
           '.avi',
+          // Audio
+          '.wav',
+          '.mp3',
+          '.ogg',
+          '.m4a',
+          '.aac',
           // Documentation
           '.md',
           '.txt',
