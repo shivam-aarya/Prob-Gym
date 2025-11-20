@@ -182,7 +182,7 @@ export default function AdminPreviewPage() {
     }
   };
 
-  // Handle file upload
+  // Handle file upload with chunking for large files
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -193,29 +193,73 @@ export default function AdminPreviewPage() {
     setUploadSuccess(null);
 
     try {
-      const formData = new FormData();
-      formData.append('password', password);
-      formData.append('sessionId', sessionId);
-
-      // Add all files with their relative paths
+      // Create file list with paths
+      const fileList: { file: File; path: string }[] = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        // Use webkitRelativePath if available (from directory upload)
         const path = (file as any).webkitRelativePath || file.name;
-        formData.append(path, file);
+        fileList.push({ file, path });
       }
 
-      setUploadProgress('Uploading and converting...');
+      // Use chunked upload for production reliability
+      const uploadId = crypto.randomUUID();
+      const CHUNK_SIZE = 3 * 1024 * 1024; // 3MB chunks (under Vercel's 4.5MB limit)
 
-      const res = await fetch('/api/admin/upload', {
+      // Create chunks from all files
+      const chunks: { file: File; path: string; fileChunkIndex: number; chunk: Blob }[] = [];
+      for (const { file, path } of fileList) {
+        const fileChunks = Math.ceil(file.size / CHUNK_SIZE);
+        for (let i = 0; i < fileChunks; i++) {
+          const start = i * CHUNK_SIZE;
+          const end = Math.min(start + CHUNK_SIZE, file.size);
+          const chunk = file.slice(start, end);
+          chunks.push({ file, path, fileChunkIndex: i, chunk });
+        }
+      }
+
+      const totalChunks = chunks.length;
+      console.log(`[Upload] Uploading ${files.length} files in ${totalChunks} chunks`);
+
+      // Upload chunks
+      let uploadedChunks = 0;
+      for (const { file, path, fileChunkIndex, chunk } of chunks) {
+        const chunkFormData = new FormData();
+        chunkFormData.append('uploadId', uploadId);
+        chunkFormData.append('chunkIndex', fileChunkIndex.toString());
+        chunkFormData.append('totalChunks', totalChunks.toString());
+        chunkFormData.append('password', password);
+        chunkFormData.append('sessionId', sessionId);
+        chunkFormData.append('fileName', file.name);
+        chunkFormData.append('filePath', path);
+        chunkFormData.append('chunk', chunk);
+
+        const res = await fetch('/api/admin/upload/chunk', {
+          method: 'POST',
+          body: chunkFormData,
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || 'Chunk upload failed');
+        }
+
+        uploadedChunks++;
+        const progress = Math.round((uploadedChunks / totalChunks) * 100);
+        setUploadProgress(`Uploading... ${progress}% (${uploadedChunks}/${totalChunks} chunks)`);
+      }
+
+      // Complete the upload
+      setUploadProgress('Processing files...');
+      const completeRes = await fetch('/api/admin/upload/complete', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uploadId }),
       });
 
-      const data = await res.json();
+      const data = await completeRes.json();
 
-      if (!res.ok) {
-        if (res.status === 401) {
+      if (!completeRes.ok) {
+        if (completeRes.status === 401) {
           setAuthError('Invalid password');
           setIsAuthenticated(false);
           setPassword('');
@@ -257,6 +301,7 @@ export default function AdminPreviewPage() {
         setConversionLogs(data.logs);
       }
     } catch (error) {
+      console.error('Upload error:', error);
       setConversionLogs({
         info: [],
         warnings: [],
