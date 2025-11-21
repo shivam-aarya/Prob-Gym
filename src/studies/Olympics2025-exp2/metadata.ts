@@ -6,14 +6,15 @@
 import { StudyMetadata } from '@/studies/types';
 
 export const metadata: StudyMetadata = {
-  "id": "0772ec10-c98b-45c0-a923-9150aae15b30",
-  "slug": "Olympics2025-exp1",
+  "id": "4308d8ec-eedd-4448-ba23-4f830a9e39bd",
+  "slug": "Olympics2025-exp2",
   "version": "1.0.0",
-  "title": "Olympics Pilot Tug-of-War",
-  "description": "Tug-of-war tournament judgments (strength/effort/prediction) plus end-of-study commentary.",
-  "shortDescription": "Tug-of-war tournament judgments (strength/effort/prediction) plus end-of-study commentary.",
+  "title": "Olympics Four Legged Race",
+  "description": "Four Legged Race scenarios with ability and prediction questions.",
+  "shortDescription": "Four Legged Race scenarios with ability and prediction questions.",
   "authors": [
-    "Professor sample",
+    "Katie Collins",
+    "Lio Wong",
     "CogGym conversion"
   ],
   "tags": {
@@ -23,10 +24,9 @@ export const metadata: StudyMetadata = {
     ],
     "modality": [
       "visual",
-      "interactive",
-      "text-input"
+      "interactive"
     ],
-    "studyLength": "quick",
+    "studyLength": "medium",
     "domain": [
       "cognitive-science"
     ],
@@ -38,12 +38,12 @@ export const metadata: StudyMetadata = {
   },
   "status": "ACTIVE",
   "settings": {
-    "questionsPerParticipant": 7,
+    "questionsPerParticipant": 17,
     "randomizeQuestions": true,
     "allowBack": true,
     "showProgress": true,
     "autoSave": true,
-    "completionMessage": "Thank you for participating in \"Olympics Pilot Tug-of-War\"!"
+    "completionMessage": "Thank you for participating in \"Olympics Four Legged Race\"!"
   },
   "flow": {
     "consent": true,
@@ -51,7 +51,7 @@ export const metadata: StudyMetadata = {
     "scenarios": true,
     "demographic": true
   },
-  "assetPath": "/studies/Olympics2025-exp1/assets",
+  "assetPath": "/studies/Olympics2025-exp2/assets",
   "plugins": [
     "TextboxPlugin"
   ]

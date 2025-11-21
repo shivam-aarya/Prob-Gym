@@ -1,18 +1,18 @@
 {
   "study": {
-    "title": "Olympics Pilot Tug-of-War",
+    "title": "Olympics Math Team",
     "randomizeQuestions": true,
-    "questionsPerParticipant": 7,
+    "questionsPerParticipant": 17,
     "backend": {
       "enabled": true,
       "endpoint": "/api/submit"
     }
   },
   "consent": {
-    "title": "Welcome to Olympics Pilot Tug-of-War",
+    "title": "Welcome to Olympics Math Team",
     "content": [
-      "Tug-of-war tournament judgments (strength/effort/prediction) plus end-of-study commentary.",
-      "This experiment should take about 25 minutes.",
+      "Math Team scenarios with ability and prediction questions.",
+      "This experiment should take about 60 minutes.",
       "Your participation is completely voluntary. You can agree to take part and later change your mind."
     ],
     "buttonText": "I agree, begin the study"
@@ -25,7 +25,7 @@
         "content": [
           {
             "type": "text",
-            "value": "In this experiment, imagine that you are a <strong>talent recruiter</strong> for tug-of-war competitions!"
+            "value": "In this experiment, imagine that you are a <strong>talent recruiter</strong> for math olympiad competitions!"
           }
         ]
       },
@@ -92,7 +92,7 @@
           },
           {
             "type": "image",
-            "src": "/studies/Olympics2025-exp1/assets/quite-strong-greg.gif",
+            "src": "/studies/Olympics2025-exp3/assets/quite-strong-greg.gif",
             "alt": "Tutorial image"
           }
         ]
@@ -106,7 +106,7 @@
           },
           {
             "type": "image",
-            "src": "/studies/Olympics2025-exp1/assets/uncertain-avg-greg.gif",
+            "src": "/studies/Olympics2025-exp3/assets/uncertain-avg-greg.gif",
             "alt": "Tutorial image"
           }
         ]
@@ -120,7 +120,7 @@
           },
           {
             "type": "image",
-            "src": "/studies/Olympics2025-exp1/assets/team2-win.gif",
+            "src": "/studies/Olympics2025-exp3/assets/team2-win.gif",
             "alt": "Tutorial image"
           }
         ]
@@ -134,7 +134,7 @@
           },
           {
             "type": "image",
-            "src": "/studies/Olympics2025-exp1/assets/team1-win-tie.gif",
+            "src": "/studies/Olympics2025-exp3/assets/team1-win-tie.gif",
             "alt": "Tutorial image"
           }
         ]

@@ -1,12 +1,12 @@
-# Olympics Pilot Tug-of-War
+# Olympics Math Team
 
 Auto-generated study from CogGym format.
 
 ## Import Information
 
-- **Source**: Olympics2025/exp1
-- **Import Date**: 2025-11-21T22:37:39.765Z
-- **Scenario Count**: 7
+- **Source**: Olympics2025/exp3
+- **Import Date**: 2025-11-21T22:37:43.623Z
+- **Scenario Count**: 17
 
 
 ## Notes
@@ -16,5 +16,5 @@ Multi-query trials were split into separate scenarios.
 
 To re-import with updated source data:
 ```bash
-npm run coggym:import Olympics2025/exp1 --overwrite
+npm run coggym:import Olympics2025/exp3 --overwrite
 ```

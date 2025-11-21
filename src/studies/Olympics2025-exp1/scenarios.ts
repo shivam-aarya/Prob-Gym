@@ -155,6 +155,20 @@ export const scenarios: StudyConfig[] = [
           ],
           "show_label_values": false
         }
+      },
+      {
+        "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_sentence"
+      },
+      {
+        "question": "<strong>Describe how your commentary should change someone's belief here (this will NOT be shown to future participants).</strong> Example explanation: Athletes vary in how much effort they put into any match; if athletes don't try hard, they don't pull as much. If we learn Lio did not try hard in the second match, it might mean they are actually stronger than they appear (because their team didn't pull as much as they could have).",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_explanation"
       }
     ]
   },
@@ -307,6 +321,20 @@ export const scenarios: StudyConfig[] = [
           ],
           "show_label_values": false
         }
+      },
+      {
+        "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_sentence"
+      },
+      {
+        "question": "<strong>Describe how your commentary should change someone's belief here (this will NOT be shown to future participants).</strong> Example explanation: Athletes vary in how much effort they put into any match; if athletes don't try hard, they don't pull as much. If we learn Lio did not try hard in the second match, it might mean they are actually stronger than they appear (because their team didn't pull as much as they could have).",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_explanation"
       }
     ]
   },
@@ -459,6 +487,20 @@ export const scenarios: StudyConfig[] = [
           ],
           "show_label_values": false
         }
+      },
+      {
+        "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_sentence"
+      },
+      {
+        "question": "<strong>Describe how your commentary should change someone's belief here (this will NOT be shown to future participants).</strong> Example explanation: Athletes vary in how much effort they put into any match; if athletes don't try hard, they don't pull as much. If we learn Lio did not try hard in the second match, it might mean they are actually stronger than they appear (because their team didn't pull as much as they could have).",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_explanation"
       }
     ]
   },
@@ -611,6 +653,20 @@ export const scenarios: StudyConfig[] = [
           ],
           "show_label_values": false
         }
+      },
+      {
+        "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_sentence"
+      },
+      {
+        "question": "<strong>Describe how your commentary should change someone's belief here (this will NOT be shown to future participants).</strong> Example explanation: Athletes vary in how much effort they put into any match; if athletes don't try hard, they don't pull as much. If we learn Lio did not try hard in the second match, it might mean they are actually stronger than they appear (because their team didn't pull as much as they could have).",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_explanation"
       }
     ]
   },
@@ -763,6 +819,20 @@ export const scenarios: StudyConfig[] = [
           ],
           "show_label_values": false
         }
+      },
+      {
+        "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_sentence"
+      },
+      {
+        "question": "<strong>Describe how your commentary should change someone's belief here (this will NOT be shown to future participants).</strong> Example explanation: Athletes vary in how much effort they put into any match; if athletes don't try hard, they don't pull as much. If we learn Lio did not try hard in the second match, it might mean they are actually stronger than they appear (because their team didn't pull as much as they could have).",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_explanation"
       }
     ]
   },
@@ -915,17 +985,28 @@ export const scenarios: StudyConfig[] = [
           ],
           "show_label_values": false
         }
+      },
+      {
+        "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_sentence"
+      },
+      {
+        "question": "<strong>Describe how your commentary should change someone's belief here (this will NOT be shown to future participants).</strong> Example explanation: Athletes vary in how much effort they put into any match; if athletes don't try hard, they don't pull as much. If we learn Lio did not try hard in the second match, it might mean they are actually stronger than they appear (because their team didn't pull as much as they could have).",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_explanation"
       }
     ]
   },
   {
     "task_name": "exp1_commentary_final",
-    "scenario_id": 30,
+    "scenario_id": 6,
     "input_type": "img",
     "commentary": "",
-    "question": "Write one sentence of commentary about this tournament that could change someone’s belief about the players.",
-    "options": [],
-    "randomize_order": false,
     "stimuli": [
       {
         "input_type": "img",
@@ -935,6 +1016,21 @@ export const scenarios: StudyConfig[] = [
       }
     ],
     "source_link": "trials_9_10_tug-of-war.png",
-    "input_method": "textbox"
+    "questions": [
+      {
+        "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_sentence"
+      },
+      {
+        "question": "<strong>Describe how your commentary should change someone's belief here (this will NOT be shown to future participants).</strong> Example explanation: Athletes vary in how much effort they put into any match; if athletes don't try hard, they don't pull as much. If we learn Lio did not try hard in the second match, it might mean they are actually stronger than they appear (because their team didn't pull as much as they could have).",
+        "options": [],
+        "input_method": "textbox",
+        "randomize_order": false,
+        "tag": "commentary_explanation"
+      }
+    ]
   }
 ];
