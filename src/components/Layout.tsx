@@ -10,7 +10,6 @@ import { useStudy } from '@/contexts/StudyContext';
 interface LayoutProps {
   children: React.ReactNode;
   config: StudyConfig;
-  submitStatus?: 'idle' | 'success' | 'error';
 }
 
 function TextSectionComponent({ section, isDark }: { section: TextSection; isDark: boolean }) {
@@ -64,7 +63,7 @@ function TextSectionComponent({ section, isDark }: { section: TextSection; isDar
   );
 }
 
-export default function Layout({ children, config, submitStatus = 'idle' }: LayoutProps) {
+export default function Layout({ children, config }: LayoutProps) {
   const { theme } = useTheme();
   const { getAssetUrl } = useStudy();
   const isDark = theme === 'dark';
@@ -74,11 +73,11 @@ export default function Layout({ children, config, submitStatus = 'idle' }: Layo
   const assetUrl = config.source_link ? getAssetUrl(config.source_link) : '';
 
   return (
-    <div className={`h-full ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      <div className="container mx-auto px-4 py-4 h-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+    <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className="container mx-auto px-4 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100vh-8rem)]">
           {/* Left Column - Scenario Info and Content */}
-          <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto select-none`}
+          <div className={`rounded-lg shadow-md p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} overflow-y-auto select-none`} 
                style={{ WebkitUserSelect: 'none', msUserSelect: 'none' }}>
             <div className="flex items-center gap-3 mb-4">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
@@ -277,18 +276,6 @@ export default function Layout({ children, config, submitStatus = 'idle' }: Layo
               </div>
             )}
             {children}
-
-            {submitStatus === 'success' && (
-              <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
-                Response submitted successfully!
-              </div>
-            )}
-
-            {submitStatus === 'error' && (
-              <div className="mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
-                Error submitting response. Please try again.
-              </div>
-            )}
           </div>
         </div>
       </div>

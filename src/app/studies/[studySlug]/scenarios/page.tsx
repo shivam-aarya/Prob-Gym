@@ -203,7 +203,7 @@ export default function Scenarios() {
   }
 
   return (
-    <main className="h-screen flex flex-col overflow-hidden">
+    <main className="min-h-screen pb-20">
       {/* Reset button - only in development mode */}
       {process.env.NODE_ENV === 'development' && (
         <button
@@ -215,23 +215,33 @@ export default function Scenarios() {
         </button>
       )}
 
-      <div className="flex-1 overflow-hidden">
-        <Layout config={currentScenarioData} submitStatus={submitStatus}>
-          {currentScenarioData.questions && currentScenarioData.questions.length > 0 ? (
-            <MultiQuestionFrame
-              config={currentScenarioData}
-              onSubmit={handleSubmit}
-              previousResponses={multiQuestionResponses}
-            />
-          ) : (
-            <QuestionFrame
-              config={currentScenarioData}
-              onSubmit={handleSubmit}
-              previousResponses={responses}
-            />
-          )}
-        </Layout>
-      </div>
+      <Layout config={currentScenarioData}>
+        {currentScenarioData.questions && currentScenarioData.questions.length > 0 ? (
+          <MultiQuestionFrame
+            config={currentScenarioData}
+            onSubmit={handleSubmit}
+            previousResponses={multiQuestionResponses}
+          />
+        ) : (
+          <QuestionFrame
+            config={currentScenarioData}
+            onSubmit={handleSubmit}
+            previousResponses={responses}
+          />
+        )}
+
+        {submitStatus === 'success' && (
+          <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
+            Response submitted successfully!
+          </div>
+        )}
+
+        {submitStatus === 'error' && (
+          <div className="mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
+            Error submitting response. Please try again.
+          </div>
+        )}
+      </Layout>
 
       <ScenarioNavigation
         currentScenario={currentScenario}
