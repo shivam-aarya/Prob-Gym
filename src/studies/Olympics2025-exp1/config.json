@@ -1,0 +1,100 @@
+{
+  "study": {
+    "title": "Olympics Pilot Tug-of-War",
+    "randomizeQuestions": true,
+    "questionsPerParticipant": 7,
+    "backend": {
+      "enabled": true,
+      "endpoint": "/api/submit"
+    }
+  },
+  "consent": {
+    "title": "Welcome to Olympics Pilot Tug-of-War",
+    "content": [
+      "Tug-of-war tournament judgments (strength/effort/prediction) plus end-of-study commentary.",
+      "This experiment should take about 20 minutes.",
+      "Your participation is completely voluntary. You can agree to take part and later change your mind."
+    ],
+    "buttonText": "I agree, begin the study"
+  },
+  "tutorial": {
+    "title": "How to Participate",
+    "pages": [
+      {
+        "title": "Instructions 1",
+        "content": [
+          {
+            "type": "text",
+            "value": "In each trial you will see a small tug-of-war tournament. Teams are shown on either side, and the crown marks the winner of each game."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 2",
+        "content": [
+          {
+            "type": "text",
+            "value": "Player strength stays constant across games, but effort can vary. You will answer several sliders about player strength/effort and predict a future match."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 3",
+        "content": [
+          {
+            "type": "text",
+            "value": "After the trials, you will be asked to write one sentence of commentary about a scenario you saw that could change someone’s belief about the players."
+          }
+        ]
+      }
+    ],
+    "buttonText": "Start Study"
+  },
+  "demographic": {
+    "title": "Demographic Information",
+    "description": "Please help us by providing some demographic information.",
+    "questions": [
+      {
+        "id": "age",
+        "type": "select",
+        "label": "What is your age?",
+        "required": true,
+        "options": [
+          "18-24",
+          "25-34",
+          "35-44",
+          "45-54",
+          "55-64",
+          "65+"
+        ]
+      },
+      {
+        "id": "gender",
+        "type": "select",
+        "label": "What is your gender?",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Non-binary",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "education",
+        "type": "select",
+        "label": "What is your highest level of education?",
+        "required": false,
+        "options": [
+          "High school or less",
+          "Some college",
+          "Bachelor's degree",
+          "Master's degree",
+          "Doctoral degree",
+          "Prefer not to say"
+        ]
+      }
+    ],
+    "buttonText": "Complete Survey"
+  }
+}

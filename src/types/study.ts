@@ -1,4 +1,4 @@
-export type InputMethod = 'number_line' | 'histogram' | 'slider';
+export type InputMethod = 'number_line' | 'histogram' | 'slider' | 'textbox';
 
 export interface TextSection {
   title: string;
