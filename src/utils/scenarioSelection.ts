@@ -1,6 +1,4 @@
 import { loadStudyScenarios } from '@/studies/loader';
-import { scenarios as Olympics2025exp2Scenarios } from '@/studies/Olympics2025-exp2/scenarios';
-import { scenarios as Olympics2025exp3Scenarios } from '@/studies/Olympics2025-exp3/scenarios';
 import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
 
 /**
