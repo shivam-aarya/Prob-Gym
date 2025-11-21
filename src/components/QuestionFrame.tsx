@@ -93,6 +93,16 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
     }
   };
 
+  // Check if this is a single-question scenario
+  if (!config.input_method) {
+    console.error('QuestionFrame requires input_method. Use MultiQuestionFrame for multi-question scenarios.');
+    return (
+      <div className="p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
+        Error: This component is for single-question scenarios only.
+      </div>
+    );
+  }
+
   // Determine plugin name from input method
   const pluginName = INPUT_METHOD_TO_PLUGIN[config.input_method];
 

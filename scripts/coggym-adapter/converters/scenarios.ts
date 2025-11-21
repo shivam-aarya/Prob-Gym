@@ -1,6 +1,6 @@
 /**
  * Converter: CogGym stimuli → Prob-Gym scenarios
- * Splits multi-query trials into separate scenarios
+ * Keeps multi-query trials together as multi-question scenarios
  */
 
 import { CogGymStimulus, Query, IdMapping } from '../types';
@@ -8,7 +8,7 @@ import { createIdMappings } from '../utils/id-mapper';
 
 /**
  * Convert CogGym stimuli to Prob-Gym scenarios
- * Each query becomes a separate scenario
+ * Multi-query trials become multi-question scenarios
  */
 export function convertToScenarios(stimuli: CogGymStimulus[]): {
   scenarios: any[];
@@ -16,27 +16,106 @@ export function convertToScenarios(stimuli: CogGymStimulus[]): {
 } {
   const mappings = createIdMappings(stimuli);
   const scenarios: any[] = [];
+  let scenarioId = 0;
 
   for (const stimulus of stimuli) {
-    for (let queryIndex = 0; queryIndex < stimulus.queries.length; queryIndex++) {
-      const query = stimulus.queries[queryIndex];
+    if (stimulus.queries.length === 1) {
+      // Single question - use legacy format
       const mapping = mappings.find(
-        m => m.stimuliId === stimulus.stimuli_id && m.queryIndex === queryIndex
+        m => m.stimuliId === stimulus.stimuli_id && m.queryIndex === 0
       );
-
-      if (!mapping) {
-        throw new Error(`Mapping not found for ${stimulus.stimuli_id} query ${queryIndex}`);
-      }
-
-      scenarios.push(convertQueryToScenario(stimulus, query, mapping.scenarioId));
+      scenarios.push(convertQueryToScenario(stimulus, stimulus.queries[0], mapping?.scenarioId || scenarioId));
+    } else {
+      // Multiple questions - use multi-question format
+      scenarios.push(convertToMultiQuestionScenario(stimulus, scenarioId));
     }
+    scenarioId++;
   }
 
   return { scenarios, mappings };
 }
 
 /**
- * Convert a single query to a Prob-Gym scenario
+ * Convert a stimulus with multiple queries to a multi-question scenario
+ */
+function convertToMultiQuestionScenario(
+  stimulus: CogGymStimulus,
+  scenarioId: number
+): any {
+  const primaryStimulus = stimulus.stimuli[0];
+
+  const scenario: any = {
+    task_name: stimulus.stimuli_id,
+    scenario_id: scenarioId,
+    input_type: primaryStimulus.input_type,
+    commentary: stimulus.commentary || '',
+  };
+
+  // Convert stimuli array to platform format
+  scenario.stimuli = stimulus.stimuli.map(s => {
+    if (s.input_type === 'text') {
+      const textStimulus: any = {
+        input_type: s.input_type,
+        text: s.text,
+      };
+      if (s.title) textStimulus.title = s.title;
+      if (s.fontsize) textStimulus.fontsize = s.fontsize;
+      return textStimulus;
+    } else {
+      const mediaStimulus: any = {
+        input_type: s.input_type,
+        media_url: s.media_url.map(url => url.replace(/^assets\//, '')),
+      };
+      if (s.title) mediaStimulus.title = s.title;
+      if (s.width) mediaStimulus.width = s.width;
+      if (s.height) mediaStimulus.height = s.height;
+      if (s.dimension) mediaStimulus.dimension = s.dimension;
+      return mediaStimulus;
+    }
+  });
+
+  // Set source_link for backward compatibility
+  if (primaryStimulus.input_type !== 'text' && primaryStimulus.media_url && primaryStimulus.media_url.length > 0) {
+    scenario.source_link = primaryStimulus.media_url[0].replace(/^assets\//, '');
+  }
+
+  // Convert all queries to questions array
+  scenario.questions = stimulus.queries.map(query => {
+    const { input_method, slider_config } = convertQueryTypeToInputMethod(query);
+
+    let options = query.option || [];
+    if (query.type === 'single-slider' && options.length === 0) {
+      options = ['Response'];
+    }
+
+    const question: any = {
+      question: query.prompt,
+      options: options,
+      input_method: input_method,
+      randomize_order: query.randomize_order || false,
+    };
+
+    if (query.tag) {
+      question.tag = query.tag;
+    }
+
+    if (slider_config) {
+      question.slider_config = slider_config;
+    }
+
+    if (input_method === 'histogram') {
+      question.total_allocation = 100;
+      question.discrete = true;
+    }
+
+    return question;
+  });
+
+  return scenario;
+}
+
+/**
+ * Convert a single query to a Prob-Gym scenario (legacy single-question format)
  */
 function convertQueryToScenario(
   stimulus: CogGymStimulus,

@@ -76,7 +76,7 @@ export default function ScenarioNavigation({
               };
 
               // Add points data if available
-              if (points && points.length > 0) {
+              if (points && points.length > 0 && response.response_data) {
                 response.response_data.points = points;
               }
             }

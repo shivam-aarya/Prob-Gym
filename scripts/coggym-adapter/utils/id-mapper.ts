@@ -83,10 +83,10 @@ export function getQueryIndex(
 }
 
 /**
- * Count total number of scenarios (sum of all queries across all stimuli)
+ * Count total number of scenarios (one per trial, even if trial has multiple queries)
  */
 export function countTotalScenarios(stimuli: CogGymStimulus[]): number {
-  return stimuli.reduce((sum, stimulus) => sum + stimulus.queries.length, 0);
+  return stimuli.length;
 }
 
 /**

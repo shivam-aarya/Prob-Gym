@@ -6,7 +6,7 @@
 import { StudyMetadata } from '@/studies/types';
 
 export const metadata: StudyMetadata = {
-  "id": "63856faa-303b-4c32-a11a-2805bf6b9cf5",
+  "id": "3b13e4c6-e1d3-451d-a26b-b6f177e3c0bc",
   "slug": "Olympics2025-exp1",
   "version": "1.0.0",
   "title": "Olympics Pilot Tug-of-War",
@@ -26,7 +26,7 @@ export const metadata: StudyMetadata = {
       "interactive",
       "text-input"
     ],
-    "studyLength": "long",
+    "studyLength": "quick",
     "domain": [
       "cognitive-science"
     ],
@@ -38,7 +38,7 @@ export const metadata: StudyMetadata = {
   },
   "status": "ACTIVE",
   "settings": {
-    "questionsPerParticipant": 31,
+    "questionsPerParticipant": 7,
     "randomizeQuestions": true,
     "allowBack": true,
     "showProgress": true,

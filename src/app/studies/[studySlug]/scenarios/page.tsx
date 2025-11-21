@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import QuestionFrame from '@/components/QuestionFrame';
+import MultiQuestionFrame from '@/components/MultiQuestionFrame';
 import ScenarioNavigation from '@/components/ScenarioNavigation';
-import { UserResponse, StudyConfig } from '@/types/study';
+import { UserResponse, StudyConfig, QuestionResponse } from '@/types/study';
 import { useRouter } from 'next/navigation';
 import { useStudy } from '@/contexts/StudyContext';
 import { getSelectedScenarios } from '@/utils/scenarioSelection';
@@ -15,6 +16,7 @@ export default function Scenarios() {
   const router = useRouter();
   const [currentScenario, setCurrentScenario] = React.useState(1);
   const [responses, setResponses] = React.useState<Record<number, number[]>>({});
+  const [multiQuestionResponses, setMultiQuestionResponses] = React.useState<Record<number, QuestionResponse[]>>({});
   const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
   const [completedScenarios, setCompletedScenarios] = React.useState<Set<number>>(new Set());
   const [selectedScenarios, setSelectedScenarios] = useState<StudyConfig[]>([]);
@@ -94,25 +96,32 @@ export default function Scenarios() {
       }
 
       // Store the response locally using the actual scenario_id
-      let updatedResponses = { ...responses };
-      if ('values' in response.response_data) {
-        updatedResponses = {
-          ...updatedResponses,
+      // Handle both single-question and multi-question responses
+      if (response.responses) {
+        // Multi-question response
+        const updatedMultiResponses = {
+          ...multiQuestionResponses,
+          [currentScenarioData.scenario_id]: response.responses,
+        };
+        setMultiQuestionResponses(updatedMultiResponses);
+        localStorage.setItem(`${studySlug}_multiQuestionResponses`, JSON.stringify(updatedMultiResponses));
+      } else if (response.response_data && 'values' in response.response_data) {
+        // Single-question response (legacy)
+        const updatedResponses = {
+          ...responses,
           [currentScenarioData.scenario_id]: response.response_data.values || [],
         };
         setResponses(updatedResponses);
-      }
+        localStorage.setItem(`${studySlug}_userResponses`, JSON.stringify(updatedResponses));
 
-      // Store the points positions if available (for continuous values)
-      if ('points' in response.response_data && response.response_data.points) {
-        localStorage.setItem(
-          `${studySlug}_pointPositions_${currentScenarioData.scenario_id}`,
-          JSON.stringify(response.response_data.points)
-        );
+        // Store the points positions if available (for continuous values)
+        if ('points' in response.response_data && response.response_data.points) {
+          localStorage.setItem(
+            `${studySlug}_pointPositions_${currentScenarioData.scenario_id}`,
+            JSON.stringify(response.response_data.points)
+          );
+        }
       }
-
-      // Save to localStorage
-      localStorage.setItem(`${studySlug}_userResponses`, JSON.stringify(updatedResponses));
 
       // Mark this scenario as completed using the actual scenario_id
       const updatedCompletedScenarios = new Set([...completedScenarios, currentScenarioData.scenario_id]);
@@ -207,7 +216,19 @@ export default function Scenarios() {
       )}
 
       <Layout config={currentScenarioData}>
-        <QuestionFrame config={currentScenarioData} onSubmit={handleSubmit} previousResponses={responses} />
+        {currentScenarioData.questions && currentScenarioData.questions.length > 0 ? (
+          <MultiQuestionFrame
+            config={currentScenarioData}
+            onSubmit={handleSubmit}
+            previousResponses={multiQuestionResponses}
+          />
+        ) : (
+          <QuestionFrame
+            config={currentScenarioData}
+            onSubmit={handleSubmit}
+            previousResponses={responses}
+          />
+        )}
 
         {submitStatus === 'success' && (
           <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
