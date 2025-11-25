@@ -125,7 +125,11 @@ function determinePlugins(responseTypes: string[], stimuli: CogGymStimulus[]): s
           break;
         case 'single-slider':
         case 'multi-slider':
-          // These use built-in slider, no plugin needed
+          // Check if this should use number_line plugin (num_clicks > 1)
+          if (query.slider_config?.num_clicks && query.slider_config.num_clicks > 1) {
+            plugins.add('NumberLinePlugin');
+          }
+          // Regular sliders don't need a plugin
           break;
       }
     }

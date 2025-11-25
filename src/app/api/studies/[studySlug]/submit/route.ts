@@ -11,6 +11,13 @@ export async function POST(
     const body = await request.json();
     const { participantId, response } = body;
 
+    console.log('[Submit API] Received submission:', {
+      studySlug,
+      participantId,
+      hasResponse: !!response,
+      responseKeys: response ? Object.keys(response) : [],
+    });
+
     // Validate study exists
     const study = getStudy(studySlug);
     if (!study) {
@@ -28,10 +35,18 @@ export async function POST(
       );
     }
 
-    // Validate response data
-    if (!response || !response.task_name || !response.scenario_id || !response.response_data) {
+    // Validate response data (support both single-question and multi-question formats)
+    if (!response || !response.task_name || !response.scenario_id) {
       return NextResponse.json(
-        { success: false, message: 'Invalid response data' },
+        { success: false, message: 'Invalid response data: missing required fields' },
+        { status: 400 }
+      );
+    }
+
+    // Ensure either response_data (single-question) or responses (multi-question) exists
+    if (!response.response_data && !response.responses) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid response data: no response data provided' },
         { status: 400 }
       );
     }

@@ -53,6 +53,7 @@ export const metadata: StudyMetadata = {
   },
   "assetPath": "/studies/Olympics2025-exp3/assets",
   "plugins": [
-    "TextboxPlugin"
+    "TextboxPlugin",
+    "NumberLinePlugin"
   ]
 };

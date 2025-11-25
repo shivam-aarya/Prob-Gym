@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Plugin, InputPluginProps } from '@/components/plugins/types';
 
 interface Point {
-  id: number;
+  id: string;
   value: number;
 }
 
@@ -33,35 +33,25 @@ function NumberLine({
 
   const [points, setPoints] = useState<Point[]>([]);
   const [isDragging, setIsDragging] = useState(false);
-  const [draggedPointIndex, setDraggedPointIndex] = useState<number | null>(null);
+  const [draggedPointId, setDraggedPointId] = useState<string | null>(null);
   const [mode, setMode] = useState<InteractionMode>('add');
-  const [availableIds, setAvailableIds] = useState<number[]>(
-    Array.from({ length: total_allocation }, (_, i) => i)
-  );
+  const [nextId, setNextId] = useState<number>(0);
   const lineRef = useRef<HTMLDivElement>(null);
 
   // Load saved point positions
   useEffect(() => {
     if (scenarioId && studySlug) {
-      const savedPositions = localStorage.getItem(`${studySlug}_pointPositions_${scenarioId}`);
-      if (savedPositions) {
+      const savedPoints = localStorage.getItem(`${studySlug}_pointPositions_${scenarioId}`);
+      if (savedPoints) {
         try {
-          const pointValues: number[] = JSON.parse(savedPositions);
-          if (pointValues && pointValues.length > 0) {
-            const newPoints: Point[] = pointValues.map((v, index) => ({
-              id: index,
-              value: v,
-            }));
-
-            const pointsToUse = newPoints.slice(0, total_allocation);
+          const parsedPoints: Point[] = JSON.parse(savedPoints);
+          if (parsedPoints && parsedPoints.length > 0) {
+            const pointsToUse = parsedPoints.slice(0, total_allocation);
             setPoints(pointsToUse);
 
-            const usedIds = pointsToUse.map((p) => p.id);
-            setAvailableIds(
-              Array.from({ length: total_allocation }, (_, i) => i).filter(
-                (id) => !usedIds.includes(id)
-              )
-            );
+            // Set next ID to be higher than any existing ID
+            const maxId = Math.max(...pointsToUse.map((p) => parseInt(p.id.split('-')[1]) || 0));
+            setNextId(maxId + 1);
             return;
           }
         } catch (err) {
@@ -73,19 +63,14 @@ function NumberLine({
     // Use initial value if provided
     if (value && Array.isArray(value) && value.length > 0) {
       const newPoints: Point[] = value.map((v: number, index: number) => ({
-        id: index,
+        id: `point-${index}`,
         value: v,
       }));
       setPoints(newPoints);
-      const usedIds = newPoints.map((p) => p.id);
-      setAvailableIds(
-        Array.from({ length: total_allocation }, (_, i) => i).filter(
-          (id) => !usedIds.includes(id)
-        )
-      );
+      setNextId(newPoints.length);
     } else {
       setPoints([]);
-      setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i));
+      setNextId(0);
     }
   }, [value, total_allocation, scenarioId, studySlug]);
 
@@ -93,11 +78,11 @@ function NumberLine({
   useEffect(() => {
     if (!value) {
       setPoints([]);
-      setAvailableIds(Array.from({ length: total_allocation }, (_, i) => i));
+      setNextId(0);
       setMode('add');
     }
     setIsDragging(false);
-    setDraggedPointIndex(null);
+    setDraggedPointId(null);
   }, [options, total_allocation, value]);
 
   const calculateValue = useCallback(
@@ -118,19 +103,23 @@ function NumberLine({
   );
 
   const getNextAvailableId = () => {
-    return availableIds[0] ?? -1;
+    const id = `point-${nextId}`;
+    setNextId(nextId + 1);
+    return id;
   };
 
   const updatePoints = (newPoints: Point[]) => {
-    setPoints(newPoints);
-    const pointValues = newPoints.map((p) => p.value);
+    // Keep points sorted by value for consistent rendering
+    const sortedPoints = [...newPoints].sort((a, b) => a.value - b.value);
+    setPoints(sortedPoints);
 
-    // Save to localStorage with study-scoped key
+    // Save full point objects (including IDs) to localStorage
     if (scenarioId && studySlug) {
-      localStorage.setItem(`${studySlug}_pointPositions_${scenarioId}`, JSON.stringify(pointValues));
+      localStorage.setItem(`${studySlug}_pointPositions_${scenarioId}`, JSON.stringify(sortedPoints));
     }
 
-    // Notify parent
+    // Notify parent with just the values
+    const pointValues = sortedPoints.map((p) => p.value);
     onChange(pointValues);
   };
 
@@ -140,56 +129,66 @@ function NumberLine({
     const clickedValue = calculateValue(e.clientX);
     if (clickedValue === null) return;
 
-    // Check if clicking near an existing point
-    const existingPointIndex = points.findIndex((p) => Math.abs(p.value - clickedValue) < 0.2);
+    // Find the closest point to the click
+    let closestPoint: Point | null = null;
+    let closestDistance = Infinity;
 
-    if (mode === 'move' && existingPointIndex !== -1) {
-      setIsDragging(true);
-      setDraggedPointIndex(existingPointIndex);
+    for (const point of points) {
+      const distance = Math.abs(point.value - clickedValue);
+      if (distance < closestDistance && distance < 0.2) {
+        closestDistance = distance;
+        closestPoint = point;
+      }
+    }
+
+    if (mode === 'move') {
+      if (closestPoint) {
+        setIsDragging(true);
+        setDraggedPointId(closestPoint.id);
+      }
     } else if (mode === 'add' && points.length < total_allocation) {
       const newId = getNextAvailableId();
-      if (newId !== -1) {
-        const newPoints = [...points, { id: newId, value: clickedValue }].sort(
-          (a, b) => a.value - b.value
-        );
-        updatePoints(newPoints);
-        setAvailableIds((prev) => prev.filter((id) => id !== newId));
-      }
-    } else if (mode === 'remove' && existingPointIndex !== -1) {
-      const removedId = points[existingPointIndex].id;
-      const newPoints = points.filter((_, i) => i !== existingPointIndex);
+      const newPoints = [...points, { id: newId, value: clickedValue }];
       updatePoints(newPoints);
-      setAvailableIds((prev) => [...prev, removedId].sort((a, b) => a - b));
+    } else if (mode === 'remove') {
+      if (closestPoint) {
+        const newPoints = points.filter((p) => p.id !== closestPoint.id);
+        updatePoints(newPoints);
+      }
     }
   };
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (!isDragging || draggedPointIndex === null || mode !== 'move') return;
+      if (!isDragging || draggedPointId === null || mode !== 'move') return;
       const newValue = calculateValue(e.clientX);
       if (newValue === null) return;
 
       setPoints((prev) => {
-        const newPoints = [...prev];
-        newPoints[draggedPointIndex] = { ...newPoints[draggedPointIndex], value: newValue };
-        return newPoints;
+        return prev.map((point) =>
+          point.id === draggedPointId ? { ...point, value: newValue } : point
+        );
       });
     },
-    [isDragging, draggedPointIndex, mode, calculateValue]
+    [isDragging, draggedPointId, mode, calculateValue]
   );
 
   const handleMouseUp = useCallback(() => {
-    if (isDragging && draggedPointIndex !== null) {
-      // Save final position with study-scoped key
-      const pointValues = points.map((p) => p.value);
+    if (isDragging && draggedPointId !== null) {
+      // Sort points and save final position
+      const sortedPoints = [...points].sort((a, b) => a.value - b.value);
+      setPoints(sortedPoints);
+
       if (scenarioId && studySlug) {
-        localStorage.setItem(`${studySlug}_pointPositions_${scenarioId}`, JSON.stringify(pointValues));
+        localStorage.setItem(`${studySlug}_pointPositions_${scenarioId}`, JSON.stringify(sortedPoints));
       }
+
+      const pointValues = sortedPoints.map((p) => p.value);
       onChange(pointValues);
     }
     setIsDragging(false);
-    setDraggedPointIndex(null);
-  }, [isDragging, draggedPointIndex, points, scenarioId, studySlug, onChange]);
+    setDraggedPointId(null);
+  }, [isDragging, draggedPointId, points, scenarioId, studySlug, onChange]);
 
   useEffect(() => {
     if (isDragging) {
@@ -202,8 +201,10 @@ function NumberLine({
     };
   }, [isDragging, handleMouseMove, handleMouseUp]);
 
-  const getPointColor = (id: number) => {
-    const hue = (id * 137.508) % 360;
+  const getPointColor = (id: string) => {
+    // Extract numeric part from ID (e.g., "point-0" -> 0)
+    const numericId = parseInt(id.split('-')[1]) || 0;
+    const hue = (numericId * 137.508) % 360;
     const saturation = 70;
     const lightness = 65;
     return `hsla(${hue}, ${saturation}%, ${lightness}%, 0.8)`;

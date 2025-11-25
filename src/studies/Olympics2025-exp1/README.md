@@ -5,7 +5,7 @@ Auto-generated study from CogGym format.
 ## Import Information
 
 - **Source**: Olympics2025/exp1
-- **Import Date**: 2025-11-21T22:37:39.765Z
+- **Import Date**: 2025-11-22T09:03:47.291Z
 - **Scenario Count**: 7
 
 

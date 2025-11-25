@@ -81,10 +81,14 @@ function convertToMultiQuestionScenario(
 
   // Convert all queries to questions array
   scenario.questions = stimulus.queries.map(query => {
-    const { input_method, slider_config } = convertQueryTypeToInputMethod(query);
+    const { input_method, slider_config, total_allocation, discrete } = convertQueryTypeToInputMethod(query);
 
     let options = query.option || [];
-    if (query.type === 'single-slider' && options.length === 0) {
+
+    // For number_line, use labels as options (the timeline points)
+    if (input_method === 'number_line' && query.slider_config?.labels) {
+      options = query.slider_config.labels.map(label => label.label);
+    } else if ((query.type === 'single-slider' || query.type === 'multi-slider') && options.length === 0) {
       options = ['Response'];
     }
 
@@ -108,6 +112,11 @@ function convertToMultiQuestionScenario(
       question.discrete = true;
     }
 
+    if (input_method === 'number_line') {
+      question.total_allocation = total_allocation;
+      question.discrete = discrete;
+    }
+
     return question;
   });
 
@@ -123,11 +132,15 @@ function convertQueryToScenario(
   scenarioId: number
 ): any {
   // Convert query type to input method first (needed for options logic)
-  const { input_method, slider_config } = convertQueryTypeToInputMethod(query);
+  const { input_method, slider_config, total_allocation, discrete } = convertQueryTypeToInputMethod(query);
 
-  // For single-slider queries, create a placeholder option since the slider doesn't need multiple options
+  // Handle options based on input method
   let options = query.option || [];
-  if (query.type === 'single-slider' && options.length === 0) {
+
+  // For number_line, use labels as options (the timeline points)
+  if (input_method === 'number_line' && query.slider_config?.labels) {
+    options = query.slider_config.labels.map(label => label.label);
+  } else if ((query.type === 'single-slider' || query.type === 'multi-slider') && options.length === 0) {
     options = ['Response']; // Placeholder option for single slider
   }
 
@@ -190,6 +203,11 @@ function convertQueryToScenario(
     scenario.discrete = true;
   }
 
+  if (input_method === 'number_line') {
+    scenario.total_allocation = total_allocation;
+    scenario.discrete = discrete;
+  }
+
   return scenario;
 }
 
@@ -199,6 +217,8 @@ function convertQueryToScenario(
 function convertQueryTypeToInputMethod(query: Query): {
   input_method: string;
   slider_config?: any;
+  total_allocation?: number;
+  discrete?: boolean;
 } {
   switch (query.type) {
     case 'multi-choice':
@@ -211,12 +231,28 @@ function convertQueryTypeToInputMethod(query: Query): {
       return { input_method: 'textbox' };
 
     case 'single-slider':
+      // Check if this should use number_line instead (when num_clicks > 1)
+      if (query.slider_config?.num_clicks && query.slider_config.num_clicks > 1) {
+        return {
+          input_method: 'number_line',
+          total_allocation: query.slider_config.num_clicks,
+          discrete: false, // Default to continuous values
+        };
+      }
       return {
         input_method: 'slider',
         slider_config: convertSliderConfig(query, false),
       };
 
     case 'multi-slider':
+      // Check if this should use number_line instead (when num_clicks > 1)
+      if (query.slider_config?.num_clicks && query.slider_config.num_clicks > 1) {
+        return {
+          input_method: 'number_line',
+          total_allocation: query.slider_config.num_clicks,
+          discrete: false, // Default to continuous values
+        };
+      }
       return {
         input_method: 'slider',
         slider_config: convertSliderConfig(query, true),

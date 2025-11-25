@@ -6,7 +6,7 @@
 import { StudyMetadata } from '@/studies/types';
 
 export const metadata: StudyMetadata = {
-  "id": "0772ec10-c98b-45c0-a923-9150aae15b30",
+  "id": "efea2e0b-d806-4db8-ae12-3aa192caddf0",
   "slug": "Olympics2025-exp1",
   "version": "1.0.0",
   "title": "Olympics Pilot Tug-of-War",
@@ -53,6 +53,7 @@ export const metadata: StudyMetadata = {
   },
   "assetPath": "/studies/Olympics2025-exp1/assets",
   "plugins": [
+    "NumberLinePlugin",
     "TextboxPlugin"
   ]
 };

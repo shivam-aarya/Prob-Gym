@@ -35,7 +35,8 @@ export async function parseInstructions(experimentPath: string): Promise<Instruc
  */
 export function parseInstructionsFromString(content: string): InstructionContent[] {
   try {
-    const lines = content.split('\n').map(line => line.trim());
+    // Trim content to normalize files with/without trailing newlines
+    const lines = content.trim().split('\n').map(line => line.trim());
 
     const instructions: InstructionContent[] = [];
     let buffer = '';
@@ -59,10 +60,17 @@ export function parseInstructionsFromString(content: string): InstructionContent
         lineStart = i + 1;
       } catch (error) {
         // Not a complete JSON object yet, continue accumulating
-        // Only throw if we're at the last line and still can't parse
-        if (i === lines.length - 1) {
-          throw new Error(`Failed to parse instruction starting at line ${lineStart + 1}: ${(error as Error).message}`);
-        }
+        // Will validate any remaining buffer content after the loop
+      }
+    }
+
+    // Check for any unparsed content remaining in buffer
+    if (buffer.trim().length > 0) {
+      try {
+        JSON.parse(buffer);
+        throw new Error(`Failed to parse instruction starting at line ${lineStart + 1}: validation failed`);
+      } catch (parseError) {
+        throw new Error(`Failed to parse instruction starting at line ${lineStart + 1}: ${(parseError as Error).message}`);
       }
     }
 

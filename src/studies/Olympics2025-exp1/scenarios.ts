@@ -24,137 +24,62 @@ export const scenarios: StudyConfig[] = [
       {
         "question": "How strong would you say that Ian is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_ian",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How strong would you say that Bob is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_bob",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Ian put into Game 1?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_ian_g1",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Ian put into Game 2?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_ian_g2",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "Who would win another match between Ian & Jack and Hank & Evan?",
         "options": [
-          "Response"
+          "Ian & Jack",
+          "Hank & Evan"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "match_prediction",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "Ian & Jack"
-            },
-            {
-              "value": 100,
-              "label": "Hank & Evan"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
@@ -190,137 +115,62 @@ export const scenarios: StudyConfig[] = [
       {
         "question": "How strong would you say that Greg is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_greg",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How strong would you say that Dan is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_dan",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Greg put into Game 1?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_greg_g1",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Greg put into Game 2?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_greg_g2",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "Who would win another match between Greg & Jack and Hank & Evan?",
         "options": [
-          "Response"
+          "Greg & Jack",
+          "Hank & Evan"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "match_prediction",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "Greg & Jack"
-            },
-            {
-              "value": 100,
-              "label": "Hank & Evan"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
@@ -356,137 +206,62 @@ export const scenarios: StudyConfig[] = [
       {
         "question": "How strong would you say that Adam is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_adam",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How strong would you say that Carl is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_carl",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Adam put into Game 1?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_adam_g1",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Adam put into Game 2?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_adam_g2",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "Who would win another match between Adam & Dan and Carl & Fred?",
         "options": [
-          "Response"
+          "Adam & Dan",
+          "Carl & Fred"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "match_prediction",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "Adam & Dan"
-            },
-            {
-              "value": 100,
-              "label": "Carl & Fred"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
@@ -522,137 +297,62 @@ export const scenarios: StudyConfig[] = [
       {
         "question": "How strong would you say that Jack is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_jack",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How strong would you say that Ian is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_ian",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Jack put into Game 1?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_jack_g1",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Jack put into Game 2?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_jack_g2",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "Who would win another match between Jack & Carl and Ian & Hank?",
         "options": [
-          "Response"
+          "Jack & Carl",
+          "Ian & Hank"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "match_prediction",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "Jack & Carl"
-            },
-            {
-              "value": 100,
-              "label": "Ian & Hank"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
@@ -688,137 +388,62 @@ export const scenarios: StudyConfig[] = [
       {
         "question": "How strong would you say that Evan is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_evan",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How strong would you say that Bob is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_bob",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Evan put into Game 1?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_evan_g1",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Evan put into Game 2?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_evan_g2",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "Who would win another match between Evan & Fred and Adam & Greg?",
         "options": [
-          "Response"
+          "Evan & Fred",
+          "Adam & Greg"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "match_prediction",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "Evan & Fred"
-            },
-            {
-              "value": 100,
-              "label": "Adam & Greg"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",
@@ -854,137 +479,62 @@ export const scenarios: StudyConfig[] = [
       {
         "question": "How strong would you say that Fred is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_fred",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How strong would you say that Adam is in general?",
         "options": [
-          "Response"
+          "very weak",
+          "very strong"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "strength_adam",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "very weak"
-            },
-            {
-              "value": 100,
-              "label": "very strong"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Fred put into Game 1?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_fred_g1",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "How much effort did Fred put into Game 2?",
         "options": [
-          "Response"
+          "low effort",
+          "high effort"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "effort_fred_g2",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "low effort"
-            },
-            {
-              "value": 100,
-              "label": "high effort"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "Who would win another match between Fred & Hank and Carl & Adam?",
         "options": [
-          "Response"
+          "Fred & Hank",
+          "Carl & Adam"
         ],
-        "input_method": "slider",
+        "input_method": "number_line",
         "randomize_order": false,
         "tag": "match_prediction",
-        "slider_config": {
-          "min": 0,
-          "max": 100,
-          "default_value": 50,
-          "show_value": true,
-          "require_all": false,
-          "labels": [
-            {
-              "value": 0,
-              "label": "Fred & Hank"
-            },
-            {
-              "value": 100,
-              "label": "Carl & Adam"
-            }
-          ],
-          "show_label_values": false
-        }
+        "total_allocation": 5,
+        "discrete": false
       },
       {
         "question": "<strong>Write your commentary here!</strong> Example sentence: Just before the first match, Bob's glasses broke.",

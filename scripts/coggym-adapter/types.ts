@@ -91,6 +91,7 @@ export interface SliderConfig {
   default_value: number;
   labels?: SliderLabel[];
   show_label_values?: boolean;
+  num_clicks?: number; // If > 1, should use number_line input instead
 }
 
 export interface SliderLabel {
