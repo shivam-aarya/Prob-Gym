@@ -45,17 +45,8 @@ export async function copyAssets(
         mediaUrls.add(url);
       }
     }
-    // Handle test_trial with embedded stimuli
-    if (instruction.type === 'test_trial' && instruction.stimuli) {
-      for (const stimulusItem of instruction.stimuli) {
-        // Only process media stimuli (img/video), skip text stimuli
-        if (stimulusItem.input_type !== 'text' && stimulusItem.media_url) {
-          for (const url of stimulusItem.media_url) {
-            mediaUrls.add(url);
-          }
-        }
-      }
-    }
+    // Note: test_trial now uses stimuli_id to reference trials,
+    // so their media is already included from the stimuli array above
   }
 
   // Copy each media file

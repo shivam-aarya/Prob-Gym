@@ -94,7 +94,7 @@ function validateInstruction(
     throw new Error(`Line ${lineNumber}: Missing required field: type`);
   }
 
-  const validTypes = ['instruction', 'test_trial'];
+  const validTypes = ['instruction', 'test_trial', 'comprehension_quiz'];
   if (!validTypes.includes(instruction.type)) {
     throw new Error(`Line ${lineNumber}: type must be one of: ${validTypes.join(', ')}`);
   }
@@ -108,47 +108,25 @@ function validateInstruction(
       break;
 
     case 'test_trial':
+      if (!instruction.stimuli_id || typeof instruction.stimuli_id !== 'string') {
+        throw new Error(`Line ${lineNumber}: test_trial type requires stimuli_id field (string)`);
+      }
+      break;
+
+    case 'comprehension_quiz':
       if (!instruction.queries || !Array.isArray(instruction.queries)) {
-        throw new Error(`Line ${lineNumber}: test_trial type requires queries array`);
+        throw new Error(`Line ${lineNumber}: comprehension_quiz type requires queries array`);
       }
       if (instruction.queries.length === 0) {
-        throw new Error(`Line ${lineNumber}: test_trial queries cannot be empty`);
+        throw new Error(`Line ${lineNumber}: comprehension_quiz queries cannot be empty`);
       }
 
-      // Validate stimuli if present
-      if (instruction.stimuli) {
-        if (!Array.isArray(instruction.stimuli) || instruction.stimuli.length === 0) {
-          throw new Error(`Line ${lineNumber}: stimuli must be a non-empty array if provided`);
-        }
-
-        const validInputTypes = ['img', 'video', 'text'];
-        for (let i = 0; i < instruction.stimuli.length; i++) {
-          const stimulusItem = instruction.stimuli[i];
-
-          if (!('input_type' in stimulusItem)) {
-            throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: Missing required field: input_type`);
-          }
-
-          if (!('media_url' in stimulusItem)) {
-            throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: Missing required field: media_url`);
-          }
-
-          if (!Array.isArray(stimulusItem.media_url)) {
-            throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: media_url must be an array`);
-          }
-
-          if (!validInputTypes.includes(stimulusItem.input_type)) {
-            throw new Error(`Line ${lineNumber}, Stimulus ${i + 1}: input_type must be one of: ${validInputTypes.join(', ')}`);
-          }
-        }
-      }
-
-      // Validate queries - text-instruction type doesn't need answer field
+      // Validate that all queries have answer field (required for quiz feedback)
       for (let i = 0; i < instruction.queries.length; i++) {
         const query = instruction.queries[i];
-        if (query.type !== 'text-instruction' && !('answer' in query)) {
+        if (!('answer' in query)) {
           throw new Error(
-            `Line ${lineNumber}, Query ${i + 1}: test_trial questions must have answer field (except text-instruction type)`
+            `Line ${lineNumber}, Query ${i + 1}: comprehension_quiz questions must have answer field for feedback`
           );
         }
       }

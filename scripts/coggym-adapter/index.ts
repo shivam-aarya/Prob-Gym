@@ -180,7 +180,7 @@ async function importExperiment(
     const { scenarios } = convertToScenarios(stimuli);
     // Calculate total queries from stimuli
     const totalQueries = stimuli.reduce((sum, s) => sum + s.queries.length, 0);
-    const probGymConfig = convertToConfig(config, instructions, studySlug, totalQueries);
+    const probGymConfig = convertToConfig(config, instructions, studySlug, totalQueries, stimuli);
 
     console.log(`   ✓ Metadata generated`);
     console.log(`   ✓ Scenarios: ${scenarios.length} (split from ${stimuli.length} trials)`);

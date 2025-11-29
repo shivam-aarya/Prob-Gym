@@ -2,7 +2,8 @@
  * Converter: CogGym instructions → Prob-Gym config.json
  */
 
-import { CogGymConfig, InstructionContent } from '../types';
+import { CogGymConfig, InstructionContent, CogGymStimulus } from '../types';
+import { convertToScenarios } from './scenarios';
 
 /**
  * Convert CogGym config and instructions to Prob-Gym config.json
@@ -11,7 +12,8 @@ export function convertToConfig(
   cogGymConfig: CogGymConfig,
   instructions: InstructionContent[],
   studySlug: string,
-  totalQueries: number
+  totalQueries: number,
+  stimuli: CogGymStimulus[]
 ): any {
   return {
     study: {
@@ -26,7 +28,7 @@ export function convertToConfig(
       },
     },
     consent: generateConsentConfig(cogGymConfig, totalQueries),
-    tutorial: generateTutorialConfig(instructions, cogGymConfig, studySlug),
+    tutorial: generateTutorialConfig(instructions, cogGymConfig, studySlug, stimuli),
     demographic: generateDemographicConfig(),
   };
 }
@@ -52,7 +54,8 @@ function generateConsentConfig(config: CogGymConfig, totalQueries: number): any 
 function generateTutorialConfig(
   instructions: InstructionContent[],
   config: CogGymConfig,
-  studySlug: string
+  studySlug: string,
+  stimuli: CogGymStimulus[]
 ): any {
   if (instructions.length === 0) {
     return {
@@ -106,54 +109,65 @@ function generateTutorialConfig(
       }
 
       case 'test_trial': {
-        const content: any[] = [];
+        // Look up the trial by stimuli_id
+        const trial = stimuli.find(s => s.stimuli_id === instruction.stimuli_id);
 
-        // Add stimuli images if present
-        if (instruction.stimuli && instruction.stimuli.length > 0) {
-          instruction.stimuli.forEach((stimulus) => {
-            if (stimulus.input_type === 'img' && stimulus.media_url.length > 0) {
-              stimulus.media_url.forEach((url) => {
-                const relativePath = url.replace(/^assets\//, '');
-                const absoluteUrl = `/studies/${studySlug}/assets/${relativePath}`;
-                content.push({
-                  type: 'image',
-                  src: absoluteUrl,
-                  alt: 'Practice stimulus',
-                });
-              });
-            } else if (stimulus.input_type === 'text') {
-              // For text stimuli, render the text content
-              content.push({
-                type: 'text',
-                value: stimulus.text,
-              });
-            }
-          });
+        if (!trial) {
+          console.warn(`Warning: test_trial references unknown stimuli_id "${instruction.stimuli_id}". Skipping.`);
+          return {
+            title: 'Practice Trial',
+            content: [{
+              type: 'text',
+              value: `<p class="text-red-600">Error: Could not find trial "${instruction.stimuli_id}". Please check your instruction.jsonl file.</p>`
+            }]
+          };
         }
 
-        // Add practice questions
-        instruction.queries.forEach((query) => {
-          if (query.type === 'text-instruction') {
-            // Text instruction - show as plain text without answer required
-            content.push({
-              type: 'text',
-              value: query.prompt,
-            });
-          } else {
-            // Regular practice question with answer
-            quizCounter++;
-            content.push({
-              type: 'quiz',
-              id: `quiz_${quizCounter}`,
-              question: query.prompt,
-              options: query.option || [],
-              answer: query.answer || 0,
-            });
-          }
-        });
+        // Convert the trial to a scenario using the same converter that handles actual study trials
+        const { scenarios } = convertToScenarios([trial]);
+        const scenarioConfig = scenarios[0];
+
+        // Use the 'scenario' content type which renders with Layout + QuestionFrame
+        // This ensures the test trial looks exactly like it would in the actual study
+        const content: any[] = [{
+          type: 'scenario',
+          config: scenarioConfig,
+          feedback: instruction.feedback ? {
+            content: instruction.feedback
+          } : undefined
+        }];
 
         return {
           title: 'Practice Trial',
+          content,
+        };
+      }
+
+      case 'comprehension_quiz': {
+        const content: any[] = [];
+
+        // Add optional introductory text if present
+        if (instruction.text) {
+          content.push({
+            type: 'text',
+            value: instruction.text,
+          });
+        }
+
+        // Add quiz questions
+        instruction.queries.forEach((query) => {
+          quizCounter++;
+          content.push({
+            type: 'quiz',
+            id: `quiz_${quizCounter}`,
+            question: query.prompt,
+            options: query.option || [],
+            answer: query.answer || 0,
+          });
+        });
+
+        return {
+          title: 'Comprehension Check',
           content,
         };
       }

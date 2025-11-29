@@ -161,7 +161,7 @@ export async function convertUploadedStudy(
 
     // Calculate total queries from stimuli
     const totalQueries = stimuli.reduce((sum, s) => sum + s.queries.length, 0);
-    const probGymConfig = convertToConfig(config, instructions, studySlug, totalQueries);
+    const probGymConfig = convertToConfig(config, instructions, studySlug, totalQueries, stimuli);
 
     // Add consent and tutorial to metadata from config
     (metadata as any).consent = probGymConfig.consent;

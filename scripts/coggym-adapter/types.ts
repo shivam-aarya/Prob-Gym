@@ -103,7 +103,7 @@ export interface SliderLabel {
 // Instruction Schema Types (instruction.jsonl)
 // ============================================================================
 
-export type InstructionModuleType = 'instruction' | 'test_trial';
+export type InstructionModuleType = 'instruction' | 'test_trial' | 'comprehension_quiz';
 
 export interface InstructionModule {
   type: InstructionModuleType;
@@ -117,12 +117,17 @@ export interface InstructionPage extends InstructionModule {
 
 export interface TestTrial extends InstructionModule {
   type: 'test_trial';
+  stimuli_id: string;
+  feedback?: string;
+}
+
+export interface ComprehensionQuiz extends InstructionModule {
+  type: 'comprehension_quiz';
   text?: string;
-  stimuli?: StimulusItem[];
   queries: Query[];
 }
 
-export type InstructionContent = InstructionPage | TestTrial;
+export type InstructionContent = InstructionPage | TestTrial | ComprehensionQuiz;
 
 // ============================================================================
 // Human Data Schema Types
