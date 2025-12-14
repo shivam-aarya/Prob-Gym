@@ -166,18 +166,15 @@ export default function SliderInput({
 
   return (
     <div className="space-y-6">
-      {/* Instructions */}
-      <div className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-        <p className="mb-2">
-          Use the sliders below to rate each option from {min} to {max}.
-        </p>
-        {constrain_sum !== undefined && (
+      {/* Sum constraint feedback */}
+      {constrain_sum !== undefined && (
+        <div className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
           <p className={`text-sm ${currentSum === constrain_sum ? (isDark ? 'text-green-400' : 'text-green-600') : (isDark ? 'text-yellow-400' : 'text-yellow-600')}`}>
             Total: {currentSum} / {constrain_sum}
             {currentSum !== constrain_sum && ' (values will auto-adjust)'}
           </p>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Sliders */}
       <div className="space-y-4">

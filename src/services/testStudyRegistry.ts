@@ -513,12 +513,12 @@ class TestStudyRegistry {
   }
 }
 
-// Singleton instance - use global to ensure it's shared across all server contexts
-// This is necessary because Next.js can have multiple server instances
+// Singleton instance - use globalThis to ensure it's shared across all contexts
+// This works in both browser and Node.js environments
 declare global {
   // eslint-disable-next-line no-var
   var testStudyRegistry: TestStudyRegistry | undefined;
 }
 
-export const testStudyRegistry = global.testStudyRegistry ?? new TestStudyRegistry();
-global.testStudyRegistry = testStudyRegistry;
+export const testStudyRegistry = globalThis.testStudyRegistry ?? new TestStudyRegistry();
+globalThis.testStudyRegistry = testStudyRegistry;

@@ -116,34 +116,72 @@ export default function Layout({ children, config }: LayoutProps) {
                       const stimulusIsGif = stimulusAssetUrl.toLowerCase().endsWith('.gif');
 
                       // Handle dimension/width/height
+                      const hasExplicitDimensions = stimulus.width || stimulus.height;
                       const containerStyle: React.CSSProperties = {};
+
+                      if (stimulus.width) {
+                        // Support both pixel values and percentages
+                        containerStyle.width = typeof stimulus.width === 'string' && stimulus.width.includes('%')
+                          ? stimulus.width
+                          : `${stimulus.width}px`;
+                      } else if (!hasExplicitDimensions) {
+                        // Default to 100% width if no dimensions specified
+                        containerStyle.width = '100%';
+                      }
+
                       if (stimulus.height) {
-                        containerStyle.height = `${stimulus.height}px`;
+                        // Support both pixel values and percentages
+                        containerStyle.height = typeof stimulus.height === 'string' && stimulus.height.includes('%')
+                          ? stimulus.height
+                          : `${stimulus.height}px`;
                       }
 
                       return (
                         <div key={index}>
                           {renderTitle()}
-                          <div
-                            className="relative min-h-[300px]"
-                            style={containerStyle.height ? containerStyle : { height: '45vh', maxHeight: '500px' }}
-                          >
-                            {stimulusIsGif ? (
-                              <ReplayableGif
-                                src={stimulusAssetUrl}
-                                alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
-                                className="absolute inset-0"
-                              />
-                            ) : (
-                              <Image
-                                src={stimulusAssetUrl}
-                                alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
-                                fill
-                                className="object-contain"
-                                priority={index === 0}
-                              />
-                            )}
-                          </div>
+                          {hasExplicitDimensions ? (
+                            // When explicit dimensions are provided, use fill mode
+                            <div
+                              className="relative min-h-[300px]"
+                              style={containerStyle}
+                            >
+                              {stimulusIsGif ? (
+                                <ReplayableGif
+                                  src={stimulusAssetUrl}
+                                  alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
+                                  className="absolute inset-0"
+                                />
+                              ) : (
+                                <Image
+                                  src={stimulusAssetUrl}
+                                  alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
+                                  fill
+                                  className="object-contain"
+                                  priority={index === 0}
+                                />
+                              )}
+                            </div>
+                          ) : (
+                            // When no dimensions specified, use responsive mode with aspect ratio
+                            <div style={containerStyle}>
+                              {stimulusIsGif ? (
+                                <img
+                                  src={stimulusAssetUrl}
+                                  alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
+                                  className="w-full h-auto"
+                                />
+                              ) : (
+                                <Image
+                                  src={stimulusAssetUrl}
+                                  alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
+                                  width={1200}
+                                  height={800}
+                                  className="w-full h-auto"
+                                  priority={index === 0}
+                                />
+                              )}
+                            </div>
+                          )}
                         </div>
                       );
                     } else if (stimulus.input_type === 'video') {
@@ -151,21 +189,38 @@ export default function Layout({ children, config }: LayoutProps) {
                         ? getAssetUrl(stimulus.media_url[0])
                         : '';
 
+                      const hasExplicitDimensions = stimulus.width || stimulus.height;
                       const containerStyle: React.CSSProperties = {};
-                      if (stimulus.width) containerStyle.width = `${stimulus.width}px`;
-                      if (stimulus.height) containerStyle.height = `${stimulus.height}px`;
+
+                      if (stimulus.width) {
+                        // Support both pixel values and percentages
+                        containerStyle.width = typeof stimulus.width === 'string' && stimulus.width.includes('%')
+                          ? stimulus.width
+                          : `${stimulus.width}px`;
+                      } else if (!hasExplicitDimensions) {
+                        // Default to 100% width if no dimensions specified
+                        containerStyle.width = '100%';
+                      }
+
+                      if (stimulus.height) {
+                        // Support both pixel values and percentages
+                        containerStyle.height = typeof stimulus.height === 'string' && stimulus.height.includes('%')
+                          ? stimulus.height
+                          : `${stimulus.height}px`;
+                      } else if (hasExplicitDimensions && stimulus.width && !stimulus.height) {
+                        // If only width is specified, set a reasonable default height
+                        containerStyle.height = '60vh';
+                        containerStyle.maxHeight = '600px';
+                      }
 
                       return (
                         <div key={index}>
                           {renderTitle()}
-                          <div
-                            className="relative min-h-[300px]"
-                            style={Object.keys(containerStyle).length > 0 ? containerStyle : { height: '40vh', maxHeight: '500px' }}
-                          >
+                          <div style={containerStyle}>
                             <video
                               src={stimulusAssetUrl}
                               controls
-                              className="w-full h-full object-contain"
+                              className="w-full h-auto"
                               playsInline
                             >
                               Your browser does not support the video tag.

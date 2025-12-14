@@ -16,8 +16,8 @@ export interface BaseStimulusItem {
   // Optional fields (Appendix A.3)
   title?: string;
   fontsize?: number;
-  width?: number;
-  height?: number;
+  width?: number | string; // Support both pixel values (number) and percentages (string)
+  height?: number | string; // Support both pixel values (number) and percentages (string)
   dimension?: Array<{ width: number; height: number }>;
 }
 
