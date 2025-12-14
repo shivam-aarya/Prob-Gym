@@ -2,9 +2,9 @@ import { StudyMetadata, StudyFilterOptions, StudySummary } from './types';
 import { probGymMetadata } from './prob-gym/metadata';
 import { metadata as gerstenberg2012pingexp1Metadata } from './gerstenberg2012ping-exp1/metadata';
 import { metadata as jern2017peopleexp1Metadata } from './jern2017people-exp1/metadata';
-import { metadata as Olympics2025exp1Metadata } from './Olympics2025-exp1/metadata';
 import { metadata as Olympics2025exp2Metadata } from './Olympics2025-exp2/metadata';
 import { metadata as Olympics2025exp3Metadata } from './Olympics2025-exp3/metadata';
+import { metadata as Wong2025Modelingexp1Metadata } from './Wong2025Modeling-exp1/metadata';
 
 /**
  * Central registry of all studies in the platform
@@ -13,9 +13,9 @@ const STUDY_REGISTRY: Record<string, StudyMetadata> = {
   'prob-gym': probGymMetadata,
     'gerstenberg2012ping-exp1': gerstenberg2012pingexp1Metadata,
     'jern2017people-exp1': jern2017peopleexp1Metadata,
-    'Olympics2025-exp1': Olympics2025exp1Metadata,
     'Olympics2025-exp2': Olympics2025exp2Metadata,
     'Olympics2025-exp3': Olympics2025exp3Metadata,
+    'Wong2025Modeling-exp1': Wong2025Modelingexp1Metadata,
   // Future studies will be added here
 };
 

@@ -62,7 +62,7 @@ export function parseStimuliFromString(content: string): CogGymStimulus[] {
  * Validate that stimulus has all required fields
  */
 function validateStimulus(stimulus: any, lineNumber: number): asserts stimulus is CogGymStimulus {
-  const requiredFields = ['stimuli_id', 'stimuli', 'queries'];
+  const requiredFields = ['id', 'stimuli', 'queries'];
 
   for (const field of requiredFields) {
     if (!(field in stimulus)) {

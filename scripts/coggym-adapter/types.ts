@@ -66,7 +66,7 @@ export interface TextStimulusItem extends BaseStimulusItem {
 export type StimulusItem = MediaStimulusItem | TextStimulusItem;
 
 export interface CogGymStimulus {
-  stimuli_id: string;
+  id: string;
   stimuli: StimulusItem[];
   commentary?: string;
   queries: Query[];
@@ -110,18 +110,21 @@ export interface InstructionModule {
 }
 
 export interface InstructionPage extends InstructionModule {
+  id: string;
   type: 'instruction';
   text: string;
   media_url?: string[];
 }
 
 export interface TestTrial extends InstructionModule {
+  id: string;
   type: 'test_trial';
-  stimuli_id: string;
+  trial_id: string;
   feedback?: string;
 }
 
 export interface ComprehensionQuiz extends InstructionModule {
+  id: string;
   type: 'comprehension_quiz';
   text?: string;
   queries: Query[];
@@ -162,7 +165,7 @@ export interface CogGymExperiment {
 }
 
 /**
- * Mapping between CogGym stimuli_id and Prob-Gym scenario_id
+ * Mapping between CogGym trial ID and Prob-Gym scenario_id
  */
 export interface IdMapping {
   stimuliId: string;

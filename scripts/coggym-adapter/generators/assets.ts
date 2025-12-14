@@ -45,7 +45,7 @@ export async function copyAssets(
         mediaUrls.add(url);
       }
     }
-    // Note: test_trial now uses stimuli_id to reference trials,
+    // Note: test_trial now uses trial_id to reference trials,
     // so their media is already included from the stimuli array above
   }
 

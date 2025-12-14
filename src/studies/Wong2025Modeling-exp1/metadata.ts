@@ -6,15 +6,15 @@
 import { StudyMetadata } from '@/studies/types';
 
 export const metadata: StudyMetadata = {
-  "id": "efea2e0b-d806-4db8-ae12-3aa192caddf0",
-  "slug": "Olympics2025-exp1",
+  "id": "dffa7f87-5c07-4353-b539-7480491d1687",
+  "slug": "Wong2025Modeling-exp1",
   "version": "1.0.0",
   "title": "Olympics Pilot Tug-of-War",
-  "description": "Tug-of-war tournament judgments (strength/effort/prediction) plus end-of-study commentary.",
-  "shortDescription": "Tug-of-war tournament judgments (strength/effort/prediction) plus end-of-study commentary.",
+  "description": "Tug-of-war tournament judgments with strength/effort/prediction and commentary inputs embedded per trial.",
+  "shortDescription": "Tug-of-war tournament judgments with strength/effort/prediction and commentary inputs embedded per trial.",
   "authors": [
-    "Professor sample",
-    "CogGym conversion"
+    "Katie Collins",
+    "Lio Wong"
   ],
   "tags": {
     "cognitiveProcess": [
@@ -38,7 +38,7 @@ export const metadata: StudyMetadata = {
   },
   "status": "ACTIVE",
   "settings": {
-    "questionsPerParticipant": 7,
+    "questionsPerParticipant": 8,
     "randomizeQuestions": true,
     "allowBack": true,
     "showProgress": true,
@@ -51,9 +51,8 @@ export const metadata: StudyMetadata = {
     "scenarios": true,
     "demographic": true
   },
-  "assetPath": "/studies/Olympics2025-exp1/assets",
+  "assetPath": "/studies/Wong2025Modeling-exp1/assets",
   "plugins": [
-    "NumberLinePlugin",
     "TextboxPlugin"
   ]
 };

@@ -109,7 +109,7 @@ export async function convertUploadedStudy(
     const stimuli = parseStimuliFromString(trialFile.content as string);
     logs.info.push(`  - Parsed trial.jsonl successfully`);
     logs.info.push(`  - Total trials: ${stimuli.length}`);
-    logs.info.push(`  - Unique trial IDs: ${new Set(stimuli.map(s => s.stimuli_id)).size}`);
+    logs.info.push(`  - Unique trial IDs: ${new Set(stimuli.map(s => s.id)).size}`);
 
     // Parse instructions (optional)
     let instructions: InstructionContent[] = [];

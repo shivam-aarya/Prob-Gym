@@ -1,0 +1,204 @@
+{
+  "study": {
+    "title": "Olympics Pilot Tug-of-War",
+    "randomizeQuestions": true,
+    "questionsPerParticipant": 8,
+    "backend": {
+      "enabled": true,
+      "endpoint": "/api/submit"
+    }
+  },
+  "consent": {
+    "title": "Welcome to Olympics Pilot Tug-of-War",
+    "content": [
+      "Tug-of-war tournament judgments with strength/effort/prediction and commentary inputs embedded per trial.",
+      "This experiment should take about 20 minutes.",
+      "Your participation is completely voluntary. You can agree to take part and later change your mind."
+    ],
+    "buttonText": "I agree, begin the study"
+  },
+  "tutorial": {
+    "title": "How to Participate",
+    "pages": [
+      {
+        "title": "Instructions 1",
+        "content": [
+          {
+            "type": "text",
+            "value": "In this experiment, you will see tug-of-war tournaments and make judgments about these tournaments."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 2",
+        "content": [
+          {
+            "type": "text",
+            "value": "In each match, players either compete as part of a team or individually. The crown indicates which team won the match."
+          },
+          {
+            "type": "image",
+            "src": "/studies/Wong2025Modeling-exp1/assets/trials_9_10_tug-of-war.png",
+            "alt": "Tutorial image"
+          }
+        ]
+      },
+      {
+        "title": "Instructions 3",
+        "content": [
+          {
+            "type": "text",
+            "value": "Note that a player's strength remains constant throughout a tournament. A player neither gets better nor worse between matches.<br><br>However, each player can decide how much effort to put into each game. A player may put in low effort, high effort, or a normal amount of effort in a game.<br><br>The outcome depends on both the players' underlying ability and how much effort they put in on that match.<br><br>Note that we will show you a new set of players in each tournament."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 4",
+        "content": [
+          {
+            "type": "text",
+            "value": "On each trial, you will answer five questions on the right side of the screen:<ul><li>Two questions about players' strength.</li><li>Two questions about how much effort players put into specific matches.</li><li>One question about who would win in a new hypothetical match.</li></ul>"
+          }
+        ]
+      },
+      {
+        "title": "Instructions 5",
+        "content": [
+          {
+            "type": "text",
+            "value": "You will respond to each question on a slider at the bottom of the screen. You can click on any point along the slider. Your task is to provide your best guess based on the available information."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 6",
+        "content": [
+          {
+            "type": "text",
+            "value": "We will next ask you a few questions to check that you understood the instructions."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 7",
+        "content": [
+          {
+            "type": "text",
+            "value": "Comprehension quiz: look at the tournament below. The next question asks: \"Who won the above game?\""
+          },
+          {
+            "type": "image",
+            "src": "/studies/Wong2025Modeling-exp1/assets/test1.png",
+            "alt": "Tutorial image"
+          }
+        ]
+      },
+      {
+        "title": "Comprehension Check",
+        "content": [
+          {
+            "type": "text",
+            "value": "Comprehension Quiz"
+          },
+          {
+            "type": "quiz",
+            "id": "quiz_1",
+            "question": "Who won the above game?",
+            "options": [
+              "Rick",
+              "Andy"
+            ],
+            "answer": 1
+          },
+          {
+            "type": "quiz",
+            "id": "quiz_2",
+            "question": "Which of the following statements is true based on the instructions given?",
+            "options": [
+              "A player's strength and effort both remain constant between games.",
+              "A player's strength remains constant, and effort can change between games.",
+              "A player's strength can change, and effort remains constant between games.",
+              "A player's strength and effort both can change between games."
+            ],
+            "answer": 1
+          }
+        ]
+      },
+      {
+        "title": "Instructions 9",
+        "content": [
+          {
+            "type": "text",
+            "value": "The <b>tug-of-war championships</b> are a tournament consisting of several tug-of-war matches between teams of athletes.<br>Tug-of-war is a sport in which <b>two teams of athletes</b> compete by pulling on <b>opposite ends of a rope.</b><br>The championships are <b>open to anyone</b>. Athletes vary widely in how <b>strong they are in general</b>. As with the general public, most athletes are average strength, though some can be much stronger and some can be much weaker.<br>How hard each athlete can <b>pull the rope in each round</b> usually depends on their <b>general physical strength</b>. Athletes with more strength can pull harder.<br>How hard each <b><i>team</i> pulls the rope</b> in any given match depends largely on how hard all of the individual athletes pull on that team.<br>The team that <b>pulls the hardest in a given match</b> usually wins.<br>But remember, <b>many other factors</b> might come up in any particular match."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 10",
+        "content": [
+          {
+            "type": "text",
+            "value": "In the second part of the task, you will act as a <strong>sports commentator</strong>. You will see two tournaments again and add one sentence of new information about each tournament."
+          }
+        ]
+      },
+      {
+        "title": "Instructions 11",
+        "content": [
+          {
+            "type": "text",
+            "value": "Your goal is to write a sentence that would change another participant's beliefs about what happened in the tournament. If you refer to a specific match, be sure to specify which one (e.g., first match or second match). You will also briefly explain why you think your sentence should have the intended effect."
+          }
+        ]
+      }
+    ],
+    "buttonText": "Start Study"
+  },
+  "demographic": {
+    "title": "Demographic Information",
+    "description": "Please help us by providing some demographic information.",
+    "questions": [
+      {
+        "id": "age",
+        "type": "select",
+        "label": "What is your age?",
+        "required": true,
+        "options": [
+          "18-24",
+          "25-34",
+          "35-44",
+          "45-54",
+          "55-64",
+          "65+"
+        ]
+      },
+      {
+        "id": "gender",
+        "type": "select",
+        "label": "What is your gender?",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Non-binary",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "education",
+        "type": "select",
+        "label": "What is your highest level of education?",
+        "required": false,
+        "options": [
+          "High school or less",
+          "Some college",
+          "Bachelor's degree",
+          "Master's degree",
+          "Doctoral degree",
+          "Prefer not to say"
+        ]
+      }
+    ],
+    "buttonText": "Complete Survey"
+  }
+}

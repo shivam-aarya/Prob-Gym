@@ -1,5 +1,5 @@
 /**
- * Utility to map between CogGym stimuli_id (string) and Prob-Gym scenario_id (number)
+ * Utility to map between CogGym trial ID (string) and Prob-Gym scenario_id (number)
  * Handles multi-query scenarios by creating separate IDs for each query
  */
 
@@ -23,7 +23,7 @@ export function createIdMappings(stimuli: CogGymStimulus[]): IdMapping[] {
     for (let queryIndex = 0; queryIndex < stimulus.queries.length; queryIndex++) {
       const query = stimulus.queries[queryIndex];
       mappings.push({
-        stimuliId: stimulus.stimuli_id,
+        stimuliId: stimulus.id,
         queryTag: query.tag,
         scenarioId: scenarioId++,
         queryIndex,
@@ -61,7 +61,7 @@ export function getStimulusScenarioIds(
 }
 
 /**
- * Get original stimuli_id from scenario_id
+ * Get original trial ID from scenario_id
  */
 export function getStimuliId(
   mappings: IdMapping[],

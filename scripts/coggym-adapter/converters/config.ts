@@ -109,16 +109,16 @@ function generateTutorialConfig(
       }
 
       case 'test_trial': {
-        // Look up the trial by stimuli_id
-        const trial = stimuli.find(s => s.stimuli_id === instruction.stimuli_id);
+        // Look up the trial by trial_id
+        const trial = stimuli.find(s => s.id === instruction.trial_id);
 
         if (!trial) {
-          console.warn(`Warning: test_trial references unknown stimuli_id "${instruction.stimuli_id}". Skipping.`);
+          console.warn(`Warning: test_trial references unknown trial_id "${instruction.trial_id}". Skipping.`);
           return {
             title: 'Practice Trial',
             content: [{
               type: 'text',
-              value: `<p class="text-red-600">Error: Could not find trial "${instruction.stimuli_id}". Please check your instruction.jsonl file.</p>`
+              value: `<p class="text-red-600">Error: Could not find trial "${instruction.trial_id}". Please check your instruction.jsonl file.</p>`
             }]
           };
         }

@@ -22,7 +22,7 @@ export function convertToScenarios(stimuli: CogGymStimulus[]): {
     if (stimulus.queries.length === 1) {
       // Single question - use legacy format
       const mapping = mappings.find(
-        m => m.stimuliId === stimulus.stimuli_id && m.queryIndex === 0
+        m => m.stimuliId === stimulus.id && m.queryIndex === 0
       );
       scenarios.push(convertQueryToScenario(stimulus, stimulus.queries[0], mapping?.scenarioId || scenarioId));
     } else {
@@ -45,7 +45,7 @@ function convertToMultiQuestionScenario(
   const primaryStimulus = stimulus.stimuli[0];
 
   const scenario: any = {
-    task_name: stimulus.stimuli_id,
+    task_name: stimulus.id,
     scenario_id: scenarioId,
     input_type: primaryStimulus.input_type,
     commentary: stimulus.commentary || '',
@@ -148,9 +148,9 @@ function convertQueryToScenario(
   const primaryStimulus = stimulus.stimuli[0];
 
   const scenario: any = {
-    task_name: stimulus.stimuli_id,
+    task_name: stimulus.id,
     scenario_id: scenarioId,
-    // Don't set original_scenario_id - it's for numeric IDs, we use task_name for the original stimuli_id
+    // Don't set original_scenario_id - it's for numeric IDs, we use task_name for the original trial ID
     input_type: primaryStimulus.input_type,
     commentary: stimulus.commentary || '',
     question: query.prompt,

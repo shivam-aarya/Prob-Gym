@@ -4,9 +4,9 @@ Auto-generated study from CogGym format.
 
 ## Import Information
 
-- **Source**: Olympics2025/exp1
-- **Import Date**: 2025-11-22T09:03:47.291Z
-- **Scenario Count**: 7
+- **Source**: Wong2025Modeling/exp1
+- **Import Date**: 2025-12-14T16:16:04.888Z
+- **Scenario Count**: 8
 
 
 ## Notes
@@ -16,5 +16,5 @@ Multi-query trials were split into separate scenarios.
 
 To re-import with updated source data:
 ```bash
-npm run coggym:import Olympics2025/exp1 --overwrite
+npm run coggym:import Wong2025Modeling/exp1 --overwrite
 ```

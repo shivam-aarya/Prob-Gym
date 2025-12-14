@@ -5,21 +5,24 @@
 import { CogGymConfig, CogGymStimulus, InstructionContent } from '../types';
 
 /**
- * Validate that all stimuli referenced in experimentFlow exist
+ * Validate that all IDs referenced in experimentFlow exist in either stimuli or instructions
  */
 export function validateStimuliReferences(
   config: CogGymConfig,
-  stimuli: CogGymStimulus[]
+  stimuli: CogGymStimulus[],
+  instructions: InstructionContent[] = []
 ): { valid: boolean; errors: string[]; warnings: string[] } {
   const errors: string[] = [];
-  const stimuliIds = new Set(stimuli.map(s => s.stimuli_id));
+  const stimuliIds = new Set(stimuli.map(s => s.id));
+  const instructionIds = new Set(instructions.map(i => i.id));
 
   for (const flow of config.experimentFlow) {
     for (const block of flow.blocks) {
-      for (const stimuliId of block) {
-        if (!stimuliIds.has(stimuliId)) {
+      for (const id of block) {
+        // Check if ID exists in either stimuli or instructions
+        if (!stimuliIds.has(id) && !instructionIds.has(id)) {
           errors.push(
-            `Stimulus "${stimuliId}" referenced in experimentFlow but not found in stimuli.jsonl`
+            `ID "${id}" referenced in experimentFlow but not found in trial.jsonl or instruction.jsonl`
           );
         }
       }
@@ -60,7 +63,7 @@ export function validateCounts(
   const warnings: string[] = [];
 
   // Check stimuli count
-  const uniqueStimuli = new Set(stimuli.map(s => s.stimuli_id)).size;
+  const uniqueStimuli = new Set(stimuli.map(s => s.id)).size;
   if (config.stimuli_count !== uniqueStimuli) {
     warnings.push(
       `Config specifies ${config.stimuli_count} stimuli but found ${uniqueStimuli} unique stimuli`
@@ -89,7 +92,7 @@ export function validateQueryTags(
     if (tags.length !== uniqueTags.size) {
       const duplicates = tags.filter((tag, index) => tags.indexOf(tag) !== index);
       errors.push(
-        `Stimulus "${stimulus.stimuli_id}" has duplicate query tags: ${duplicates.join(', ')}`
+        `Stimulus "${stimulus.id}" has duplicate query tags: ${duplicates.join(', ')}`
       );
     }
   }
@@ -110,7 +113,7 @@ export function validateExperiment(
   instructions: InstructionContent[]
 ): { valid: boolean; errors: string[]; warnings: string[] } {
   const results = [
-    validateStimuliReferences(config, stimuli),
+    validateStimuliReferences(config, stimuli, instructions),
     validateInstructionReferences(instructions, stimuli),
     validateCounts(config, stimuli),
     validateQueryTags(stimuli),

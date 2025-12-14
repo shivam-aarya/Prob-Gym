@@ -90,6 +90,10 @@ function validateInstruction(
   instruction: any,
   lineNumber: number
 ): asserts instruction is InstructionContent {
+  if (!('id' in instruction)) {
+    throw new Error(`Line ${lineNumber}: Missing required field: id`);
+  }
+
   if (!('type' in instruction)) {
     throw new Error(`Line ${lineNumber}: Missing required field: type`);
   }
@@ -108,8 +112,8 @@ function validateInstruction(
       break;
 
     case 'test_trial':
-      if (!instruction.stimuli_id || typeof instruction.stimuli_id !== 'string') {
-        throw new Error(`Line ${lineNumber}: test_trial type requires stimuli_id field (string)`);
+      if (!instruction.trial_id || typeof instruction.trial_id !== 'string') {
+        throw new Error(`Line ${lineNumber}: test_trial type requires trial_id field (string)`);
       }
       break;
 
