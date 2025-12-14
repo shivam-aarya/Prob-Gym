@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Technology Stack
 
-- **Framework**: Next.js 15.2.4 (App Router) with React 19
+- **Framework**: Next.js 15.5.9 (App Router) with React 19
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 4
 - **Database**: Supabase (PostgreSQL) with abstraction layer supporting in-memory fallback
