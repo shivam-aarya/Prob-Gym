@@ -271,64 +271,73 @@ export default function TutorialPage({ config, onComplete }: TutorialPageProps) 
   const isCompleteButtonDisabled = (currentPageHasTestScenario && !testScenarioCompleted) || !allQuizzesAnsweredCorrectly;
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">{config.title}</h1>
-      
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-        <h2 className="text-xl font-semibold mb-4">{config.pages[currentPage].title}</h2>
-        <div className={`space-y-4 ${currentPageHasTestScenario ? 'scenario-page' : ''}`}>
-          {config.pages[currentPage].content.map((content, index) => (
-            <ContentRenderer
-              key={index}
-              content={content}
-              onTestSubmit={content.type === 'scenario' && content.feedback ? () => handleTestScenarioSubmit() : undefined}
-              showConfirmation={showConfirmation}
-              quizAnswers={quizAnswers}
-              setQuizAnswers={setQuizAnswers}
-            />
-          ))}
+    <div className="min-h-screen pb-24">
+      {/* Main content area with standardized width */}
+      <div className="max-w-4xl mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-6">{config.title}</h1>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
+          <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-xl font-semibold">{config.pages[currentPage].title}</h2>
+          </div>
+          <div className={`p-6 space-y-4 ${currentPageHasTestScenario ? 'scenario-page' : ''}`}>
+            {config.pages[currentPage].content.map((content, index) => (
+              <ContentRenderer
+                key={index}
+                content={content}
+                onTestSubmit={content.type === 'scenario' && content.feedback ? () => handleTestScenarioSubmit() : undefined}
+                showConfirmation={showConfirmation}
+                quizAnswers={quizAnswers}
+                setQuizAnswers={setQuizAnswers}
+              />
+            ))}
+          </div>
         </div>
+
+        {/* Warning messages */}
+        {currentPageHasTestScenario && !testScenarioCompleted && (
+          <div className="p-4 bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-md">
+            Please complete the test scenario above before proceeding.
+          </div>
+        )}
+
+        {!allQuizzesAnsweredCorrectly && currentPageQuizzes.length > 0 && (
+          <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-md">
+            Please answer all quiz questions correctly before proceeding.
+          </div>
+        )}
       </div>
 
-      <div className="flex justify-between items-center">
-        <button
-          onClick={handlePrevious}
-          disabled={currentPage === 0}
-          className={`px-4 py-2 rounded-lg transition-colors ${
-            currentPage === 0
-              ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed text-gray-500 dark:text-gray-400'
-              : 'bg-gray-600 hover:bg-gray-700 text-white'
-          }`}
-        >
-          Previous
-        </button>
-        
-        <button
-          onClick={handleNext}
-          disabled={isCompleteButtonDisabled}
-          className={`px-4 py-2 rounded-lg transition-colors ${
-            isCompleteButtonDisabled
-              ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed text-gray-500 dark:text-gray-400'
-              : currentPage === config.pages.length - 1
-                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+      {/* Fixed navigation buttons pinned to window */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 shadow-lg z-10">
+        <div className="max-w-4xl mx-auto flex justify-between items-center">
+          <button
+            onClick={handlePrevious}
+            disabled={currentPage === 0}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              currentPage === 0
+                ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed text-gray-500 dark:text-gray-400'
                 : 'bg-gray-600 hover:bg-gray-700 text-white'
-          }`}
-        >
-          {currentPage === config.pages.length - 1 ? config.buttonText : 'Next'}
-        </button>
+            }`}
+          >
+            Previous
+          </button>
+
+          <button
+            onClick={handleNext}
+            disabled={isCompleteButtonDisabled}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              isCompleteButtonDisabled
+                ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed text-gray-500 dark:text-gray-400'
+                : currentPage === config.pages.length - 1
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  : 'bg-gray-600 hover:bg-gray-700 text-white'
+            }`}
+          >
+            {currentPage === config.pages.length - 1 ? config.buttonText : 'Next'}
+          </button>
+        </div>
       </div>
-
-      {currentPageHasTestScenario && !testScenarioCompleted && (
-        <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-md">
-          Please complete the test scenario above before proceeding.
-        </div>
-      )}
-
-      {!allQuizzesAnsweredCorrectly && currentPageQuizzes.length > 0 && (
-        <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-md">
-          Please answer all quiz questions correctly before proceeding.
-        </div>
-      )}
     </div>
   );
 } 
