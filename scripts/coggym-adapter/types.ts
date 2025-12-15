@@ -119,7 +119,7 @@ export interface InstructionPage extends InstructionModule {
 export interface TestTrial extends InstructionModule {
   id: string;
   type: 'test_trial';
-  trial_id: string;
+  stimuli_id: string;
   feedback?: string;
 }
 

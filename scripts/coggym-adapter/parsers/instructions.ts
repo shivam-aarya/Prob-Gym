@@ -112,8 +112,8 @@ function validateInstruction(
       break;
 
     case 'test_trial':
-      if (!instruction.trial_id || typeof instruction.trial_id !== 'string') {
-        throw new Error(`Line ${lineNumber}: test_trial type requires trial_id field (string)`);
+      if (!instruction.stimuli_id || typeof instruction.stimuli_id !== 'string') {
+        throw new Error(`Line ${lineNumber}: test_trial type requires stimuli_id field (string)`);
       }
       break;
 
