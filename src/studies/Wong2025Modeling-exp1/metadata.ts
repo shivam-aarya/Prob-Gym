@@ -6,7 +6,7 @@
 import { StudyMetadata } from '@/studies/types';
 
 export const metadata: StudyMetadata = {
-  "id": "dffa7f87-5c07-4353-b539-7480491d1687",
+  "id": "2c1a799a-82ee-4123-bf25-3555de226559",
   "slug": "Wong2025Modeling-exp1",
   "version": "1.0.0",
   "title": "Olympics Pilot Tug-of-War",
@@ -38,7 +38,7 @@ export const metadata: StudyMetadata = {
   },
   "status": "ACTIVE",
   "settings": {
-    "questionsPerParticipant": 8,
+    "questionsPerParticipant": 9,
     "randomizeQuestions": true,
     "allowBack": true,
     "showProgress": true,
@@ -53,6 +53,7 @@ export const metadata: StudyMetadata = {
   },
   "assetPath": "/studies/Wong2025Modeling-exp1/assets",
   "plugins": [
+    "MultipleChoicePlugin",
     "TextboxPlugin"
   ]
 };

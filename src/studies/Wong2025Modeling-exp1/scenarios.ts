@@ -7,8 +7,30 @@ import { StudyConfig } from '@/types/study';
 
 export const scenarios: StudyConfig[] = [
   {
-    "task_name": "trials_9_10_tug-of-war",
+    "task_name": "exp1_practice_1",
     "scenario_id": 0,
+    "input_type": "img",
+    "commentary": "",
+    "question": "Who won the above game?",
+    "options": [
+      "Rick",
+      "Andy"
+    ],
+    "randomize_order": false,
+    "stimuli": [
+      {
+        "input_type": "img",
+        "media_url": [
+          "test1.png"
+        ]
+      }
+    ],
+    "source_link": "test1.png",
+    "input_method": "multi-choice"
+  },
+  {
+    "task_name": "trials_9_10_tug-of-war",
+    "scenario_id": 1,
     "input_type": "img",
     "commentary": "",
     "stimuli": [
@@ -160,7 +182,7 @@ export const scenarios: StudyConfig[] = [
   },
   {
     "task_name": "trials_11_12_tug-of-war",
-    "scenario_id": 1,
+    "scenario_id": 2,
     "input_type": "img",
     "commentary": "",
     "stimuli": [
@@ -312,7 +334,7 @@ export const scenarios: StudyConfig[] = [
   },
   {
     "task_name": "trials_13_14_tug-of-war",
-    "scenario_id": 2,
+    "scenario_id": 3,
     "input_type": "img",
     "commentary": "",
     "stimuli": [
@@ -464,7 +486,7 @@ export const scenarios: StudyConfig[] = [
   },
   {
     "task_name": "trials_15_16_tug-of-war",
-    "scenario_id": 3,
+    "scenario_id": 4,
     "input_type": "img",
     "commentary": "",
     "stimuli": [
@@ -616,7 +638,7 @@ export const scenarios: StudyConfig[] = [
   },
   {
     "task_name": "trials_17_18_tug-of-war",
-    "scenario_id": 4,
+    "scenario_id": 5,
     "input_type": "img",
     "commentary": "",
     "stimuli": [
@@ -768,7 +790,7 @@ export const scenarios: StudyConfig[] = [
   },
   {
     "task_name": "trials_19_20_tug-of-war",
-    "scenario_id": 5,
+    "scenario_id": 6,
     "input_type": "img",
     "commentary": "",
     "stimuli": [
@@ -920,7 +942,7 @@ export const scenarios: StudyConfig[] = [
   },
   {
     "task_name": "trials_17_18_tug-of-war_commentary",
-    "scenario_id": 6,
+    "scenario_id": 7,
     "input_type": "img",
     "commentary": "",
     "stimuli": [
@@ -951,7 +973,7 @@ export const scenarios: StudyConfig[] = [
   },
   {
     "task_name": "trials_19_20_tug-of-war_commentary",
-    "scenario_id": 7,
+    "scenario_id": 8,
     "input_type": "img",
     "commentary": "",
     "stimuli": [

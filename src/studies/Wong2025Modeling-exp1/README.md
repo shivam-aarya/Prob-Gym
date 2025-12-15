@@ -5,8 +5,8 @@ Auto-generated study from CogGym format.
 ## Import Information
 
 - **Source**: Wong2025Modeling/exp1
-- **Import Date**: 2025-12-14T16:16:04.888Z
-- **Scenario Count**: 8
+- **Import Date**: 2025-12-15T00:28:53.681Z
+- **Scenario Count**: 9
 
 
 ## Notes

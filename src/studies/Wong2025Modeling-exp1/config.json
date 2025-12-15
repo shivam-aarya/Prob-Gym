@@ -2,7 +2,7 @@
   "study": {
     "title": "Olympics Pilot Tug-of-War",
     "randomizeQuestions": true,
-    "questionsPerParticipant": 8,
+    "questionsPerParticipant": 9,
     "backend": {
       "enabled": true,
       "endpoint": "/api/submit"
@@ -25,7 +25,12 @@
         "content": [
           {
             "type": "text",
-            "value": "In this experiment, you will see tug-of-war tournaments and make judgments about these tournaments."
+            "value": "In this experiment, you will see tug-of-war tournaments and make judgments about these games. <br><br> In each game, players either compete as part of a team or individually. For example, in the tournament shown below, Peter and Matthew competed against Jacob and Anthony in Game 1. <b>The crown indicates which team won the game.</b> Here, Peter and Matthew won against Jacob and Anthony. <br><br> In Game 2, Jacob won the game against Peter. <br><br> Note that <b>a player's strength remains constant</b> throughout a tournament. For example, Peter was equally strong in Game 1 and in Game 2. A player neither gets stronger nor weaker between games. <br><br> However, <b>each player can decide how much effort to put into each game.</b> A player may put in low effort, high effort, or a normal amount of effort in a game. For example, it's possible that Peter put in high effort in Game 1 but low effort in Game 2. <br><br>The pulling power of a team depends on the strength of its players, and how much effort each player puts into the game. The team with the greater pulling power wins the game. <br><br>Note that we will show you a new set of players in each tournament."
+          },
+          {
+            "type": "image",
+            "src": "/studies/Wong2025Modeling-exp1/assets/exp_tournament.png",
+            "alt": "Tutorial image"
           }
         ]
       },
@@ -34,12 +39,7 @@
         "content": [
           {
             "type": "text",
-            "value": "In each match, players either compete as part of a team or individually. The crown indicates which team won the match."
-          },
-          {
-            "type": "image",
-            "src": "/studies/Wong2025Modeling-exp1/assets/trials_9_10_tug-of-war.png",
-            "alt": "Tutorial image"
+            "value": "On each trial, you will answer five questions on the right side of the screen:<ul><li>Two questions about players' strength.</li><li>Two questions about how much effort players put into specific matches.</li><li>One question about who would win in a new hypothetical match.</li></ul> <br><br>You can click on any point along the slider. Your task is to provide your best guess based on the available information."
           }
         ]
       },
@@ -48,48 +48,40 @@
         "content": [
           {
             "type": "text",
-            "value": "Note that a player's strength remains constant throughout a tournament. A player neither gets better nor worse between matches.<br><br>However, each player can decide how much effort to put into each game. A player may put in low effort, high effort, or a normal amount of effort in a game.<br><br>The outcome depends on both the players' underlying ability and how much effort they put in on that match.<br><br>Note that we will show you a new set of players in each tournament."
-          }
-        ]
-      },
-      {
-        "title": "Instructions 4",
-        "content": [
-          {
-            "type": "text",
-            "value": "On each trial, you will answer five questions on the right side of the screen:<ul><li>Two questions about players' strength.</li><li>Two questions about how much effort players put into specific matches.</li><li>One question about who would win in a new hypothetical match.</li></ul>"
-          }
-        ]
-      },
-      {
-        "title": "Instructions 5",
-        "content": [
-          {
-            "type": "text",
-            "value": "You will respond to each question on a slider at the bottom of the screen. You can click on any point along the slider. Your task is to provide your best guess based on the available information."
-          }
-        ]
-      },
-      {
-        "title": "Instructions 6",
-        "content": [
-          {
-            "type": "text",
             "value": "We will next ask you a few questions to check that you understood the instructions."
           }
         ]
       },
       {
-        "title": "Instructions 7",
+        "title": "Practice Trial",
         "content": [
           {
-            "type": "text",
-            "value": "Comprehension quiz: look at the tournament below. The next question asks: \"Who won the above game?\""
-          },
-          {
-            "type": "image",
-            "src": "/studies/Wong2025Modeling-exp1/assets/test1.png",
-            "alt": "Tutorial image"
+            "type": "scenario",
+            "config": {
+              "task_name": "exp1_practice_1",
+              "scenario_id": 0,
+              "input_type": "img",
+              "commentary": "",
+              "question": "Who won the above game?",
+              "options": [
+                "Rick",
+                "Andy"
+              ],
+              "randomize_order": false,
+              "stimuli": [
+                {
+                  "input_type": "img",
+                  "media_url": [
+                    "test1.png"
+                  ]
+                }
+              ],
+              "source_link": "test1.png",
+              "input_method": "multi-choice"
+            },
+            "feedback": {
+              "content": "Correct answer: Andy."
+            }
           }
         ]
       },
@@ -103,16 +95,6 @@
           {
             "type": "quiz",
             "id": "quiz_1",
-            "question": "Who won the above game?",
-            "options": [
-              "Rick",
-              "Andy"
-            ],
-            "answer": 1
-          },
-          {
-            "type": "quiz",
-            "id": "quiz_2",
             "question": "Which of the following statements is true based on the instructions given?",
             "options": [
               "A player's strength and effort both remain constant between games.",
@@ -125,7 +107,7 @@
         ]
       },
       {
-        "title": "Instructions 9",
+        "title": "Instructions 6",
         "content": [
           {
             "type": "text",
@@ -134,7 +116,7 @@
         ]
       },
       {
-        "title": "Instructions 10",
+        "title": "Instructions 7",
         "content": [
           {
             "type": "text",
@@ -143,7 +125,7 @@
         ]
       },
       {
-        "title": "Instructions 11",
+        "title": "Instructions 8",
         "content": [
           {
             "type": "text",
