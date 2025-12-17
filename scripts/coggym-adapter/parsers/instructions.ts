@@ -5,6 +5,7 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
 import { InstructionContent } from '../types';
+import type { ExperimentItem } from '@/types/study';
 
 /**
  * Parse an instruction.jsonl file from a CogGym experiment
@@ -136,4 +137,86 @@ function validateInstruction(
       }
       break;
   }
+}
+
+/**
+ * Convert CogGym instruction modules to ExperimentItems
+ * Transforms instruction.jsonl content into items that can be rendered in experimentFlow
+ *
+ * @param instructions - Array of parsed instruction modules from instruction.jsonl
+ * @param stimuliMap - Maps CogGym trial IDs to Prob-Gym scenario IDs (for resolving test_trial references)
+ * @returns Map of instruction ID to ExperimentItem
+ */
+export function convertInstructionsToItems(
+  instructions: InstructionContent[],
+  stimuliMap: Map<string, number>
+): Map<string, ExperimentItem> {
+  const itemsMap = new Map<string, ExperimentItem>();
+
+  for (const instruction of instructions) {
+    switch (instruction.type) {
+      case 'instruction': {
+        const item: ExperimentItem = {
+          type: 'instruction',
+          id: instruction.id,
+          text: instruction.text
+        };
+
+        // Add media if present
+        if (instruction.media_url && instruction.media_url.length > 0) {
+          item.media = instruction.media_url.map(url => {
+            // Determine media type from file extension
+            const isVideo = /\.(mp4|webm|mov|avi)$/i.test(url);
+
+            return {
+              type: isVideo ? 'video' : 'image',
+              url: url.replace(/^assets\//, '') // Strip "assets/" prefix
+            };
+          });
+        }
+
+        itemsMap.set(instruction.id, item);
+        break;
+      }
+
+      case 'test_trial': {
+        const scenarioId = stimuliMap.get(instruction.stimuli_id);
+
+        if (scenarioId === undefined) {
+          console.warn(
+            `[Instructions Parser] test_trial "${instruction.id}" references unknown stimuli_id "${instruction.stimuli_id}" - skipping`
+          );
+          break;
+        }
+
+        const item: ExperimentItem = {
+          type: 'test_trial',
+          id: instruction.id,
+          scenarioId,
+          feedback: instruction.feedback
+        };
+
+        itemsMap.set(instruction.id, item);
+        break;
+      }
+
+      case 'comprehension_quiz': {
+        const item: ExperimentItem = {
+          type: 'comprehension_quiz',
+          id: instruction.id,
+          text: instruction.text,
+          questions: instruction.queries.map(query => ({
+            question: query.prompt,
+            options: query.option || [],
+            correctAnswer: query.answer || 0
+          }))
+        };
+
+        itemsMap.set(instruction.id, item);
+        break;
+      }
+    }
+  }
+
+  return itemsMap;
 }

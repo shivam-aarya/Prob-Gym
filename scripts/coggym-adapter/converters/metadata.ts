@@ -4,7 +4,8 @@
 
 import { randomUUID } from 'crypto';
 import { CogGymConfig, CogGymStimulus, InstructionContent } from '../types';
-import { flattenBlocks } from '../utils/block-flattener';
+import { parseExperimentFlow, hasMultipleConditions } from '../utils/experimentFlowParser';
+import { convertInstructionsToItems } from '../parsers/instructions';
 import { countTotalScenarios } from '../utils/id-mapper';
 
 /**
@@ -16,8 +17,28 @@ export function convertToMetadata(
   instructions: InstructionContent[],
   studySlug: string
 ): any {
-  const { shouldRandomize } = flattenBlocks(config.experimentFlow);
   const totalScenarios = countTotalScenarios(stimuli);
+
+  // Create stimulus ID to scenario ID mapping
+  const stimuliMap = new Map<string, number>();
+  stimuli.forEach((stimulus, index) => {
+    stimuliMap.set(stimulus.id, index);
+  });
+
+  // Convert instructions to ExperimentItems
+  const instructionsMap = convertInstructionsToItems(instructions, stimuliMap);
+
+  // Parse experiment flow (preserve block structure)
+  const experimentalConditions = parseExperimentFlow(
+    config.experimentFlow,
+    stimuliMap,
+    instructionsMap
+  );
+
+  // Determine if any randomization is specified
+  const hasRandomization = config.experimentFlow.some(
+    f => f.block_randomization || f.stimuli_randomization
+  );
 
   // Infer modality from response types and input types
   const modality = inferModality(config.responseType, stimuli);
@@ -28,7 +49,8 @@ export function convertToMetadata(
   // Determine required plugins based on response types
   const plugins = determinePlugins(config.responseType, stimuli);
 
-  return {
+  // Build metadata object
+  const metadata: any = {
     id: randomUUID(),
     slug: studySlug,
     version: '1.0.0',
@@ -52,21 +74,51 @@ export function convertToMetadata(
     status: 'ACTIVE' as const,
     settings: {
       questionsPerParticipant: totalScenarios,
-      randomizeQuestions: shouldRandomize,
-      allowBack: true,
+      randomizeQuestions: hasRandomization,
+      allowBack: false, // ExperimentFlow is sequential only
       showProgress: true,
       autoSave: true,
       completionMessage: `Thank you for participating in "${config.experimentName}"!`,
     },
     flow: {
       consent: true,
-      tutorial: instructions.length > 0,
+      tutorial: false, // All instructions are in experimentFlow now
       scenarios: true,
       demographic: true,
     },
     assetPath: `/studies/${studySlug}/assets`,
     plugins,
   };
+
+  // Add experimentFlow if conditions exist
+  if (experimentalConditions.length > 0) {
+    metadata.experimentFlow = {
+      conditions: experimentalConditions,
+      assignmentStrategy: hasMultipleConditions(config.experimentFlow) ? 'random' : undefined
+    };
+
+    // Add inline items (all items from all conditions and blocks)
+    // This is used for fast lookup by ID during runtime
+    const allItems = new Map<string, any>();
+
+    // First add all instruction/quiz items
+    instructionsMap.forEach((item, id) => {
+      allItems.set(id, item);
+    });
+
+    // Then add all trial items from the experimentFlow blocks
+    for (const condition of experimentalConditions) {
+      for (const block of condition.blocks) {
+        for (const item of block.items) {
+          allItems.set(item.id, item);
+        }
+      }
+    }
+
+    metadata.inlineItems = Array.from(allItems.values());
+  }
+
+  return metadata;
 }
 
 /**

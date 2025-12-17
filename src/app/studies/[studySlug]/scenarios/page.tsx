@@ -1,28 +1,29 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Layout from '@/components/Layout';
-import QuestionFrame from '@/components/QuestionFrame';
-import MultiQuestionFrame from '@/components/MultiQuestionFrame';
-import ScenarioNavigation from '@/components/ScenarioNavigation';
-import { UserResponse, StudyConfig, QuestionResponse } from '@/types/study';
 import { useRouter } from 'next/navigation';
 import { useStudy } from '@/contexts/StudyContext';
-import { getSelectedScenarios } from '@/utils/scenarioSelection';
+import { StudyConfig, ExperimentItem } from '@/types/study';
+import ExperimentItemRenderer from '@/components/ExperimentItemRenderer';
+import ScenarioNavigation from '@/components/ScenarioNavigation';
 import { getStudyItem } from '@/utils/studyStorage';
+import { getParticipantId } from '@/utils/studyStorage';
+import { assignCondition } from '@/utils/conditionAssignment';
+import { getCurrentItem, advanceToNextItem, getProgress } from '@/utils/itemSequence';
 
+/**
+ * Scenarios page using experimentFlow
+ * Renders items sequentially from the assigned experimental condition
+ */
 export default function Scenarios() {
-  const { config, studySlug } = useStudy();
+  const { config, metadata, studySlug } = useStudy();
   const router = useRouter();
-  const [currentScenario, setCurrentScenario] = React.useState(1);
-  const [responses, setResponses] = React.useState<Record<number, number[]>>({});
-  const [multiQuestionResponses, setMultiQuestionResponses] = React.useState<Record<number, QuestionResponse[]>>({});
-  const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
-  const [completedScenarios, setCompletedScenarios] = React.useState<Set<number>>(new Set());
-  const [selectedScenarios, setSelectedScenarios] = useState<StudyConfig[]>([]);
+  const [currentItem, setCurrentItem] = useState<ExperimentItem | null>(null);
+  const [scenarios, setScenarios] = useState<StudyConfig[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Only check for consent if consent is required
+    // Check for consent (if required)
     if (config.consent) {
       const hasConsent = getStudyItem(studySlug, 'consented');
       if (!hasConsent) {
@@ -31,224 +32,150 @@ export default function Scenarios() {
       }
     }
 
-    // Only check for tutorial if tutorial is required
-    if (config.tutorial) {
-      const hasTutorial = getStudyItem(studySlug, 'tutorialComplete');
-      if (!hasTutorial) {
-        router.push(`/studies/${studySlug}/tutorial`);
-        return;
-      }
-    }
-
-    // Get the selected scenarios for this participant
+    // Load scenarios from API
     const loadScenarios = async () => {
-      const scenarios = await getSelectedScenarios(studySlug);
-      setSelectedScenarios(scenarios);
-    };
-    loadScenarios();
+      try {
+        const res = await fetch(`/api/studies/${studySlug}/data`);
+        const data = await res.json();
 
-    // Load saved responses from localStorage
-    const savedResponses = getStudyItem(studySlug, 'userResponses');
-    if (savedResponses) {
-      setResponses(JSON.parse(savedResponses));
-    }
-
-    // Load completed scenarios from localStorage
-    const savedCompletedScenarios = getStudyItem(studySlug, 'completedScenarios');
-    if (savedCompletedScenarios) {
-      setCompletedScenarios(new Set(JSON.parse(savedCompletedScenarios)));
-    }
-  }, [studySlug, router, config.consent, config.tutorial]);
-
-  const handleSubmit = async (response: UserResponse) => {
-    setSubmitStatus('idle');
-
-    try {
-      // Get the current scenario data
-      const currentScenarioData = selectedScenarios.find((s) => s.scenario_id === currentScenario);
-      if (!currentScenarioData) {
-        throw new Error('Current scenario not found');
-      }
-
-      // Use the original scenario ID for API submission if available
-      const submissionScenarioId =
-        currentScenarioData.original_scenario_id || currentScenarioData.scenario_id;
-      const apiResponse = { ...response, scenario_id: submissionScenarioId };
-
-      if (config.study.backend?.enabled) {
-        // Get participant ID (study-scoped)
-        const participantId = localStorage.getItem(`${studySlug}_participantId`) || `participant_${Date.now()}`;
-        if (!localStorage.getItem(`${studySlug}_participantId`)) {
-          localStorage.setItem(`${studySlug}_participantId`, participantId);
+        if (!data.success || !data.scenarios) {
+          throw new Error(`Failed to load scenarios: ${data.error || 'Unknown error'}`);
         }
 
-        // Submit to study-scoped API
-        const result = await fetch(`/api/studies/${studySlug}/submit`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ participantId, response: apiResponse }),
-        });
+        setScenarios(data.scenarios);
 
-        const data = await result.json();
-        if (!data.success) {
-          throw new Error('Failed to submit response');
-        }
-      }
+        // Initialize experimentFlow if needed
+        if (metadata.experimentFlow && metadata.experimentFlow.conditions.length > 0) {
+          // Get or create participant ID
+          const participantId = getParticipantId(studySlug) || `participant_${Date.now()}`;
 
-      // Store the response locally using the actual scenario_id
-      // Handle both single-question and multi-question responses
-      if (response.responses) {
-        // Multi-question response
-        const updatedMultiResponses = {
-          ...multiQuestionResponses,
-          [currentScenarioData.scenario_id]: response.responses,
-        };
-        setMultiQuestionResponses(updatedMultiResponses);
-        localStorage.setItem(`${studySlug}_multiQuestionResponses`, JSON.stringify(updatedMultiResponses));
-      } else if (response.response_data && 'values' in response.response_data) {
-        // Single-question response (legacy)
-        const updatedResponses = {
-          ...responses,
-          [currentScenarioData.scenario_id]: response.response_data.values || [],
-        };
-        setResponses(updatedResponses);
-        localStorage.setItem(`${studySlug}_userResponses`, JSON.stringify(updatedResponses));
-
-        // Store the points positions if available (for continuous values)
-        if ('points' in response.response_data && response.response_data.points) {
-          localStorage.setItem(
-            `${studySlug}_pointPositions_${currentScenarioData.scenario_id}`,
-            JSON.stringify(response.response_data.points)
+          // Assign condition and generate item sequence
+          const assignment = assignCondition(
+            studySlug,
+            participantId,
+            metadata.experimentFlow.conditions,
+            metadata.experimentFlow.assignmentStrategy
           );
-        }
-      }
 
-      // Mark this scenario as completed using the actual scenario_id
-      const updatedCompletedScenarios = new Set([...completedScenarios, currentScenarioData.scenario_id]);
-      setCompletedScenarios(updatedCompletedScenarios);
+          console.log(`[Scenarios] Assigned to condition: ${assignment.condition}`);
 
-      // Save completed scenarios to localStorage
-      localStorage.setItem(
-        `${studySlug}_completedScenarios`,
-        JSON.stringify(Array.from(updatedCompletedScenarios))
-      );
+          // Load current item
+          const item = getCurrentItem(studySlug, metadata.inlineItems || []);
+          setCurrentItem(item);
 
-      setSubmitStatus('success');
-
-      // Auto-advance to next scenario after a successful submission
-      if (currentScenario < selectedScenarios.length) {
-        setTimeout(() => {
-          setCurrentScenario(currentScenario + 1);
-          setSubmitStatus('idle');
-        }, 1000);
-      } else {
-        // Check if all scenarios are completed
-        const allCompleted = selectedScenarios.every((scenario) =>
-          updatedCompletedScenarios.has(scenario.scenario_id)
-        );
-
-        if (allCompleted) {
-          localStorage.setItem(`${studySlug}_scenariosComplete`, 'true');
-          setTimeout(() => {
+          if (!item) {
+            // Sequence is complete, redirect to demographic
+            console.log('[Scenarios] Sequence complete, redirecting to demographic');
             router.push(`/studies/${studySlug}/demographic`);
-          }, 1000);
+            return;
+          }
         } else {
-          // Find the first incomplete scenario
-          const firstIncomplete = selectedScenarios.find(
-            (scenario) => !updatedCompletedScenarios.has(scenario.scenario_id)
-          );
-          if (firstIncomplete) {
-            setTimeout(() => {
-              setCurrentScenario(firstIncomplete.scenario_id);
-              setSubmitStatus('idle');
-            }, 1000);
+          console.error('[Scenarios] No experimentFlow found in metadata');
+          // Could redirect to error page or show error message
+        }
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error('[Scenarios] Error loading:', error);
+        setIsLoading(false);
+      }
+    };
+
+    loadScenarios();
+  }, [studySlug, router, config.consent, metadata]);
+
+  /**
+   * Handle item completion
+   * Called when user completes a trial, instruction, quiz, etc.
+   */
+  const handleItemComplete = async (response?: any) => {
+    console.log('[Scenarios] Item completed:', currentItem?.id, response);
+
+    // If this was a trial, save the response
+    if (currentItem?.type === 'trial' && response) {
+      try {
+        const participantId = getParticipantId(studySlug);
+
+        // Submit to API if backend is enabled
+        if (config.study.backend?.enabled) {
+          const result = await fetch(`/api/studies/${studySlug}/submit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ participantId, response }),
+          });
+
+          const data = await result.json();
+          if (!data.success) {
+            console.error('[Scenarios] Failed to submit response:', data.error);
           }
         }
+
+        // Also store in localStorage as backup
+        const responses = getStudyItem(studySlug, 'responses');
+        const responsesData = responses ? JSON.parse(responses) : {};
+        responsesData[currentItem.id] = response;
+        localStorage.setItem(`${studySlug}_responses`, JSON.stringify(responsesData));
+      } catch (error) {
+        console.error('[Scenarios] Error saving response:', error);
       }
-    } catch (error) {
-      console.error('Error submitting response:', error);
-      setSubmitStatus('error');
+    }
+
+    // Advance to next item
+    const hasMore = advanceToNextItem(studySlug);
+
+    if (hasMore) {
+      // Load next item
+      const nextItem = getCurrentItem(studySlug, metadata.inlineItems || []);
+      setCurrentItem(nextItem);
+
+      if (!nextItem) {
+        console.error('[Scenarios] Failed to load next item');
+      }
+    } else {
+      // Sequence complete, redirect to demographic
+      console.log('[Scenarios] All items complete, redirecting to demographic');
+      localStorage.setItem(`${studySlug}_scenariosComplete`, 'true');
+      router.push(`/studies/${studySlug}/demographic`);
     }
   };
 
-  const handleNavigate = (scenarioId: number) => {
-    if (scenarioId >= 1 && scenarioId <= selectedScenarios.length) {
-      setCurrentScenario(scenarioId);
-      setSubmitStatus('idle');
-    }
-  };
-
-  const handleResetStudy = () => {
-    if (confirm('This will reset your study progress. Continue?')) {
-      // Clear localStorage items
-      localStorage.removeItem(`${studySlug}_selectedScenarios`);
-      localStorage.removeItem(`${studySlug}_userResponses`);
-      localStorage.removeItem(`${studySlug}_completedScenarios`);
-      localStorage.removeItem(`${studySlug}_scenariosComplete`);
-
-      // Reload the page to reset state
-      window.location.reload();
-    }
-  };
-
-  // If scenarios aren't loaded yet, show a loading indicator
-  if (selectedScenarios.length === 0) {
-    return <div className="flex items-center justify-center min-h-screen">Loading scenarios...</div>;
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg">Loading study...</div>
+      </div>
+    );
   }
 
-  const currentScenarioData = selectedScenarios.find((s) => s.scenario_id === currentScenario);
-
-  if (!currentScenarioData) {
-    return <div>Error: Scenario not found</div>;
+  // No current item (shouldn't happen, but handle gracefully)
+  if (!currentItem) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-lg mb-4">Study complete or no items available</p>
+          <button
+            onClick={() => router.push(`/studies/${studySlug}/demographic`)}
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    );
   }
 
+  // Render current item
   return (
-    <main className="min-h-screen pb-20">
-      {/* Reset button - only in development mode */}
-      {process.env.NODE_ENV === 'development' && (
-        <button
-          onClick={handleResetStudy}
-          className="fixed top-4 right-4 px-3 py-1 bg-red-500 text-white rounded-md text-xs"
-          style={{ zIndex: 1000 }}
-        >
-          Reset Study
-        </button>
-      )}
-
-      <Layout config={currentScenarioData}>
-        {currentScenarioData.questions && currentScenarioData.questions.length > 0 ? (
-          <MultiQuestionFrame
-            config={currentScenarioData}
-            onSubmit={handleSubmit}
-            previousResponses={multiQuestionResponses}
-          />
-        ) : (
-          <QuestionFrame
-            config={currentScenarioData}
-            onSubmit={handleSubmit}
-            previousResponses={responses}
-          />
-        )}
-
-        {submitStatus === 'success' && (
-          <div className="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
-            Response submitted successfully!
-          </div>
-        )}
-
-        {submitStatus === 'error' && (
-          <div className="mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
-            Error submitting response. Please try again.
-          </div>
-        )}
-      </Layout>
-
-      <ScenarioNavigation
-        currentScenario={currentScenario}
-        totalScenarios={selectedScenarios.length}
-        onNavigate={handleNavigate}
-        completedScenarios={completedScenarios}
+    <div className="relative min-h-screen">
+      <ExperimentItemRenderer
+        item={currentItem}
+        scenarios={scenarios}
+        onComplete={handleItemComplete}
       />
-    </main>
+
+      {/* Progress indicator */}
+      <ScenarioNavigation studySlug={studySlug} />
+    </div>
   );
 }

@@ -1,34 +1,33 @@
 /**
- * API endpoint for fetching study metadata
- * Supports both regular studies and test studies
+ * API route to get study metadata
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { loadStudyMetadata } from '@/studies/loader';
+import { getStudy } from '@/studies/registry';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ studySlug: string }> }
 ) {
-  const { studySlug } = await params;
-
-  console.log(`[API /metadata] Fetching metadata for study: ${studySlug}`);
-
   try {
-    const metadata = await loadStudyMetadata(studySlug);
+    const { studySlug } = await params;
+
+    // Load study metadata
+    const metadata = getStudy(studySlug);
 
     if (!metadata) {
-      console.error(`[API /metadata] Study not found: ${studySlug}`);
       return NextResponse.json(
         { success: false, error: 'Study not found' },
         { status: 404 }
       );
     }
 
-    console.log(`[API /metadata] Successfully loaded metadata for: ${studySlug}`);
-    return NextResponse.json({ success: true, metadata });
+    return NextResponse.json({
+      success: true,
+      metadata
+    });
   } catch (error) {
-    console.error(`[API /metadata] Error loading metadata:`, error);
+    console.error('[API /metadata] Error loading study metadata:', error);
     return NextResponse.json(
       {
         success: false,

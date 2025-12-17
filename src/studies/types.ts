@@ -177,6 +177,13 @@ export interface StudyMetadata {
   /** Required plugins */
   plugins: string[];
 
+  // === Experiment Flow ===
+  /** Experimental flow configuration (optional, for advanced designs) */
+  experimentFlow?: import('@/types/study').ExperimentFlow;
+
+  /** Inline items (instructions/quizzes that appear during scenarios) */
+  inlineItems?: import('@/types/study').ExperimentItem[];
+
   // === Study Content Paths ===
   /** Path to scenarios file (relative to study directory) */
   scenariosPath?: string;

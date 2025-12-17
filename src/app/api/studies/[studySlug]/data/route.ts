@@ -1,48 +1,49 @@
 /**
- * API route to fetch study data (metadata and scenarios)
- * Supports both regular studies and test studies
+ * API route to get study data (scenarios and metadata)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { loadStudyMetadata, loadStudyScenarios } from '@/studies/loader';
+import { loadStudyScenarios } from '@/studies/loader';
+import { getStudy } from '@/studies/registry';
 
-interface RouteParams {
-  params: Promise<{
-    studySlug: string;
-  }>;
-}
-
-/**
- * GET /api/studies/[studySlug]/data
- * Returns metadata and scenarios for a study
- */
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ studySlug: string }> }
+) {
   try {
     const { studySlug } = await params;
 
-    // Load metadata and scenarios
-    const metadata = await loadStudyMetadata(studySlug);
+    // Load study metadata
+    const study = getStudy(studySlug);
+
+    if (!study) {
+      return NextResponse.json(
+        { success: false, error: 'Study not found' },
+        { status: 404 }
+      );
+    }
+
+    // Load scenarios
     const scenarios = await loadStudyScenarios(studySlug);
 
-    if (!metadata) {
+    if (!scenarios || scenarios.length === 0) {
       return NextResponse.json(
-        { error: 'Study not found' },
+        { success: false, error: 'No scenarios found for this study' },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      metadata,
-      scenarios: scenarios || [],
+      scenarios,
+      metadata: study
     });
   } catch (error) {
-    console.error('[Study Data API] Error:', error);
-
+    console.error('[API /data] Error loading study data:', error);
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : 'Unknown error'
       },
       { status: 500 }
     );

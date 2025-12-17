@@ -1,201 +1,57 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useTheme } from './ThemeProvider';
-import { useRouter } from 'next/navigation';
-import { UserResponse, StudyConfig } from '@/types/study';
-import { submitResponse } from '@/utils/api';
-import { getSelectedScenarios } from '@/utils/scenarioSelection';
-import { useStudy } from '@/contexts/StudyContext';
-import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
+import { getProgress } from '@/utils/itemSequence';
 
 interface ScenarioNavigationProps {
-  currentScenario: number;
-  totalScenarios: number;
-  onNavigate: (scenarioId: number) => void;
-  responses: Record<number, number[]>;
-  completedScenarios: Set<number>;
+  studySlug: string;
 }
 
-export default function ScenarioNavigation({
-  currentScenario,
-  totalScenarios,
-  onNavigate,
-  completedScenarios
-}: Omit<ScenarioNavigationProps, 'responses'>) {
+/**
+ * Simplified navigation for experimentFlow
+ * Shows only progress indicator (no prev/next buttons)
+ * ExperimentFlow is strictly sequential
+ */
+export default function ScenarioNavigation({ studySlug }: ScenarioNavigationProps) {
   const { theme } = useTheme();
-  const router = useRouter();
-  const { studySlug } = useStudy();
   const isDark = theme === 'dark';
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const allScenariosCompleted = completedScenarios.size === totalScenarios;
+  const progress = getProgress(studySlug);
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
+  // Don't show navigation if no progress info
+  if (progress.total === 0) {
+    return null;
+  }
 
-    try {
-      // First, get all saved responses from study-scoped localStorage
-      const savedResponsesJson = getStudyItem(studySlug, 'userResponses');
-
-      if (savedResponsesJson) {
-        const savedResponses: Record<number, number[]> = JSON.parse(savedResponsesJson);
-        const selectedScenarios = await getSelectedScenarios(studySlug);
-
-        // Submit each saved response to the API
-        for (const scenarioId of Object.keys(savedResponses).map(Number)) {
-          const scenarioData = selectedScenarios.find((s: StudyConfig) => s.scenario_id === scenarioId);
-
-          if (scenarioData) {
-            let response: UserResponse;
-
-            // Use the original scenario ID for API submission if available
-            const submissionScenarioId = scenarioData.original_scenario_id || scenarioData.scenario_id;
-
-            if (scenarioData.input_method === 'histogram') {
-              response = {
-                task_name: scenarioData.task_name,
-                scenario_id: submissionScenarioId,
-                response_data: {
-                  values: savedResponses[scenarioId],
-                  options: scenarioData.options
-                }
-              };
-            } else {
-              // Handle number_line input type - use study-scoped key
-              const pointPositionsJson = getStudyItem(studySlug, `pointPositions_${scenarioId}`);
-              const points = pointPositionsJson ? JSON.parse(pointPositionsJson) : null;
-
-              response = {
-                task_name: scenarioData.task_name,
-                scenario_id: submissionScenarioId,
-                response_data: {
-                  values: savedResponses[scenarioId],
-                  options: scenarioData.options
-                }
-              };
-
-              // Add points data if available
-              if (points && points.length > 0 && response.response_data) {
-                response.response_data.points = points;
-              }
-            }
-
-            // Submit to the API with studySlug
-            await submitResponse(studySlug, response);
-          }
-        }
-      }
-
-      // Mark study as complete and redirect to study-scoped demographic page
-      setStudyItem(studySlug, 'scenariosComplete', 'true');
-      router.push(`/studies/${studySlug}/demographic`);
-    } catch (error) {
-      console.error('Error submitting responses:', error);
-      // Even if there's an error, we still want to proceed to the next step
-      setStudyItem(studySlug, 'scenariosComplete', 'true');
-      router.push(`/studies/${studySlug}/demographic`);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const progressPercent = (progress.current / progress.total) * 100;
 
   return (
-    <div className={`fixed bottom-0 left-0 right-0 border-t transition-colors ${
-      isDark 
-        ? 'bg-gray-900 border-gray-700' 
-        : 'bg-white border-gray-200'
-    }`}>
-      <div className="container mx-auto flex items-center justify-between max-w-7xl px-4 py-4">
-        {/* Navigation buttons and counter */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => onNavigate(currentScenario - 1)}
-            disabled={currentScenario === 1}
-            className={`px-4 py-2 rounded-md transition-colors ${
-              isDark
-                ? 'bg-gray-800 hover:bg-gray-700 text-gray-200 disabled:bg-gray-900 disabled:text-gray-600'
-                : 'bg-gray-100 hover:bg-gray-200 text-gray-900 disabled:bg-gray-50 disabled:text-gray-400'
+    <div
+      className={`fixed bottom-0 left-0 right-0 border-t transition-colors ${
+        isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
+      }`}
+    >
+      <div className="container mx-auto max-w-7xl px-4 py-4">
+        <div className="flex flex-col gap-2">
+          {/* Progress text */}
+          <div
+            className={`text-sm font-medium text-center ${
+              isDark ? 'text-gray-300' : 'text-gray-600'
             }`}
           >
-            Previous
-          </button>
-
-          <div className={`text-sm font-medium ${
-            isDark ? 'text-gray-300' : 'text-gray-600'
-          }`}>
-            Scenario {currentScenario} of {totalScenarios}
+            Item {progress.current} of {progress.total}
           </div>
 
-          <button
-            onClick={() => onNavigate(currentScenario + 1)}
-            disabled={currentScenario === totalScenarios}
-            className={`px-4 py-2 rounded-md transition-colors ${
-              isDark
-                ? 'bg-gray-800 hover:bg-gray-700 text-gray-200 disabled:bg-gray-900 disabled:text-gray-600'
-                : 'bg-gray-100 hover:bg-gray-200 text-gray-900 disabled:bg-gray-50 disabled:text-gray-400'
-            }`}
-          >
-            Next
-          </button>
-        </div>
-
-        {/* Progress indicators and submit button */}
-        <div className="flex items-center gap-4">
-          <div className="flex gap-2">
-            {Array.from({ length: totalScenarios }, (_, i) => i + 1).map((scenarioId) => {
-              const isActive = scenarioId === currentScenario;
-              const isCompleted = completedScenarios.has(scenarioId);
-              
-              return (
-                <button
-                  key={scenarioId}
-                  onClick={() => onNavigate(scenarioId)}
-                  className={`w-4 h-4 rounded-full transition-colors relative ${
-                    isActive
-                      ? isDark ? 'bg-blue-400' : 'bg-blue-500'
-                      : isCompleted
-                        ? isDark ? 'bg-green-500' : 'bg-green-400'
-                        : isDark ? 'bg-gray-800' : 'bg-gray-200'
-                  }`}
-                  aria-label={`Go to scenario ${scenarioId}`}
-                >
-                  {isCompleted && (
-                    <svg
-                      className="absolute -top-[0.0rem] -right-[0.0rem] w-4 h-4 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  )}
-                </button>
-              );
-            })}
+          {/* Progress bar */}
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div
+              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${progressPercent}%` }}
+            />
           </div>
-
-          {allScenariosCompleted && (
-            <button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className={`px-4 py-2 rounded-md transition-colors ${
-                isDark
-                  ? 'bg-green-600 hover:bg-green-700 text-white'
-                  : 'bg-green-500 hover:bg-green-600 text-white'
-              }`}
-            >
-              {isSubmitting ? "Submitting..." : "Submit All Responses"}
-            </button>
-          )}
         </div>
       </div>
     </div>
   );
-} 
+}
