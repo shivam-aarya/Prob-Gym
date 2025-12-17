@@ -5,8 +5,7 @@
 
 import {
   ExperimentalCondition,
-  ParticipantAssignment,
-  ExperimentBlock
+  ParticipantAssignment
 } from '@/types/study';
 import { getStudyItem, setStudyItem } from './studyStorage';
 

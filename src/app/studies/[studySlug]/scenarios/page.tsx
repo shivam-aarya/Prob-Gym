@@ -9,7 +9,7 @@ import ScenarioNavigation from '@/components/ScenarioNavigation';
 import { getStudyItem } from '@/utils/studyStorage';
 import { getParticipantId } from '@/utils/studyStorage';
 import { assignCondition } from '@/utils/conditionAssignment';
-import { getCurrentItem, advanceToNextItem, getProgress } from '@/utils/itemSequence';
+import { getCurrentItem, advanceToNextItem } from '@/utils/itemSequence';
 
 /**
  * Scenarios page using experimentFlow

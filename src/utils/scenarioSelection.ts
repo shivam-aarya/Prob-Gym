@@ -1,5 +1,4 @@
 import { loadStudyScenarios } from '@/studies/loader';
-import { scenarios as Wong2025Modelingexp1Scenarios } from '@/studies/Wong2025Modeling-exp1/scenarios';
 import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
 
 /**
