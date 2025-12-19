@@ -6,7 +6,7 @@
 import { StudyMetadata } from '@/studies/types';
 
 export const metadata: StudyMetadata = {
-  "id": "9bff047e-d6ed-4649-8f99-42f0266698b1",
+  "id": "5de6314a-34f7-4684-b06e-062d7603fcaa",
   "slug": "Wong2025Modeling-exp1",
   "version": "1.0.0",
   "title": "Olympics Pilot Tug-of-War",

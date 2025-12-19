@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Plugin, InputPluginProps } from '@/components/plugins/types';
 
 interface SliderState {
-  value: number;
+  value: number | null; // null when no default value is set and slider hasn't been touched
   touched: boolean;
 }
 
@@ -40,7 +40,7 @@ function ConstrainedSlider({
     min = 0,
     max = 100,
     step = 1,
-    default_value = 50,
+    default_value, // No default - can be undefined
     show_value = true,
     require_all = false,
     constrain_sum,
@@ -83,7 +83,10 @@ function ConstrainedSlider({
     if (value && Array.isArray(value) && value.length === options.length) {
       return value.map((v: number) => ({ value: v, touched: true }));
     }
-    return options.map(() => ({ value: default_value, touched: false }));
+    // If no default_value is specified, start with null (no value)
+    const initialValue = default_value !== undefined ? default_value : null;
+    const initialTouched = default_value !== undefined;
+    return options.map(() => ({ value: initialValue, touched: initialTouched }));
   });
 
   // Load saved values from localStorage
@@ -106,7 +109,9 @@ function ConstrainedSlider({
   // Reset when options change
   useEffect(() => {
     if (!value) {
-      setSliders(options.map(() => ({ value: default_value, touched: false })));
+      const initialValue = default_value !== undefined ? default_value : null;
+      const initialTouched = default_value !== undefined;
+      setSliders(options.map(() => ({ value: initialValue, touched: initialTouched })));
     }
   }, [options, default_value, value]);
 
@@ -119,7 +124,7 @@ function ConstrainedSlider({
 
       // If constrain_sum is enabled, adjust other sliders proportionally
       if (constrain_sum !== undefined) {
-        const sum = updated.reduce((acc, s) => acc + s.value, 0);
+        const sum = updated.reduce((acc, s) => acc + (s.value ?? 0), 0);
         if (sum > constrain_sum) {
           // Need to reduce other sliders
           const excess = sum - constrain_sum;
@@ -127,11 +132,12 @@ function ConstrainedSlider({
 
           if (otherSum > 0) {
             for (let i = 0; i < updated.length; i++) {
-              if (i !== index) {
-                const reduction = (updated[i].value / otherSum) * excess;
+              if (i !== index && updated[i].value !== null) {
+                const currentValue = updated[i].value as number;
+                const reduction = (currentValue / otherSum) * excess;
                 updated[i] = {
                   ...updated[i],
-                  value: Math.max(min, Math.round(updated[i].value - reduction)),
+                  value: Math.max(min, Math.round(currentValue - reduction)),
                 };
               }
             }
@@ -139,26 +145,34 @@ function ConstrainedSlider({
         }
       }
 
-      // Create values array in the original order
-      const values = new Array(options.length);
-      displayOrder.forEach((originalIndex, displayIndex) => {
-        values[originalIndex] = updated[displayIndex]?.value ?? default_value;
-      });
-
-      // Save to localStorage with study-scoped key
-      if (scenarioId && studySlug) {
-        localStorage.setItem(`${studySlug}_sliderValues_${scenarioId}`, JSON.stringify(values));
-      }
-
-      // Notify parent of change
-      onChange(values);
-
       return updated;
     });
+
+    // Move onChange and localStorage outside of setState to avoid "setState during render" error
+    // Use a small timeout to ensure state is updated first
+    setTimeout(() => {
+      setSliders((currentSliders) => {
+        // Create values array in the original order
+        const values = new Array(options.length);
+        displayOrder.forEach((originalIndex, displayIndex) => {
+          values[originalIndex] = currentSliders[displayIndex]?.value ?? null;
+        });
+
+        // Save to localStorage with study-scoped key
+        if (scenarioId && studySlug) {
+          localStorage.setItem(`${studySlug}_sliderValues_${scenarioId}`, JSON.stringify(values));
+        }
+
+        // Notify parent of change
+        onChange(values);
+
+        return currentSliders; // Return unchanged state
+      });
+    }, 0);
   };
 
   const allTouched = sliders.every((s) => s.touched);
-  const currentSum = sliders.reduce((acc, s) => acc + s.value, 0);
+  const currentSum = sliders.reduce((acc, s) => acc + (s.value ?? 0), 0);
 
   return (
     <div className="space-y-6">
@@ -187,7 +201,9 @@ function ConstrainedSlider({
           // Guard against undefined slider during state updates
           if (!slider) return null;
 
-          const percentage = ((slider.value - min) / (max - min)) * 100;
+          // Calculate percentage only if value is not null
+          const hasValue = slider.value !== null;
+          const percentage = hasValue ? ((slider.value! - min) / (max - min)) * 100 : 0;
 
           return (
             <div key={originalIndex} className="space-y-2">
@@ -200,7 +216,7 @@ function ConstrainedSlider({
                 </label>
                 {show_value && (
                   <span className="text-sm font-mono px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
-                    {slider.value}
+                    {hasValue ? slider.value : '-'}
                   </span>
                 )}
               </div>
@@ -208,14 +224,16 @@ function ConstrainedSlider({
               <div className="relative">
                 {/* Track background */}
                 <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-700">
-                  {/* Filled portion */}
-                  <div
-                    className="h-2 rounded-full transition-all duration-150"
-                    style={{
-                      width: `${percentage}%`,
-                      backgroundColor: slider.touched ? '#3b82f6' : '#9ca3af',
-                    }}
-                  />
+                  {/* Filled portion - only show if value is set */}
+                  {hasValue && (
+                    <div
+                      className="h-2 rounded-full transition-all duration-150"
+                      style={{
+                        width: `${percentage}%`,
+                        backgroundColor: slider.touched ? '#3b82f6' : '#9ca3af',
+                      }}
+                    />
+                  )}
                 </div>
 
                 {/* Slider input */}
@@ -225,7 +243,7 @@ function ConstrainedSlider({
                   min={min}
                   max={max}
                   step={step}
-                  value={slider.value}
+                  value={hasValue ? slider.value! : Math.round((min + max) / 2)}
                   onChange={(e) => handleSliderChange(displayIndex, Number(e.target.value))}
                   disabled={disabled}
                   className="absolute inset-0 w-full h-2 opacity-0 cursor-pointer disabled:cursor-not-allowed"

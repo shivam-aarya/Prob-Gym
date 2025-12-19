@@ -54,7 +54,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -81,7 +80,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -108,7 +106,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -135,7 +132,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -162,7 +158,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -206,7 +201,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -233,7 +227,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -260,7 +253,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -287,7 +279,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -314,7 +305,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -358,7 +348,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -385,7 +374,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -412,7 +400,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -439,7 +426,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -466,7 +452,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -510,7 +495,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -537,7 +521,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -564,7 +547,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -591,7 +573,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -618,7 +599,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -662,7 +642,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -689,7 +668,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -716,7 +694,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -743,7 +720,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -770,7 +746,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -814,7 +789,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -841,7 +815,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -868,7 +841,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -895,7 +867,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [
@@ -922,7 +893,6 @@ export const scenarios: StudyConfig[] = [
         "slider_config": {
           "min": 0,
           "max": 100,
-          "default_value": 50,
           "show_value": true,
           "require_all": false,
           "labels": [

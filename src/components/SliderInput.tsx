@@ -24,7 +24,7 @@ interface SliderInputProps {
 }
 
 interface SliderState {
-  value: number;
+  value: number | null; // null when no default value is set and slider hasn't been touched
   touched: boolean;
 }
 
@@ -38,7 +38,7 @@ export default function SliderInput({
   min = 0,
   max = 100,
   step = 1,
-  default_value = 50,
+  default_value,
   show_value = true,
   require_all = false,
   constrain_sum,
@@ -79,7 +79,11 @@ export default function SliderInput({
     if (initialValues && initialValues.length === options.length) {
       return initialValues.map(value => ({ value, touched: true }));
     }
-    return options.map(() => ({ value: default_value, touched: false }));
+    // If no default_value is specified, start with null (no value)
+    // Otherwise use the provided default value
+    const initialValue = default_value !== undefined ? default_value : null;
+    const initialTouched = default_value !== undefined; // Only touched if explicitly set
+    return options.map(() => ({ value: initialValue, touched: initialTouched }));
   });
 
   // Load saved values from localStorage
@@ -102,7 +106,9 @@ export default function SliderInput({
   // Reset when options change
   useEffect(() => {
     if (!initialValues) {
-      setSliders(options.map(() => ({ value: default_value, touched: false })));
+      const initialValue = default_value !== undefined ? default_value : null;
+      const initialTouched = default_value !== undefined;
+      setSliders(options.map(() => ({ value: initialValue, touched: initialTouched })));
     }
   }, [options, default_value, initialValues]);
 
@@ -115,7 +121,7 @@ export default function SliderInput({
 
       // If constrain_sum is enabled, adjust other sliders proportionally
       if (constrain_sum !== undefined) {
-        const sum = updated.reduce((acc, s) => acc + s.value, 0);
+        const sum = updated.reduce((acc, s) => acc + (s.value ?? 0), 0);
         if (sum > constrain_sum) {
           // Need to reduce other sliders
           const excess = sum - constrain_sum;
@@ -123,11 +129,12 @@ export default function SliderInput({
 
           if (otherSum > 0) {
             for (let i = 0; i < updated.length; i++) {
-              if (i !== index) {
-                const reduction = (updated[i].value / otherSum) * excess;
+              if (i !== index && updated[i].value !== null) {
+                const currentValue = updated[i].value as number;
+                const reduction = (currentValue / otherSum) * excess;
                 updated[i] = {
                   ...updated[i],
-                  value: Math.max(min, Math.round(updated[i].value - reduction))
+                  value: Math.max(min, Math.round(currentValue - reduction))
                 };
               }
             }
@@ -161,7 +168,7 @@ export default function SliderInput({
 
   const allTouched = sliders.every(s => s.touched);
   const canSubmit = !require_all || allTouched;
-  const currentSum = sliders.reduce((acc, s) => acc + s.value, 0);
+  const currentSum = sliders.reduce((acc, s) => acc + (s.value ?? 0), 0);
   const isSumValid = constrain_sum === undefined || currentSum === constrain_sum;
 
   return (
@@ -185,7 +192,9 @@ export default function SliderInput({
           // Guard against undefined slider during state updates
           if (!slider) return null;
 
-          const percentage = ((slider.value - min) / (max - min)) * 100;
+          // Calculate percentage only if value is not null
+          const hasValue = slider.value !== null;
+          const percentage = hasValue ? ((slider.value! - min) / (max - min)) * 100 : 0;
 
           return (
             <div key={originalIndex} className="space-y-2">
@@ -200,7 +209,7 @@ export default function SliderInput({
                   <span className={`text-sm font-mono px-2 py-1 rounded ${
                     isDark ? 'bg-gray-700 text-gray-200' : 'bg-gray-100 text-gray-800'
                   }`}>
-                    {slider.value}
+                    {hasValue ? slider.value : '-'}
                   </span>
                 )}
               </div>
@@ -208,16 +217,18 @@ export default function SliderInput({
               <div className="relative">
                 {/* Track background */}
                 <div className={`h-2 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                  {/* Filled portion */}
-                  <div
-                    className="h-2 rounded-full transition-all duration-150"
-                    style={{
-                      width: `${percentage}%`,
-                      backgroundColor: slider.touched
-                        ? (isDark ? '#60a5fa' : '#3b82f6')
-                        : (isDark ? '#4b5563' : '#9ca3af')
-                    }}
-                  />
+                  {/* Filled portion - only show if value is set */}
+                  {hasValue && (
+                    <div
+                      className="h-2 rounded-full transition-all duration-150"
+                      style={{
+                        width: `${percentage}%`,
+                        backgroundColor: slider.touched
+                          ? (isDark ? '#60a5fa' : '#3b82f6')
+                          : (isDark ? '#4b5563' : '#9ca3af')
+                      }}
+                    />
+                  )}
                 </div>
 
                 {/* Slider input */}
@@ -227,7 +238,7 @@ export default function SliderInput({
                   min={min}
                   max={max}
                   step={step}
-                  value={slider.value}
+                  value={hasValue ? slider.value! : Math.round((min + max) / 2)}
                   onChange={(e) => handleSliderChange(displayIndex, Number(e.target.value))}
                   disabled={disabled}
                   className="absolute inset-0 w-full h-2 opacity-0 cursor-pointer disabled:cursor-not-allowed"

@@ -270,11 +270,10 @@ function convertSliderConfig(query: Query, isMultiSlider: boolean): any {
   const cogGymConfig = query.slider_config;
 
   if (!cogGymConfig) {
-    // Default config
+    // Default config - don't set default_value so sliders start untouched
     return {
       min: 0,
       max: 100,
-      default_value: 50,
       show_value: true,
       require_all: false,
     };
@@ -283,10 +282,14 @@ function convertSliderConfig(query: Query, isMultiSlider: boolean): any {
   const probGymConfig: any = {
     min: cogGymConfig.min,
     max: cogGymConfig.max,
-    default_value: cogGymConfig.default_value,
     show_value: true,
     require_all: isMultiSlider,
   };
+
+  // Only set default_value if it's explicitly provided in the config
+  if (cogGymConfig.default_value !== undefined) {
+    probGymConfig.default_value = cogGymConfig.default_value;
+  }
 
   // Handle labels
   if (cogGymConfig.labels && cogGymConfig.labels.length > 0) {
