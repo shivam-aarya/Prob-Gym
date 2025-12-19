@@ -18,6 +18,8 @@ export const AVAILABLE_STUDIES = [
   'Olympics2025-exp2',
   'Olympics2025-exp3',
   'Wong2025Modeling-exp1',
+  'Wong2025Modeling-exp2',
+  'Wong2025Modeling-exp3',
 ] as const;
 
 export type StudySlug = typeof AVAILABLE_STUDIES[number];

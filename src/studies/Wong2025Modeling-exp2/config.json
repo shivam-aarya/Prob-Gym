@@ -1,0 +1,67 @@
+{
+  "study": {
+    "title": "Olympics Four Legged Race",
+    "randomizeQuestions": true,
+    "questionsPerParticipant": 17,
+    "backend": {
+      "enabled": true,
+      "endpoint": "/api/submit"
+    }
+  },
+  "consent": {
+    "title": "Welcome to Olympics Four Legged Race",
+    "content": [
+      "Four-legged race tournament judgments with ability/effort/prediction and commentary inputs embedded per trial.",
+      "This experiment should take about 40 minutes.",
+      "Your participation is completely voluntary. You can agree to take part and later change your mind."
+    ],
+    "buttonText": "I agree, begin the study"
+  },
+  "demographic": {
+    "title": "Demographic Information",
+    "description": "Please help us by providing some demographic information.",
+    "questions": [
+      {
+        "id": "age",
+        "type": "select",
+        "label": "What is your age?",
+        "required": true,
+        "options": [
+          "18-24",
+          "25-34",
+          "35-44",
+          "45-54",
+          "55-64",
+          "65+"
+        ]
+      },
+      {
+        "id": "gender",
+        "type": "select",
+        "label": "What is your gender?",
+        "required": true,
+        "options": [
+          "Male",
+          "Female",
+          "Non-binary",
+          "Prefer not to say"
+        ]
+      },
+      {
+        "id": "education",
+        "type": "select",
+        "label": "What is your highest level of education?",
+        "required": false,
+        "options": [
+          "High school or less",
+          "Some college",
+          "Bachelor's degree",
+          "Master's degree",
+          "Doctoral degree",
+          "Prefer not to say"
+        ]
+      }
+    ],
+    "buttonText": "Complete Survey"
+  }
+}
