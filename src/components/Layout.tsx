@@ -163,20 +163,24 @@ export default function Layout({ children, config }: LayoutProps) {
                             </div>
                           ) : (
                             // When no dimensions specified, use responsive mode with aspect ratio
-                            <div style={containerStyle}>
+                            // Constrain both width and height so image fits on screen without scrolling
+                            <div
+                              style={containerStyle}
+                              className="relative w-full h-[calc(100vh-16rem)]"
+                            >
                               {stimulusIsGif ? (
                                 <img
                                   src={stimulusAssetUrl}
                                   alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
-                                  className="w-full h-auto"
+                                  className="absolute inset-0 w-full h-full"
+                                  style={{ objectFit: 'contain' }}
                                 />
                               ) : (
                                 <Image
                                   src={stimulusAssetUrl}
                                   alt={stimulus.title || `Scenario ${config.scenario_id} - Stimulus ${index + 1}`}
-                                  width={1200}
-                                  height={800}
-                                  className="w-full h-auto"
+                                  fill
+                                  className="object-contain"
                                   priority={index === 0}
                                 />
                               )}
