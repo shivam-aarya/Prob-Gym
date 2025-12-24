@@ -21,6 +21,8 @@ export default function Scenarios() {
   const [currentItem, setCurrentItem] = useState<ExperimentItem | null>(null);
   const [scenarios, setScenarios] = useState<StudyConfig[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   const hasRedirected = useRef(false);
 
   useEffect(() => {
@@ -104,7 +106,15 @@ export default function Scenarios() {
    * Called when user completes a trial, instruction, quiz, etc.
    */
   const handleItemComplete = async (response?: any) => {
+    // Prevent multiple submissions
+    if (isSubmitting) {
+      console.log('[Scenarios] Submission already in progress, ignoring');
+      return;
+    }
+
     console.log('[Scenarios] Item completed:', currentItem?.id, response);
+    setIsSubmitting(true);
+    setSubmissionError(null);
 
     // If this was a trial, save the response
     if (currentItem?.type === 'trial' && response) {
@@ -120,9 +130,17 @@ export default function Scenarios() {
           });
 
           const data = await result.json();
+
+          // Check if submission was successful
           if (!data.success) {
-            console.error('[Scenarios] Failed to submit response:', data.error);
+            const errorMessage = data.message || 'Failed to submit response. Please try again.';
+            console.error('[Scenarios] Failed to submit response:', errorMessage);
+            setSubmissionError(errorMessage);
+            setIsSubmitting(false);
+            return; // Don't advance if submission failed
           }
+
+          console.log('[Scenarios] Response submitted successfully');
         }
 
         // Also store in localStorage as backup
@@ -132,6 +150,9 @@ export default function Scenarios() {
         setStudyItem(studySlug, 'responses', JSON.stringify(responsesData));
       } catch (error) {
         console.error('[Scenarios] Error saving response:', error);
+        setSubmissionError('Network error. Please check your connection and try again.');
+        setIsSubmitting(false);
+        return; // Don't advance if there was an error
       }
     }
 
@@ -152,6 +173,8 @@ export default function Scenarios() {
       setStudyItem(studySlug, 'scenariosComplete', 'true');
       router.push(`/studies/${studySlug}/demographic`);
     }
+
+    setIsSubmitting(false);
   };
 
   // Loading state
@@ -183,10 +206,36 @@ export default function Scenarios() {
   // Render current item
   return (
     <div className="relative min-h-screen">
+      {/* Error message display */}
+      {submissionError && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full mx-4">
+          <div className="bg-red-100 dark:bg-red-900/80 border-2 border-red-500 rounded-lg p-4 shadow-lg">
+            <div className="flex items-start gap-3">
+              <svg className="w-6 h-6 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div className="flex-1">
+                <h3 className="text-red-800 dark:text-red-200 font-semibold mb-1">Submission Failed</h3>
+                <p className="text-red-700 dark:text-red-300 text-sm">{submissionError}</p>
+              </div>
+              <button
+                onClick={() => setSubmissionError(null)}
+                className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <ExperimentItemRenderer
         item={currentItem}
         scenarios={scenarios}
         onComplete={handleItemComplete}
+        isSubmitting={isSubmitting}
       />
 
       {/* Progress indicator */}

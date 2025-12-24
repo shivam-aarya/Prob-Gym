@@ -7,6 +7,7 @@ interface MultiQuestionFrameProps {
   config: StudyConfig;
   onSubmit: (response: UserResponse) => void;
   previousResponses?: Record<number, QuestionResponse[]>;
+  isSubmitting?: boolean;
 }
 
 // Map input_method values to plugin names
@@ -19,10 +20,9 @@ const INPUT_METHOD_TO_PLUGIN: Record<string, string> = {
   'textbox': 'textbox',
 };
 
-export default function MultiQuestionFrame({ config, onSubmit, previousResponses = {} }: MultiQuestionFrameProps) {
+export default function MultiQuestionFrame({ config, onSubmit, previousResponses = {}, isSubmitting = false }: MultiQuestionFrameProps) {
   const { studySlug } = useStudy();
   const [currentValues, setCurrentValues] = useState<Record<number, number[] | string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
 
   const questions = config.questions || [];
@@ -61,6 +61,8 @@ export default function MultiQuestionFrame({ config, onSubmit, previousResponses
 
   // Handler for form submission
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+
     const endTime = new Date();
     const duration = startTime ? endTime.getTime() - startTime.getTime() : 0;
 
@@ -92,14 +94,8 @@ export default function MultiQuestionFrame({ config, onSubmit, previousResponses
       }
     };
 
-    setIsSubmitting(true);
-    try {
-      onSubmit(response);
-    } catch (error) {
-      console.error('Error handling submission:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Call parent onSubmit, parent will handle API submission and state management
+    onSubmit(response);
   };
 
   // Determine if we can submit (all questions answered)

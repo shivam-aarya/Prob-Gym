@@ -7,6 +7,7 @@ interface QuestionFrameProps {
   config: StudyConfig;
   onSubmit: (response: UserResponse) => void;
   previousResponses?: Record<number, number[]>;
+  isSubmitting?: boolean;
 }
 
 // Map input_method values to plugin names
@@ -19,11 +20,10 @@ const INPUT_METHOD_TO_PLUGIN: Record<string, string> = {
   'textbox': 'textbox',
 };
 
-export default function QuestionFrame({ config, onSubmit, previousResponses = {} }: QuestionFrameProps) {
+export default function QuestionFrame({ config, onSubmit, previousResponses = {}, isSubmitting = false }: QuestionFrameProps) {
   const { studySlug } = useStudy();
   const [previousResponse, setPreviousResponse] = useState<number[] | null>(null);
   const [currentValues, setCurrentValues] = useState<number[] | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
 
   // Handler for actual form submission
   const handleSubmit = async () => {
-    if (!currentValues) return;
+    if (!currentValues || isSubmitting) return;
 
     const endTime = new Date();
     const duration = startTime ? endTime.getTime() - startTime.getTime() : 0;
@@ -82,15 +82,8 @@ export default function QuestionFrame({ config, onSubmit, previousResponses = {}
       }
     };
 
-    // Call parent onSubmit, parent will handle API submission
-    setIsSubmitting(true);
-    try {
-      onSubmit(response);
-    } catch (error) {
-      console.error('Error handling submission:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Call parent onSubmit, parent will handle API submission and state management
+    onSubmit(response);
   };
 
   // Check if this is a single-question scenario

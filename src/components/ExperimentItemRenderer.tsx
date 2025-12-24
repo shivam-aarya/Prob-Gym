@@ -12,6 +12,7 @@ interface ExperimentItemRendererProps {
   item: ExperimentItem;
   scenarios: StudyConfig[];
   onComplete: (response?: any) => void;
+  isSubmitting?: boolean;
 }
 
 /**
@@ -21,7 +22,8 @@ interface ExperimentItemRendererProps {
 export default function ExperimentItemRenderer({
   item,
   scenarios,
-  onComplete
+  onComplete,
+  isSubmitting = false
 }: ExperimentItemRendererProps) {
   const { metadata } = useStudy();
 
@@ -71,12 +73,14 @@ export default function ExperimentItemRenderer({
                 config={scenario}
                 onSubmit={onComplete}
                 previousResponses={{}}
+                isSubmitting={isSubmitting}
               />
             ) : (
               <QuestionFrame
                 config={scenario}
                 onSubmit={onComplete}
                 previousResponses={{}}
+                isSubmitting={isSubmitting}
               />
             )}
           </Layout>
@@ -86,7 +90,7 @@ export default function ExperimentItemRenderer({
 
     case 'test_trial': {
       // Render test trial with feedback
-      return <TestTrialRenderer item={item} scenarios={scenarios} onComplete={onComplete} />;
+      return <TestTrialRenderer item={item} scenarios={scenarios} onComplete={onComplete} isSubmitting={isSubmitting} />;
     }
 
     case 'instruction': {
@@ -165,11 +169,13 @@ export default function ExperimentItemRenderer({
 function TestTrialRenderer({
   item,
   scenarios,
-  onComplete
+  onComplete,
+  isSubmitting = false
 }: {
   item: ExperimentItem & { type: 'test_trial' };
   scenarios: StudyConfig[];
   onComplete: (response?: any) => void;
+  isSubmitting?: boolean;
 }) {
   const [submitted, setSubmitted] = useState(false);
   const [response, setResponse] = useState<any>(null);
@@ -203,12 +209,14 @@ function TestTrialRenderer({
             config={scenario}
             onSubmit={handleSubmit}
             previousResponses={{}}
+            isSubmitting={isSubmitting}
           />
         ) : (
           <QuestionFrame
             config={scenario}
             onSubmit={handleSubmit}
             previousResponses={{}}
+            isSubmitting={isSubmitting}
           />
         )}
       </Layout>
