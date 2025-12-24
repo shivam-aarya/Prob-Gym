@@ -1,45 +1,72 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import DemographicSurvey from '@/components/DemographicSurvey';
 import { useRouter } from 'next/navigation';
 import { useStudy } from '@/contexts/StudyContext';
+import { getStudyItem, setStudyItem, getParticipantId } from '@/utils/studyStorage';
 
 export default function Demographic() {
   const { config, studySlug } = useStudy();
   const router = useRouter();
+  const hasRedirected = useRef(false);
 
   useEffect(() => {
-    // Check if user has completed all previous steps
-    const hasConsent = localStorage.getItem(`${studySlug}_consented`);
-    const hasTutorial = localStorage.getItem(`${studySlug}_tutorialComplete`);
-    const hasCompletedScenarios = localStorage.getItem(`${studySlug}_scenariosComplete`);
+    // Prevent multiple redirects
+    if (hasRedirected.current) return;
 
-    if (!hasConsent) {
-      router.push(`/studies/${studySlug}/consent`);
-    } else if (!hasTutorial) {
-      router.push(`/studies/${studySlug}/tutorial`);
-    } else if (!hasCompletedScenarios) {
-      router.push(`/studies/${studySlug}/scenarios`);
+    // Only check for consent if consent is configured
+    if (config.consent) {
+      const hasConsent = getStudyItem(studySlug, 'consented');
+      if (!hasConsent) {
+        console.log('[Demographic] Missing consent, redirecting to consent');
+        hasRedirected.current = true;
+        router.push(`/studies/${studySlug}/consent`);
+        return;
+      }
     }
-  }, [studySlug, router]);
+
+    // Only check for tutorial if tutorial is configured
+    if (config.tutorial) {
+      const hasTutorial = getStudyItem(studySlug, 'tutorialComplete');
+      if (!hasTutorial) {
+        console.log('[Demographic] Missing tutorial, redirecting to tutorial');
+        hasRedirected.current = true;
+        router.push(`/studies/${studySlug}/tutorial`);
+        return;
+      }
+    }
+
+    // Only check for scenarios if scenarios are configured
+    if (config.scenarios) {
+      const hasCompletedScenarios = getStudyItem(studySlug, 'scenariosComplete');
+      if (!hasCompletedScenarios) {
+        console.log('[Demographic] Missing scenarios completion, redirecting to scenarios');
+        hasRedirected.current = true;
+        router.push(`/studies/${studySlug}/scenarios`);
+        return;
+      }
+    }
+
+    console.log('[Demographic] All required steps completed, staying on demographic page');
+  }, [studySlug, config.consent, config.tutorial, config.scenarios]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = async (demographicResponses: Record<string, string>) => {
     try {
       // Calculate total completion time
-      const startTime = localStorage.getItem(`${studySlug}_studyStartTime`);
+      const startTime = getStudyItem(studySlug, 'studyStartTime');
       const endTime = new Date();
       const totalDurationMs = startTime
         ? endTime.getTime() - new Date(startTime).getTime()
         : 0;
 
       // Get participant ID
-      const participantId = localStorage.getItem('participantId');
+      const participantId = getParticipantId(studySlug);
 
       if (!participantId) {
         console.error('No participant ID found');
         // Still proceed to complete page
-        localStorage.setItem(`${studySlug}_studyComplete`, 'true');
+        setStudyItem(studySlug, 'studyComplete', 'true');
         router.push(`/studies/${studySlug}/complete`);
         return;
       }
@@ -70,12 +97,12 @@ export default function Demographic() {
       }
 
       // Mark study as complete and proceed regardless of API result
-      localStorage.setItem(`${studySlug}_studyComplete`, 'true');
+      setStudyItem(studySlug, 'studyComplete', 'true');
       router.push(`/studies/${studySlug}/complete`);
     } catch (error) {
       console.error('Error submitting demographic data:', error);
       // Still proceed to complete page even if there's an error
-      localStorage.setItem(`${studySlug}_studyComplete`, 'true');
+      setStudyItem(studySlug, 'studyComplete', 'true');
       router.push(`/studies/${studySlug}/complete`);
     }
   };

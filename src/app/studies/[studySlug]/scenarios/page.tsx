@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStudy } from '@/contexts/StudyContext';
 import { StudyConfig, ExperimentItem } from '@/types/study';
 import ExperimentItemRenderer from '@/components/ExperimentItemRenderer';
 import ScenarioNavigation from '@/components/ScenarioNavigation';
-import { getStudyItem } from '@/utils/studyStorage';
-import { getParticipantId } from '@/utils/studyStorage';
+import { getStudyItem, setStudyItem } from '@/utils/studyStorage';
+import { getParticipantId, setParticipantId } from '@/utils/studyStorage';
 import { assignCondition } from '@/utils/conditionAssignment';
 import { getCurrentItem, advanceToNextItem } from '@/utils/itemSequence';
 
@@ -21,12 +21,17 @@ export default function Scenarios() {
   const [currentItem, setCurrentItem] = useState<ExperimentItem | null>(null);
   const [scenarios, setScenarios] = useState<StudyConfig[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const hasRedirected = useRef(false);
 
   useEffect(() => {
+    // Prevent multiple redirects
+    if (hasRedirected.current) return;
+
     // Check for consent (if required)
     if (config.consent) {
       const hasConsent = getStudyItem(studySlug, 'consented');
       if (!hasConsent) {
+        hasRedirected.current = true;
         router.push(`/studies/${studySlug}/consent`);
         return;
       }
@@ -47,7 +52,12 @@ export default function Scenarios() {
         // Initialize experimentFlow if needed
         if (metadata.experimentFlow && metadata.experimentFlow.conditions.length > 0) {
           // Get or create participant ID
-          const participantId = getParticipantId(studySlug) || `participant_${Date.now()}`;
+          let participantId = getParticipantId(studySlug);
+          if (!participantId) {
+            participantId = `participant_${Date.now()}`;
+            setParticipantId(studySlug, participantId);
+            console.log(`[Scenarios] Created new participant ID: ${participantId}`);
+          }
 
           // Assign condition and generate item sequence
           const assignment = assignCondition(
@@ -64,8 +74,13 @@ export default function Scenarios() {
           setCurrentItem(item);
 
           if (!item) {
-            // Sequence is complete, redirect to demographic
-            console.log('[Scenarios] Sequence complete, redirecting to demographic');
+            // Sequence is complete, mark as complete and redirect to demographic
+            console.log('[Scenarios] Sequence complete, setting flag and redirecting to demographic');
+            setStudyItem(studySlug, 'scenariosComplete', 'true');
+            // Verify it was set
+            const verify = getStudyItem(studySlug, 'scenariosComplete');
+            console.log('[Scenarios] Flag verification:', { studySlug, scenariosComplete: verify });
+            hasRedirected.current = true;
             router.push(`/studies/${studySlug}/demographic`);
             return;
           }
@@ -82,7 +97,7 @@ export default function Scenarios() {
     };
 
     loadScenarios();
-  }, [studySlug, router, config.consent, metadata]);
+  }, [studySlug, config.consent, metadata]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /**
    * Handle item completion
@@ -114,7 +129,7 @@ export default function Scenarios() {
         const responses = getStudyItem(studySlug, 'responses');
         const responsesData = responses ? JSON.parse(responses) : {};
         responsesData[currentItem.id] = response;
-        localStorage.setItem(`${studySlug}_responses`, JSON.stringify(responsesData));
+        setStudyItem(studySlug, 'responses', JSON.stringify(responsesData));
       } catch (error) {
         console.error('[Scenarios] Error saving response:', error);
       }
@@ -134,7 +149,7 @@ export default function Scenarios() {
     } else {
       // Sequence complete, redirect to demographic
       console.log('[Scenarios] All items complete, redirecting to demographic');
-      localStorage.setItem(`${studySlug}_scenariosComplete`, 'true');
+      setStudyItem(studySlug, 'scenariosComplete', 'true');
       router.push(`/studies/${studySlug}/demographic`);
     }
   };

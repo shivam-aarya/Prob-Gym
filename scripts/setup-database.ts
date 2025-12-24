@@ -12,7 +12,7 @@ import { resolve } from 'path';
 config({ path: resolve(process.cwd(), '.env.local') });
 
 import { createClient } from '@supabase/supabase-js';
-import { probGymMetadata } from '../src/studies/prob-gym/metadata';
+import { getAllStudies } from '../src/studies/registry';
 
 // Load environment variables
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -66,93 +66,86 @@ async function setupDatabase() {
 
     console.log('✅ Schema exists\n');
 
-    // Step 2: Check if Prob-Gym study already exists
-    console.log('🔍 Checking for existing Prob-Gym study...');
-    const { data: existingStudy } = await supabase
-      .from('studies')
-      .select('*')
-      .eq('slug', 'prob-gym')
-      .single();
+    // Step 2: Get all studies from registry
+    const allStudies = getAllStudies();
+    console.log(`📚 Found ${allStudies.length} studies in registry\n`);
 
-    if (existingStudy) {
-      console.log('⚠️  Prob-Gym study already exists');
-      console.log('   ID:', existingStudy.id);
-      console.log('   Status:', existingStudy.status);
+    const shouldUpdate = process.argv.includes('--force');
+    let createdCount = 0;
+    let updatedCount = 0;
+    let skippedCount = 0;
 
-      const shouldUpdate = process.argv.includes('--force');
-      if (!shouldUpdate) {
-        console.log('\n✨ Database is already set up!');
-        console.log('   Use --force flag to update existing study\n');
-        return;
-      }
+    // Step 3: Process each study
+    for (const studyMetadata of allStudies) {
+      console.log(`📝 Processing study: ${studyMetadata.title} (${studyMetadata.slug})`);
 
-      console.log('   Updating existing study...');
-      const { error: updateError } = await supabase
+      // Check if study already exists
+      const { data: existingStudy } = await supabase
         .from('studies')
-        .update({
-          title: probGymMetadata.title,
-          config: probGymMetadata.settings,
-          metadata: probGymMetadata,
-          status: probGymMetadata.status,
-          version: probGymMetadata.version,
-        })
-        .eq('slug', 'prob-gym');
+        .select('*')
+        .eq('slug', studyMetadata.slug)
+        .single();
 
-      if (updateError) {
-        console.error('❌ Failed to update study:', updateError.message);
-        process.exit(1);
+      if (existingStudy) {
+        if (shouldUpdate) {
+          // Update existing study
+          const { error: updateError } = await supabase
+            .from('studies')
+            .update({
+              title: studyMetadata.title,
+              config: studyMetadata.settings,
+              metadata: studyMetadata,
+              status: studyMetadata.status,
+              version: studyMetadata.version,
+            })
+            .eq('slug', studyMetadata.slug);
+
+          if (updateError) {
+            console.error(`   ❌ Failed to update: ${updateError.message}`);
+          } else {
+            console.log(`   ✅ Updated (ID: ${existingStudy.id})`);
+            updatedCount++;
+          }
+        } else {
+          console.log(`   ⏭️  Already exists (ID: ${existingStudy.id})`);
+          skippedCount++;
+        }
+      } else {
+        // Insert new study
+        const { data: newStudy, error: insertError } = await supabase
+          .from('studies')
+          .insert({
+            id: studyMetadata.id,
+            slug: studyMetadata.slug,
+            title: studyMetadata.title,
+            config: studyMetadata.settings,
+            metadata: studyMetadata,
+            status: studyMetadata.status,
+            version: studyMetadata.version,
+          })
+          .select()
+          .single();
+
+        if (insertError) {
+          console.error(`   ❌ Failed to insert: ${insertError.message}`);
+        } else {
+          console.log(`   ✅ Created (ID: ${newStudy.id})`);
+          createdCount++;
+        }
       }
-
-      console.log('✅ Study updated successfully\n');
-      return;
     }
 
-    // Step 3: Insert Prob-Gym study
-    console.log('📝 Inserting Prob-Gym study...');
-    const { data: newStudy, error: insertError } = await supabase
-      .from('studies')
-      .insert({
-        id: probGymMetadata.id,
-        slug: probGymMetadata.slug,
-        title: probGymMetadata.title,
-        config: probGymMetadata.settings,
-        metadata: probGymMetadata,
-        status: probGymMetadata.status,
-        version: probGymMetadata.version,
-      })
-      .select()
-      .single();
-
-    if (insertError) {
-      console.error('❌ Failed to insert study:', insertError.message);
-      process.exit(1);
-    }
-
-    console.log('✅ Prob-Gym study created successfully!');
-    console.log('   ID:', newStudy.id);
-    console.log('   Slug:', newStudy.slug);
-    console.log('   Title:', newStudy.title);
-    console.log('   Status:', newStudy.status);
-
-    // Step 4: Verify setup
-    console.log('\n🔍 Verifying setup...');
-    const { data: verification, error: verifyError } = await supabase
-      .from('studies')
-      .select('*')
-      .eq('slug', 'prob-gym')
-      .single();
-
-    if (verifyError || !verification) {
-      console.error('❌ Verification failed');
-      process.exit(1);
-    }
-
-    console.log('✅ Verification successful!\n');
-    console.log('🎉 Database setup complete!\n');
+    // Step 4: Summary
+    console.log('\n🎉 Database setup complete!\n');
     console.log('📊 Summary:');
-    console.log('   - Schema: ✅ Applied');
-    console.log('   - Prob-Gym study: ✅ Created');
-    console.log('   - Status: Ready for participants\n');
+    console.log(`   - Total studies: ${allStudies.length}`);
+    console.log(`   - Created: ${createdCount}`);
+    console.log(`   - Updated: ${updatedCount}`);
+    console.log(`   - Skipped: ${skippedCount}`);
+    if (skippedCount > 0 && !shouldUpdate) {
+      console.log('\n💡 Use --force flag to update existing studies');
+    }
+    console.log();
 
   } catch (error) {
     console.error('\n❌ Setup failed:', error);

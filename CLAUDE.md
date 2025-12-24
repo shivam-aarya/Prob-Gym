@@ -11,7 +11,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Framework**: Next.js 15.5.9 (App Router) with React 19
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 4
-- **Database**: Supabase (PostgreSQL) with abstraction layer supporting in-memory fallback
+- **Database**: GCP Cloud SQL (PostgreSQL) - migrating from Supabase, with abstraction layer supporting in-memory fallback
+- **Hosting**: Vercel (migrating to GCP Cloud Run)
 - **Build Tool**: Turbopack (via `--turbopack` flag)
 - **Visualization**: Chart.js with react-chartjs-2
 
@@ -215,6 +216,43 @@ The codebase was recently restructured from a single-study app to multi-study pl
 See `INTEGRATION_PLAN.md` for detailed migration history and future extensibility plans.
 
 ## Environment Variables
+
+### GCP Cloud SQL (Production - Currently Migrating)
+
+**Cloud SQL Instance Details:**
+- **Project ID**: `coggym`
+- **Instance Name**: `coggym2025`
+- **Connection Name**: `coggym:us-central1:coggym2025`
+- **Region**: `us-central1`
+- **Database Name**: `coggym_production`
+- **Database User**: `coggym_app`
+- **Database Password**: `CogGym2025!SecureDB#Pass`
+- **Root Password**: `#p1YLZdHxHjnQup~`
+
+**Local Development (via Cloud SQL Proxy):**
+```bash
+# Start Cloud SQL Proxy (in separate terminal)
+cloud-sql-proxy coggym:us-central1:coggym2025
+
+# Environment variables for .env.local
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_NAME=coggym_production
+DB_USER=coggym_app
+DB_PASSWORD=CogGym2025!SecureDB#Pass
+```
+
+**Cloud Run Production:**
+```bash
+CLOUD_SQL_CONNECTION_NAME=coggym:us-central1:coggym2025
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=coggym_production
+DB_USER=coggym_app
+DB_PASSWORD=CogGym2025!SecureDB#Pass
+```
+
+### Supabase (Legacy - Being Phased Out)
 
 Required for Supabase (optional - app works with in-memory DB without these):
 ```
