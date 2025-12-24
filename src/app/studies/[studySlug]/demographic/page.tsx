@@ -7,7 +7,7 @@ import { useStudy } from '@/contexts/StudyContext';
 import { getStudyItem, setStudyItem, getParticipantId } from '@/utils/studyStorage';
 
 export default function Demographic() {
-  const { config, studySlug } = useStudy();
+  const { config, metadata, studySlug } = useStudy();
   const router = useRouter();
   const hasRedirected = useRef(false);
 
@@ -38,7 +38,7 @@ export default function Demographic() {
     }
 
     // Only check for scenarios if scenarios are configured
-    if (config.scenarios) {
+    if (metadata.flow.scenarios) {
       const hasCompletedScenarios = getStudyItem(studySlug, 'scenariosComplete');
       if (!hasCompletedScenarios) {
         console.log('[Demographic] Missing scenarios completion, redirecting to scenarios');
@@ -49,7 +49,7 @@ export default function Demographic() {
     }
 
     console.log('[Demographic] All required steps completed, staying on demographic page');
-  }, [studySlug, config.consent, config.tutorial, config.scenarios]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [studySlug, config.consent, config.tutorial, metadata.flow.scenarios]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = async (demographicResponses: Record<string, string>) => {
     try {
